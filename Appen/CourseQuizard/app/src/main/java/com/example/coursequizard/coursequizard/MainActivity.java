@@ -1,5 +1,6 @@
 package com.example.coursequizard.coursequizard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,47 +16,13 @@ import android.util.Log;
 import android.os.AsyncTask;
 
 public class MainActivity extends AppCompatActivity {
-    public String question = "Empty";
-    private class MyAsyncTask extends AsyncTask<Void, Void, Void>
-    {
-
-        @Override
-        protected void onPostExecute(Void result) {
-            //Task you want to do on UIThread after completing Network operation
-            //onPostExecute is called after doInBackground finishes its task.
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            questionToServer(question);
-            return null;
-        }
+    public void toCreateQuestionAtivity(View view){
+        Intent i = new Intent(getApplicationContext(),CreateQuestionActivity.class);
+        startActivity(i);
     }
-    public void questionToServer(String question){
-
-        try {
-            Log.i("Question","E");
-            Socket socket = new Socket("130.238.92.16",4999);
-            Log.i("Question","A");
-            DataOutputStream DOS = new DataOutputStream(socket.getOutputStream());
-            Log.i("Question","B");
-            //DOS.writeUTF(question);
-            socket.getOutputStream().write(question.getBytes());
-            Log.i("Question", "C");
-            socket.close();
-            Log.i("Question", "D");
-        }
-      catch (Exception e){
-          Log.i("Question",e.toString());
-        }
-    }
-    public void sendQuestion(View view){
-        EditText questionEditText = (EditText) findViewById(R.id.questionEditText);
-        question = questionEditText.getText().toString();
-        MyAsyncTask clientTask = new MyAsyncTask();
-        clientTask.execute();
-
-
+    public void toNewGameActivity(View view){
+        Intent i = new Intent(getApplicationContext(),NewGameActivity.class);
+        startActivity(i);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

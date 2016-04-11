@@ -11,21 +11,34 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.coursequizard.coursequizard.MainActivity">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/questionEditText"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="105dp"
-        android:text="Question?" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send Question"
-        android:id="@+id/questionButton"
-        android:layout_centerVertical="true"
+        android:text="My Games"
+        android:id="@+id/myGamesButton"
+        android:layout_marginTop="66dp"
+        android:layout_below="@+id/newGameButton"
+        android:layout_alignStart="@+id/newGameButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Question"
+        android:id="@+id/createQuestionButton"
+        android:layout_marginTop="72dp"
+        android:layout_below="@+id/myGamesButton"
+        android:layout_alignEnd="@+id/myGamesButton"
+        android:layout_alignStart="@+id/myGamesButton"
+        android:onClick="toCreateQuestionAtivity" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New game"
+        android:id="@+id/newGameButton"
+        android:layout_marginTop="64dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:onClick="sendQuestion" />
+        android:onClick="toNewGameActivity" />
 </RelativeLayout>
