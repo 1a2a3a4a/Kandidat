@@ -6,9 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 public class NewGameActivity extends AppCompatActivity {
+   public void cqToPlayGameActivity(View view){
+       Intent i = new Intent(getApplicationContext(),PlayGameActivity.class);
+       startActivity(i);
+   }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

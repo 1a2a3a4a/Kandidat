@@ -89,12 +89,17 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_play) {
             // Handle the camera action
         } else if (id == R.id.nav_profile) {
+            Intent i = new Intent(getApplicationContext(),MyProfileActivity.class);
+            startActivity(i);
 
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_create) {
+            Intent i = new Intent(getApplicationContext(),CreateQuestionActivity.class);
+            startActivity(i);
+
 
         } else if (id == R.id.nav_share) {
 
