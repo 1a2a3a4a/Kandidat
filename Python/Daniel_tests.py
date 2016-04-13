@@ -158,14 +158,9 @@ def Tagging(text):
    #print(PosTokens)
    return PosTokens
 
-def main():
-   while True:
-      q_list = [] 
-      text = input("Input text: ")
-      if text == 'stop':
-         break
+def gen_questions(text):
+      q_list = []
       PosTokens = Tagging(text)
-      
       #custom_sent_tokenizer = PunktSentenceTokenizer(train_text)
       #tokenized = custom_sent_tokenizer.tokenize(train_text)
       #for i in tokenized:
@@ -175,12 +170,22 @@ def main():
       #print(chunked)
       #print(PosTokens)
       for sentence in PosTokens:
-         #print(sentence)
          q_list.append((questionize(sentence)))
-      for sentence in q_list:
-          print(sentence)
-          print('\n')
-         
+      return q_list
+
+def main():
+    while True:
+        q_list = [] 
+        text = input("Input text: ")
+        
+        if text == 'stop':
+            break
+        q_list = gen_questions(text)
+        
+        for sentence in q_list:   
+            print(sentence)
+            print('\n')
+
 
 if __name__ == "__main__":
    main()
