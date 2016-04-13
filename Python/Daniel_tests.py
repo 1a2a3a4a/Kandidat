@@ -155,7 +155,7 @@ def Tagging(text):
    tokens = [tokenize.word_tokenize(s) for s in sentences]
    #print(tokens)
    PosTokens = [pos_tag(e) for e in tokens]
-   print(PosTokens)
+   #print(PosTokens)
    return PosTokens
 
 def gen_questions(text):
