@@ -17,8 +17,8 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public void cqToNewGameActivity(View view){
-        Intent i = new Intent(getApplicationContext(),NewGameActivity.class);
+    public void cqToOpponentActivity(View view){
+        Intent i = new Intent(getApplicationContext(),OpponentActivity.class);
         startActivity(i);
     }
 

@@ -13,12 +13,32 @@
     tools:showIn="@layout/app_bar_main">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:text="New Game"
         android:id="@+id/cqNewGameButton"
-        android:layout_marginTop="45dp"
-        android:layout_centerHorizontal="true"
-        android:onClick="cqToNewGameActivity"
-        android:nestedScrollingEnabled="false" />
+        android:onClick="cqToOpponentActivity"
+        android:nestedScrollingEnabled="false"
+        android:layout_marginTop="37dp"
+        android:layout_below="@+id/cqMyGamesButton"
+        android:layout_alignStart="@+id/cqCreateQuestionButton" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="My games"
+        android:id="@+id/cqMyGamesButton"
+        android:layout_marginTop="54dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/cqNewGameButton"
+        android:layout_alignStart="@+id/cqNewGameButton" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Create question"
+        android:id="@+id/cqCreateQuestionButton"
+        android:layout_marginTop="26dp"
+        android:layout_below="@+id/cqNewGameButton"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
