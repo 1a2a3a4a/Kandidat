@@ -111,59 +111,78 @@ def preprocess(chunked):
 
 def questionize(chunked):
    tags = 'CD NN NNS NNP NNPS NAME'
+   dot_words ='THE . ,'
    chunked = preprocess(chunked)
-   black_list = '- – '
+   black_list = '- –'
    blank_targets = 0
+   amount = 0
    for w in chunked:
+      if blank_targets >= 1:
+          break
       if w[1] in tags and w[0] not in black_list:
          blank_targets += 1
-
-   print(blank_targets)
-   amount = 0
-   if blank_targets > 2:
-      amount = 2
-   if amount < 1:
-      amount = 1
-
+   answer = ''
+   #print(blank_targets)
    blanked_out = 0
-   while(blanked_out < amount):
+   while(blanked_out < blank_targets):
+      #print("loop")
       question = ''
       y = 0
       for w in chunked:
-         print(w)
+         #print(w)
          if w[1] not in tags or w[0] in black_list:
             question += w[0]
          else:
-            if blanked_out < amount:
+            if blanked_out < blank_targets:
                roll = random.randint(0,100)
                if roll < 50:
-                  question += '\BLANK'
+                  question += '?BLANK'
+                  answer = w[0]
                   blanked_out += 1
                else:
                   question += w[0]
             else:
                question += w[0]
          if(y < len(chunked)-1):
-            if(not(chunked[y+1][1] == 'THE' or chunked[y+1][1] == ','  or chunked[y+1][1] == '.')):
+            if(chunked[y+1][1] not in dot_words):
                question += ' '
          y += 1
-   return question
+   return (question + '?Q?'+ answer + '?Q?')
 
-if __name__ == "__main__":
+def Tagging(text):
+   sentences = tokenize.sent_tokenize(text)
+   #print(sentences)
+   tokens = [tokenize.word_tokenize(s) for s in sentences]
+   #print(tokens)
+   PosTokens = [pos_tag(e) for e in tokens]
+   #print(PosTokens)
+   return PosTokens
+
+def main():
    while True:
-      train_text = input("Input text: ")
-      if input == 'stop':
+      q_list = [] 
+      text = input("Input text: ")
+      if text == 'stop':
          break
-      custom_sent_tokenizer = PunktSentenceTokenizer(train_text)
-      tokenized = custom_sent_tokenizer.tokenize(train_text)
-      for i in tokenized:
-         words = word_tokenize(i)
-         tagged = pos_tag(words)
+      PosTokens = Tagging(text)
+      
+      #custom_sent_tokenizer = PunktSentenceTokenizer(train_text)
+      #tokenized = custom_sent_tokenizer.tokenize(train_text)
+      #for i in tokenized:
+       #  words = word_tokenize(i)
+        # tagged = pos_tag(words)
       #chunked = process_content(tokenized)
       #print(chunked)
-      print(tagged)
-      for sentence in tagged:
+      #print(PosTokens)
+      for sentence in PosTokens:
+         #print(sentence)
+         q_list.append((questionize(sentence)))
+      for sentence in q_list:
+          print(sentence)
+          print('\n')
          
-         print(sentence)
-         #print(questionize(sentence))
+
+if __name__ == "__main__":
+   main()
+   
 
