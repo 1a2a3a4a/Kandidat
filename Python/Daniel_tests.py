@@ -111,7 +111,7 @@ def preprocess(chunked):
 
 def questionize(chunked):
    tags = 'CD NN NNS NNP NNPS NAME'
-   dot_words ='THE . ,'
+   dot_words ='THE . , :'
    chunked = preprocess(chunked)
    black_list = '- –'
    blank_targets = 0
@@ -155,11 +155,11 @@ def Tagging(text):
    tokens = [tokenize.word_tokenize(s) for s in sentences]
    #print(tokens)
    PosTokens = [pos_tag(e) for e in tokens]
-   #print(PosTokens)
+   print(PosTokens)
    return PosTokens
 
 def gen_questions(text):
-      q_list = []
+      q_string = ''
       PosTokens = Tagging(text)
       #custom_sent_tokenizer = PunktSentenceTokenizer(train_text)
       #tokenized = custom_sent_tokenizer.tokenize(train_text)
@@ -170,21 +170,21 @@ def gen_questions(text):
       #print(chunked)
       #print(PosTokens)
       for sentence in PosTokens:
-         q_list.append((questionize(sentence)))
-      return q_list
+         q_string += questionize(sentence) + '?N?'
+      return q_string
 
 def main():
     while True:
-        q_list = [] 
+        q_string = ''
         text = input("Input text: ")
         
         if text == 'stop':
             break
-        q_list = gen_questions(text)
-        
-        for sentence in q_list:   
-            print(sentence)
-            print('\n')
+        q_string = gen_questions(text)
+        print(q_string)
+       # for sentence in q_list:   
+        #    print(sentence)
+         #   print('\n')
 
 
 if __name__ == "__main__":
