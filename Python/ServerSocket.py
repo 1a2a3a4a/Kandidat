@@ -1,8 +1,9 @@
 import socket
 import time
 from test import Tagging
+from Daniel_tests import gen_questions
 #tonys dator: 130.238.92.16
-
+#port 4999
 def main():
 
 # create a socket object
@@ -25,8 +26,10 @@ def main():
         
         print("Got a connection from %s" % str(addr))
         receiveText =  clientsocket.recv(1024).decode()
-        TaggedReceiveText  = Tagging(receiveText)
-        print(TaggedReceiveText)
+        Question  = gen_questions(receiveText)
+        print(Question)
+        clientsocket.send(Question.encode())
+        
         clientsocket.close()
         
 
