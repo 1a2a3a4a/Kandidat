@@ -27,11 +27,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Random opponent"
-    android:id="@+id/randomOpponentButton"/>
+    android:id="@+id/randomOpponentButton"
+        android:onClick="randomOpponentButtonClicked" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Singleplayer"
-        android:id="@+id/sinlgePlayerButton"/>
+        android:id="@+id/sinlgePlayerButton"
+        android:onClick="singlePlayerButtonClicked" />
     </LinearLayout>
 </RelativeLayout>

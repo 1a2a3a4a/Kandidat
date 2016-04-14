@@ -27,7 +27,10 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".SearchResultsActivity"></activity>
+        <activity android:name=".SearchResultsActivity" />
+        <activity android:name=".ChallengeActivity" />
+        <activity android:name=".CourseActivity" />
+        <activity android:name=".UploadTextActivity"></activity>
     </application>
 
 </manifest>
