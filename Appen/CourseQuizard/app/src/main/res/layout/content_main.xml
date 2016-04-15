@@ -48,6 +48,7 @@
         android:id="@+id/generateQuestionButton"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/cqCreateQuestionButton"
-        android:onClick="toGenerateQuestionActivity"
+        android:onClick="toUploadTextActivity"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>
+
