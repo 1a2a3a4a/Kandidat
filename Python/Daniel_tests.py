@@ -147,7 +147,7 @@ def questionize(chunked):
             if(chunked[y+1][1] not in dot_words):
                question += ' '
          y += 1
-   return (question + '?Q?'+ answer + '?Q?')
+   return (question + '%Q%'+ answer)
 
 def Tagging(text):
    sentences = tokenize.sent_tokenize(text)
@@ -170,7 +170,7 @@ def gen_questions(text):
       #print(chunked)
       #print(PosTokens)
       for sentence in PosTokens:
-         q_string += questionize(sentence) + '?N?'
+         q_string += questionize(sentence) + '%N%'
       return q_string
 
 def main():
