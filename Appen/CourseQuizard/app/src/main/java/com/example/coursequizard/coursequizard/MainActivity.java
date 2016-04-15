@@ -24,6 +24,20 @@ public class MainActivity extends AppCompatActivity
         startActivity(i);
     }
 
+    public void toUploadTextActivity(View view){
+        Intent i = new Intent(getApplicationContext(),UploadTextActivity.class);
+        String[] send =new String[] {"fromMainActivity",""};
+        i.putExtra("prevActivity",send );
+        startActivity(i);
+
+    }
+    public void toCreateQuestionActivity(View view){
+        Intent i = new Intent(getApplicationContext(),CreateQuestionActivity.class);
+        String[] send =new String[] {"fromMainActivity",""};
+        i.putExtra("prevActivity",send );
+        startActivity(i);
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
