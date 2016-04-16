@@ -39,6 +39,9 @@ def similarwords(word):
     for x in range (0, 3): #stoppa in de tre random similar orden i en lista
         random_similarwords[x] = similarwords[random_numbers[x]]
 #    print(random_similarwords)
+    for x in range (0, 3):
+        if(random_similarwords[x] == 0):
+                random_similarwords[x] = 'Not generated' 
     return random_similarwords
 
 def main():
