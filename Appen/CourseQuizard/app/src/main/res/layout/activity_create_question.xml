@@ -126,7 +126,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="71dp"
         android:layout_alignParentEnd="true"
-        android:hint="Enter Question HEre" />
+        android:hint="Enter question here" />
 
     <Button
         android:layout_width="wrap_content"
