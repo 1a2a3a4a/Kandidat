@@ -3,6 +3,7 @@ package com.example.coursequizard.coursequizard;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,14 +21,37 @@ public class CourseActivity extends AppCompatActivity {
         return false;
     }
 
-    public void toChallengeActivity(String course) {
-        String opponent = getIntent().getExtras().getString("prevActivity");
+    public void fromActivity(String course){
+        String[] message = new String[2];
+        message = getIntent().getExtras().getStringArray("prevActivity");
+        Log.i("message0", message[0]);
+        Log.i("message1", message[1]);
+        if (message[0].equals("fromChallengeActivity")){
+            toChallengeActivity(message[1], course);
+        }
+        else if (message[0].equals("fromOpponentActivity")){
+            toChallengeActivity(message[1], course);
+        }
+
+        else if (message[0].equals("fromCreateQuestionActivity")) {
+            toCreateQuestionActivity(course);
+        }
+
+    }
+
+    public void toChallengeActivity(String opponent, String course) {
         Intent i = new Intent(getApplicationContext(), ChallengeActivity.class);
         String[] send = new String[]{opponent, course};
 
         i.putExtra("Opponent and Course", send);
         startActivity(i);
 
+    }
+    public void toCreateQuestionActivity(String course){
+        Intent i = new Intent(getApplicationContext(), CreateQuestionActivity.class);
+        String[] send = new String[]{"fromCourseActivity", course};
+        i.putExtra("prevActivity", send);
+        startActivity(i);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +86,7 @@ public class CourseActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 String opponentFriend = courseList.get(position);
-                toChallengeActivity(opponentFriend);
+                fromActivity(opponentFriend);
             }
         });
     }

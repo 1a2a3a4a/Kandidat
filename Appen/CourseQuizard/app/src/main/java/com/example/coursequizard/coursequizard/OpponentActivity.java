@@ -40,7 +40,9 @@ public class OpponentActivity extends AppCompatActivity {
         message =  getIntent().getExtras().getStringArray("prevActivity");
         if (message[0].equals("fromMainActivity")){
             Intent i = new Intent(getApplicationContext(), CourseActivity.class);
-            i.putExtra("prevActivity", opponentChosen);
+            message [0]= "fromOpponentActivity";
+            message [1] = opponentChosen;
+            i.putExtra("prevActivity", message);
             startActivity(i);
         }
         if (message[0].equals("fromChallengeActivity")) {

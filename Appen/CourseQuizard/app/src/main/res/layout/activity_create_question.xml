@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:id="@+id/tableLayout">
         <!--
          <Button
              android:layout_width="wrap_content"
@@ -123,10 +124,9 @@
         android:inputType="textMultiLine"
         android:maxLines="8"
         android:id="@+id/questionTextView"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="71dp"
-        android:layout_alignParentEnd="true"
-        android:hint="Enter question here" />
+        android:hint="Enter question here"
+        android:layout_above="@+id/tableLayout"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -156,5 +156,21 @@
         android:layout_alignParentEnd="true"
         android:onClick="addQuestion" />
 
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="Course"
+        android:id="@+id/courseCreateQuestionTextView"
+        android:layout_below="@+id/cancelButton"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="42dp" />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editCourseCreateQuestionImageButton"
+        android:src="@drawable/ic_mode_edit_black_18dp"
+        android:onClick="toCourseActivity"
+        android:layout_alignBottom="@+id/courseCreateQuestionTextView"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

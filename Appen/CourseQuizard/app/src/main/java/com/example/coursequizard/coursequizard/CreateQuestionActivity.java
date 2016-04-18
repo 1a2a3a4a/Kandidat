@@ -38,12 +38,36 @@ public class CreateQuestionActivity extends AppCompatActivity {
 
     }
     */
+    public void fromActivity(){
+        EditText courseTextView = (EditText) findViewById(R.id.courseCreateQuestionTextView);
+        String [] message = new String[2];
+        message = getIntent().getExtras().getStringArray("prevActivity");
+        if (message[0].equals("fromCourseActivity")){
+            courseTextView.setText(message[1]);
+        }
+
+    }
+    public void toCourseActivity(View view){
+        Intent i = new Intent(getApplicationContext(),CourseActivity.class);
+        String[] send = new String[]{"fromCreateQuestionActivity","placeholder"};
+        i.putExtra("prevActivity",send );
+        startActivity(i);
+    }
     public void addQuestion(View view){
         EditText editAnswerButton = (EditText) findViewById(R.id.editAnswerButton);
         EditText editAlt1Button = (EditText) findViewById(R.id.editAlt1Button);
         EditText editAlt2Button = (EditText) findViewById(R.id.editAlt2Button);
         EditText editAlt3Button = (EditText) findViewById(R.id.editAlt3Button);
         EditText questionTextView = (EditText) findViewById(R.id.questionTextView);
+        String question = questionTextView.getText().toString();
+        String answer = editAnswerButton.getText().toString();
+        String alt1 =        editAlt1Button.getText().toString();
+        String alt2 = editAlt2Button.getText().toString();
+        String alt3 = editAlt3Button.getText().toString();
+        String type = "add question";
+        BackgroundWithServer bgws = new BackgroundWithServer(this);
+
+        bgws.execute(type,question,answer,alt1,alt2,alt3);
         //CQ cq = new CQ();
        // cq.connect();
         /*cq.sendQuestionToDB(questionTextView.getText().toString(),
@@ -117,6 +141,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
         genlistcount=0;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_question);
+        fromActivity();
 
     }
 }

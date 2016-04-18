@@ -29,7 +29,7 @@ public class ChallengeActivity extends AppCompatActivity {
     public void toCourseActivity(View view){
         Intent i = new Intent(getApplicationContext(),CourseActivity.class);
         TextView opponentTextView = (TextView) findViewById(R.id.opponentTextView);
-        String send = opponentTextView.getText().toString();
+        String[] send = new String[]{"fromChallengeActivity",opponentTextView.getText().toString()};
         i.putExtra("prevActivity",send );
         startActivity(i);
     }
