@@ -1,5 +1,5 @@
 import java.sql.*;
-
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class CQ {
@@ -15,7 +15,7 @@ public class CQ {
 			e.printStackTrace();
 		}
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://130.238.247.54:3307/cq", "root", "dinmormor");
+			con = DriverManager.getConnection("jdbc:mysql://130.238.250.231:3307/cq", "root", "dinmormor");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -28,6 +28,38 @@ public class CQ {
 			e.printStackTrace();
 		}
 		//scanner.close();
+	}
+
+	public LinkedList getQuestionsFRomDB(){
+		String command = ("SELECT * FROM Question");
+		ResultSet rs = null;
+		try {
+			PreparedStatement send = con.prepareStatement(command);
+			rs = send.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return questionsToList(rs);
+	}
+	
+	private LinkedList questionsToList(ResultSet rs) {
+		LinkedList list = new LinkedList();
+		try {
+			//System.out.println("Q_ID\t|Sentence\t\t|Answer\t|Alt1\t|Alt2\t|Alt3");
+			while(rs.next()){
+				//Question q = new Question(rs.getString(1), rs.getString(2), rs.getString(3),  rs.getString(4), rs.getString(5), rs.getString(6));
+				//System.out.println(rs.getString(1) + "\t|" + rs.getString(2)+ "\t|" + rs.getString(3)+ "\t|" + rs.getString(4)+ "\t|" + rs.getString(5)+ "\t|" + rs.getString(6));
+				//list.add(q);
+				
+				//rs.getInt(2);
+				
+			}
+			//System.out.println("End");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	public void sendQuestionToDB(String Sentence, String Answer, String Alt1, String Alt2, String Alt3){
