@@ -1,7 +1,7 @@
 from nltk import *
 from nltk.corpus import *
 from numpy import *
-
+from Similar import similarwords
 
 
 ##CC	coordinating conjunction
@@ -108,6 +108,12 @@ def preprocess(chunked):
    new_list = process_dates(new_list)
    return new_list
 
+def add_alternatives(answer):
+    alternatives = similarwords(answer)
+    return_alternatives = "%Q%" + alternatives[0] + "%Q%" + alternatives[1] + "%Q%" + alternatives[2] 
+
+    return return_alternatives
+
 
 def questionize(chunked):
    tags = 'CD NN NNS NNP NNPS NAME'
@@ -147,7 +153,7 @@ def questionize(chunked):
             if(chunked[y+1][1] not in dot_words):
                question += ' '
          y += 1
-   return (question + '%Q%'+ answer)
+   return (question + '%Q%'+ answer + add_alternatives(answer))
 
 def Tagging(text):
    sentences = tokenize.sent_tokenize(text)

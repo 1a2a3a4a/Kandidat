@@ -14,7 +14,7 @@
 
     <Button
         android:layout_width="200dp"
-        android:layout_height="50dp"
+        android:layout_height="80dp"
         android:text="My games"
         android:id="@+id/cqMyGamesButton"
         android:layout_marginTop="50dp"
@@ -23,7 +23,7 @@
         android:layout_alignStart="@+id/cqNewGameButton" />
     <Button
         android:layout_width="200dp"
-        android:layout_height="50dp"
+        android:layout_height="80dp"
         android:text="New Game"
         android:id="@+id/cqNewGameButton"
         android:onClick="cqToOpponentActivity"
@@ -34,7 +34,7 @@
 
     <Button
         android:layout_width="200dp"
-        android:layout_height="50dp"
+        android:layout_height="80dp"
         android:text="Create question"
         android:id="@+id/cqCreateQuestionButton"
         android:layout_marginTop="20dp"
@@ -43,11 +43,12 @@
         android:layout_centerHorizontal="true" />
     <Button
         android:layout_width="200dp"
-        android:layout_height="50dp"
+        android:layout_height="80dp"
         android:text="Generate questions from text"
         android:id="@+id/generateQuestionButton"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/cqCreateQuestionButton"
-        android:onClick="toGenerateQuestionActivity"
+        android:onClick="toUploadTextActivity"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>
+

@@ -5,4 +5,5 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="friendHint">Search friends</string>
     <string name="action_settings">Settings</string>
+    <string name="upload_text">Paste your text to be uploaded and generated</string>
 </resources>

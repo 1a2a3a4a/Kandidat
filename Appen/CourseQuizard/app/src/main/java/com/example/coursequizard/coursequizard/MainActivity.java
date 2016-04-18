@@ -24,6 +24,20 @@ public class MainActivity extends AppCompatActivity
         startActivity(i);
     }
 
+    public void toUploadTextActivity(View view){
+        Intent i = new Intent(getApplicationContext(),UploadTextActivity.class);
+        String[] send =new String[] {"fromMainActivity",""};
+        i.putExtra("prevActivity",send );
+        startActivity(i);
+
+    }
+    public void toCreateQuestionActivity(View view){
+        Intent i = new Intent(getApplicationContext(),CreateQuestionActivity.class);
+        String[] send =new String[] {"fromMainActivity",""};
+        i.putExtra("prevActivity",send );
+        startActivity(i);
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +54,7 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
-
+*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
