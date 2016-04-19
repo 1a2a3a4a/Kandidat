@@ -14,6 +14,9 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+/**
+ * Upload text for automatic question generation. text is uploaded to python server using sockets.
+ */
 public class UploadTextActivity extends AppCompatActivity {
     public String uploadText = new String();
     public void toCreateQuestionActivity(String questions){
@@ -28,6 +31,7 @@ public class UploadTextActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_text);
     }
+    // for socket communication
     private class MyAsyncTask extends AsyncTask<Void, Void, Void>
     {
 

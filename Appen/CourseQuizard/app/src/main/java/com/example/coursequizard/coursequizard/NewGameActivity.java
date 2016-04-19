@@ -9,6 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+/**
+ * This was a pre aplha class, not used
+ */
 public class NewGameActivity extends AppCompatActivity {
    public void cqToPlayGameActivity(View view){
        Intent i = new Intent(getApplicationContext(),PlayGameActivity.class);

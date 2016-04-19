@@ -156,14 +156,15 @@
         android:layout_alignParentEnd="true"
         android:onClick="addQuestion" />
 
-    <EditText
+    <TextView
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:text="Course"
+        android:hint="Press icon to edit course"
         android:id="@+id/courseCreateQuestionTextView"
         android:layout_below="@+id/cancelButton"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="42dp" />
+        android:layout_marginTop="42dp"
+        android:layout_above="@+id/questionTextView" />
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -171,6 +172,7 @@
         android:src="@drawable/ic_mode_edit_black_18dp"
         android:onClick="toCourseActivity"
         android:layout_alignBottom="@+id/courseCreateQuestionTextView"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:clickable="true" />
 
 </RelativeLayout>

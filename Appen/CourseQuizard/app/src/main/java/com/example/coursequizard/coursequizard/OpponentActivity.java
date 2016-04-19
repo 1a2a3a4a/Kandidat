@@ -15,43 +15,61 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+/**
+ * The user can choose who to challenge or playing sinlge player
+ * myFriends The friends of the user
+ * Opponent: The name of the opponent
+ */
 public class OpponentActivity extends AppCompatActivity {
 
     public ArrayList<String> myFriends = new ArrayList<String>();
     private String opponent = new String();
 
-
-
-    public String getOpponent(){
-        return opponent;
-    }
+    /**
+     * if user chooses random opponent
+     * @param view
+     */
     public void randomOpponentButtonClicked(View view){
                 String random  = "Random Opponent";
         toNextActivity( random);
 
     }
+    /**
+     * if user chooses to play alone
+     * @param view
+     */
     public void singlePlayerButtonClicked(View view){
         String sp = "Single Player";
         toNextActivity(sp);
 
     }
+
+    /**
+     * go to the next activity after oipponent is chosen
+     * @param opponentChosen the opponent chosen
+     */
     public void toNextActivity(String opponentChosen) {
-        String [] message = new String[2];
-        message =  getIntent().getExtras().getStringArray("prevActivity");
-        if (message[0].equals("fromMainActivity")){
-            Intent i = new Intent(getApplicationContext(), CourseActivity.class);
-            message [0]= "fromOpponentActivity";
-            message [1] = opponentChosen;
-            i.putExtra("prevActivity", message);
-            startActivity(i);
+        ArrayList<String> message = new ArrayList<String>();
+        message =  getIntent().getExtras().getStringArrayList("prevActivity");
+
+        if (message.get(0).equals("fromMainActivity")){
+            String type ="my courses, from opponent";
+            BackgroundWithServer bgws = new BackgroundWithServer(this);
+            bgws.execute(type,opponentChosen);
         }
-        if (message[0].equals("fromChallengeActivity")) {
+        if (message.get(0).equals("fromChallengeActivity")) {
             Intent i = new Intent(getApplicationContext(), ChallengeActivity.class);
-            message[0]= opponentChosen;
+            message.set(0,opponentChosen);
             i.putExtra("Opponent and Course", message);
             startActivity(i);
         }
     }
+
+    /**
+     * the beginning of developing search functionality
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -90,6 +108,7 @@ public class OpponentActivity extends AppCompatActivity {
         myFriends.add("K");
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,myFriends);
         friendsListView.setAdapter(arrayAdapter);
+        // a listener for the friendlist
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent,View view, int position,long id){

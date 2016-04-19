@@ -14,7 +14,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 /**
- * Created by Simon on 2016-04-18.
+ * Not used
+ * Not used
+ * Not used
+ * Not used
+ * Not used
+ * Not used
+ * Not used
+ * Not used
+ *
  */
 public class GetQuestionsFromServer extends AsyncTask<String,Void,String> {
     Context context;
