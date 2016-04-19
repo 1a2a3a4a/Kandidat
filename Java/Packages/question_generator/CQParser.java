@@ -3,12 +3,12 @@ import java.util.LinkedList;
 public class CQParser {
     private LinkedList<Question> list;
     private LinkedList<Course> clist;
-
+    private LinkedList<University> ulist;
 
     public  CQParser(){
 	list = new LinkedList<Question>();
 	clist = new LinkedList<Course>();
-
+	ulist = new LinkedList<University>();
 	
     }
     
@@ -36,8 +36,25 @@ public class CQParser {
 				   sentence_splits[3],
 				   sentence_splits[4]);
 	    clist.add(c);
-	    System.out.println("");
+
+
 	}
+    }
+
+    public void universityParser(String text){
+	String splits[] = text.split("%N%");
+	for(int i=0; i < splits.length; i++){
+	    String sentence_splits[] = splits[i].split("%U%");
+	    University u  = new University(Integer.parseInt(sentence_splits[0]),
+					   sentence_splits[1],
+					   sentence_splits[2]);
+	    ulist.add(u);
+	}
+    }
+    
+    public LinkedList<University> getGeneratedUList(String UniText){
+	universityParser(UniText);
+	return this.ulist;
     }
 
     public LinkedList<Question> generate(String text){
@@ -70,6 +87,13 @@ public class CQParser {
 	String str = "";
 	for(int i=0; i < this.clist.size(); i++){
 	    str += this.clist.get(i).ctoString() + "\n";
+	}
+	return str;
+    }
+    public String utoString(){
+	String str = "";
+	for(int i=0; i < this.ulist.size(); i++){
+	    str += this.ulist.get(i).utoString() + "\n";
 	}
 	return str;
     }
