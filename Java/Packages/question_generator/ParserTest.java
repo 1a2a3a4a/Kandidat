@@ -7,6 +7,7 @@ public class ParserTest {
 		Question q = new Question("Q1", "A1", "Alt1", "Alt2", "Alt3");
 		LinkedList q_list = par.getList();
 		System.out.println(par.toString());
-
+	       		LinkedList c_list = par.getGeneratedCList("1%C%1%C%Uppsala Univeresitet%C%1DT%C%HejHej%N%");
+	       		System.out.println(par.ctoString());
 	}
 }
