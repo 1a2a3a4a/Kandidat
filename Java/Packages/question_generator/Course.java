@@ -28,7 +28,7 @@ public class Course{
     public String getCourse_code_ID(){
 	return this.Course_code;
     }
-    public String getname_ID(){
+    public String getname(){
 	return this.name;
     }
     public void setC_ID(int CID){
