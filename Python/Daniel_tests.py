@@ -122,6 +122,7 @@ def questionize(chunked):
    black_list = '- –'
    blank_targets = 0
    amount = 0
+   question = ''
    for w in chunked:
       if blank_targets >= 1:
           break
@@ -132,7 +133,7 @@ def questionize(chunked):
    blanked_out = 0
    while(blanked_out < blank_targets):
       #print("loop")
-      question = ''
+
       y = 0
       for w in chunked:
          #print(w)
