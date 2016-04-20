@@ -59,6 +59,10 @@ public class CreateQuestionActivity extends AppCompatActivity {
             courseTextView.setText(message.get(1));
             courseID =message.get(2);
         }
+       else if (message.get(0).equals("fromAddCourseActivity")) {
+            courseTextView.setText(message.get(1));
+            courseID = message.get(3);
+       }
 
     }
 
@@ -144,7 +148,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
     /**
      * go to the main menu
      */
-    public void toMainActivity(){
+    public void toMainActivity(View view){
         Intent i = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(i);
     }

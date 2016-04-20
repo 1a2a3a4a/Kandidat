@@ -66,8 +66,8 @@ public class UploadTextActivity extends AppCompatActivity {
 
         try {
 
-            Log.i("Connect","A");
-            Socket socket = new Socket("130.238.92.16",4999);
+            Log.i("Connect","Aha");
+            Socket socket = new Socket("130.238.246.232",4999);
             Log.i("OutputStream","B");
             DataOutputStream DOS = new DataOutputStream(socket.getOutputStream());
             Log.i("Send","C");
@@ -87,7 +87,8 @@ public class UploadTextActivity extends AppCompatActivity {
         catch (Exception e){
             Log.i("Send catch",e.toString());
         }
-        toCreateQuestionActivity(response);
+        //toCreateQuestionActivity(response);
+        Log.i("From Tony", response);
     }
 
         public void uploadTextToGenerate(View view){

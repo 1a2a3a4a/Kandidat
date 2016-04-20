@@ -54,11 +54,13 @@ public class OpponentActivity extends AppCompatActivity {
 
         if (message.get(0).equals("fromMainActivity")){
             String type ="my courses, from opponent";
+            //to courseactivity
             BackgroundWithServer bgws = new BackgroundWithServer(this);
             bgws.execute(type,opponentChosen);
         }
         if (message.get(0).equals("fromChallengeActivity")) {
             Intent i = new Intent(getApplicationContext(), ChallengeActivity.class);
+
             message.set(0,opponentChosen);
             i.putExtra("Opponent and Course", message);
             startActivity(i);
