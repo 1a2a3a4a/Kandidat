@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import java.io.DataOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 //import CQ.*;
@@ -51,12 +52,12 @@ public class CreateQuestionActivity extends AppCompatActivity {
      */
    public void fromActivity(){
         TextView courseTextView = (TextView) findViewById(R.id.courseCreateQuestionTextView);
-        String [] message = new String[3];
-        message = getIntent().getExtras().getStringArray("prevActivity");
+       ArrayList<String>  message = new ArrayList<String>();
+        message = getIntent().getExtras().getStringArrayList("prevActivity");
        // if we have chosen the course for the question  we have to get the course ID
-        if (message[0].equals("fromCourseActivity")){
-            courseTextView.setText(message[1]);
-            courseID =message[2];
+        if (message.get(0).equals("fromCourseActivity")){
+            courseTextView.setText(message.get(1));
+            courseID =message.get(2);
         }
 
     }

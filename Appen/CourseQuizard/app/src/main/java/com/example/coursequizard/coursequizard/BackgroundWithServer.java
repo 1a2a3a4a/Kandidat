@@ -209,8 +209,9 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
             Log.i("result",result);
             ArrayList<String> send = new ArrayList<String>();
             send.add("fromOpponentActivity");
-            send.add(result);
             send.add(opponent);
+            // send the coursestring
+            send.add(result);
             i.putExtra("prevActivity", send);
             context.startActivity(i);
         }
