@@ -106,7 +106,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:text="New Text"
-        android:id="@+id/textView2"
+        android:id="@+id/questionTextView"
         android:layout_alignParentTop="true"
         android:layout_marginTop="71dp"
         android:layout_alignParentEnd="true" />

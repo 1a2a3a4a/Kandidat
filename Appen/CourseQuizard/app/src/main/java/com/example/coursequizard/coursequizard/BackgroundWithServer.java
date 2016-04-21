@@ -118,6 +118,23 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     private void myCourseListFromOpponent(String ... params){
         opponentName = params[1];
     }
+
+    private void getSinglePlayerQuiz(String ... params){
+               courseID = params[1];
+        try {
+            post_data = URLEncoder.encode("courseID", "UTF-8") + "=" + URLEncoder.encode(courseName, "UTF-8") + "&";
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+
+
     @Override
     /**
      * Communicates with the database server. First writes to the server, then reads the output.
@@ -156,6 +173,10 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         }
         else if(type.equals("my courses, from add courses")){
 
+        }
+        else if(type.equals("singlePlayerMode")){
+            getSinglePlayerQuiz(params);
+            operationURL="http://130.238.250.231/getquestionsfromdb.php";
         }
             try {
                 URL url = new URL(operationURL);
@@ -275,6 +296,14 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         }
         else if (type.equals("university list")){
 
+        }
+        else if (type.equals("singlePlayerMode")){
+            Intent i = new Intent(context,PlayGameActivity.class);
+            ArrayList<String> send = new ArrayList<String>();
+            send.add("fromSPChallengeActivity");
+            send.add(result);
+            i.putExtra("prevActivity",send );
+            context.startActivity(i);
         }
              // show a popup with the output
             else {

@@ -62,15 +62,27 @@ public class ChallengeActivity extends AppCompatActivity {
      *
      */
     public void toPlayGameActivity(View view){
-        String type ="get questions";
+        String type ="friendPlayerMode";
+
         // receiving the arguments
         courseAndOpponent();
         // do the backgroundcommunication with the server
-        BackgroundWithServer bgws = new BackgroundWithServer(this);
-        bgws.execute(type,opponentName,courseID);
+        if(opponentName.toLowerCase().equals("random opponennt")){
+            type ="singlePlayerMode";
+            BackgroundWithServer bgws = new BackgroundWithServer(this);
+            bgws.execute(type,courseID);
+
+        }
+        else if(opponentName.toLowerCase().equals("single player")){
+            type ="randomPlayerMode";
+            BackgroundWithServer bgws = new BackgroundWithServer(this);
+            bgws.execute(type,courseID);
+        }
+        else {
+            BackgroundWithServer bgws = new BackgroundWithServer(this);
+            bgws.execute(type, opponentName, courseID);
+        }
         // Start the PlayGame Activity
-        Intent i = new Intent(getApplicationContext(),PlayGameActivity.class);
-        startActivity(i);
     }
     /**
      * This method run when the edit Opponent Button is pressed
