@@ -178,7 +178,7 @@ def gen_questions(text):
       #print(PosTokens)
       for sentence in PosTokens:
          q_string += questionize(sentence) + '%N%'
-      return q_string
+      return q_string + '\n'
 
 def main():
     while True:
