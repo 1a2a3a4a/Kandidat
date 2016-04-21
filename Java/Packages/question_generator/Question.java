@@ -1,10 +1,13 @@
 
 public class Question {
+	private int q_id = -1;
 	private String question = "";
 	private String answer = "";
 	private String alt1 = "";
 	private String alt2 = "";
 	private String alt3 = "";
+	private int c_id = -1;
+	private int rating = 0;
 	//private LinkedList tags = new LinkedList();
 	
 	public Question(String question, String answer, String alt1, String alt2, String alt3){
@@ -13,8 +16,33 @@ public class Question {
 		this.alt1 = alt1;
 		this.alt2 = alt2;
 		this.alt3 = alt3;
-	}		
+	}	
+	public Question(int q_id, String question, String answer, String alt1, String alt2, String alt3, int c_id, int rating){
+		this.question = question;
+		this.answer = answer;
+		this.alt1 = alt1;
+		this.alt2 = alt2;
+		this.alt3 = alt3;
+	}	
 	
+	public int getQ_id() {
+		return q_id;
+	}
+	public void setQ_id(int q_id) {
+		this.q_id = q_id;
+	}
+	public int getC_id() {
+		return c_id;
+	}
+	public void setC_id(int c_id) {
+		this.c_id = c_id;
+	}
+	public int getRating() {
+		return rating;
+	}
+	public void setRating(int rating, int increment) {
+		this.rating = rating + increment;
+	}
 	public String getQuestion() {
 		return question;
 	}
