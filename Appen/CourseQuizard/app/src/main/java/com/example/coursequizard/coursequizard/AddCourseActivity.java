@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import java.util.ArrayList;
+
 /**
 This is the Add course Activity, here users can add non existing courses.
 
@@ -23,9 +26,9 @@ public class AddCourseActivity extends AppCompatActivity {
      */
 
     public void fromActivity(){
-            String [] message = new String[2];
-            message = getIntent().getExtras().getStringArray("prevActivity");
-            if (message[0].equals("fromCourseActivity")){
+            ArrayList<String>  message = new ArrayList<String>();
+            message = getIntent().getExtras().getStringArrayList("prevActivity");
+            if (message.get(0).equals("fromCourseActivity")){
                addCourseView();
             }
 
@@ -47,7 +50,8 @@ public class AddCourseActivity extends AppCompatActivity {
         String courseName = newCourseNameEditText.getText().toString();
         String courseCode = newCourseCodeEditText.getText().toString();
         String uniID = "1";
-        toBackGroundWithServer(courseName,courseCode,uniID);
+        String uniName ="Uppsala";
+        toBackGroundWithServer(courseName,courseCode, uniName);
     }
 
     /**
@@ -55,13 +59,13 @@ public class AddCourseActivity extends AppCompatActivity {
      *
      * @param courseName the course name
      * @param courseCode the course code
-     * @param uniID      the ID of the University the course take place on
+     *
      */
-    public void toBackGroundWithServer(String courseName,String courseCode, String uniID) {
-        String type = "add course";
+    public void toBackGroundWithServer(String courseName,String courseCode,String universityName) {
+        String type = "added course";
         BackgroundWithServer bgws = new BackgroundWithServer(this);
 
-        bgws.execute(type,courseName,courseCode,uniID);
+        bgws.execute(type,courseName,courseCode,universityName);
     }
 
     /**

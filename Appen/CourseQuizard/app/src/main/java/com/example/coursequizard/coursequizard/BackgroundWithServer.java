@@ -34,11 +34,16 @@ import java.util.ArrayList;
  *
  */
 public class BackgroundWithServer extends AsyncTask<String,Void,String> {
+    ArrayList<String> passCourseParameters = new ArrayList<String>();
     String operationURL="";
     String post_data = "";
     Context context;
     String type = "";
-    String opponent ="";
+    String opponentName="";
+    String courseName="";
+    String courseCode ="";
+    String courseID ="";
+    String universityName="";
     AlertDialog alertDialog;
     BackgroundWithServer (Context ctx) {
         context = ctx;
@@ -76,14 +81,15 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
      * @param params all paramters neccecary for adding a question to the database
      */
 
-    private void addCourse(String ... params){
-        String courseName = params[1];
-        String courseID   = params[2];
-        String uniID      =params[3];
+    private void addCourse(String ... params) {
+        courseName = params[1];
+        courseCode = params[2];
+        universityName = params[3];
+
         try {
             post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(courseName, "UTF-8") + "&"
-                    + URLEncoder.encode("course_code", "UTF-8") + "=" + URLEncoder.encode(courseID, "UTF-8") + "&"
-                    + URLEncoder.encode("uni_id", "UTF-8") + "=" + URLEncoder.encode(uniID, "UTF-8") + "&";
+                    + URLEncoder.encode("course_code", "UTF-8") + "=" + URLEncoder.encode(courseCode, "UTF-8") + "&"
+                    + URLEncoder.encode("uni_name", "UTF-8") + "=" + URLEncoder.encode(universityName, "UTF-8") + "&";
 
 
         } catch (Exception e) {
@@ -99,13 +105,18 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         String userID = params[1];
 
     }
+    private void allUniversties(String ... params){
+    }
+    private void myCourseListFromChallenge(String ... params){
+        opponentName = params[1];
+    }
     /**
      * Fitting the arguments to the specific URL
      * @param params all paramters neccecary for adding a question to the database
      */
 
     private void myCourseListFromOpponent(String ... params){
-        opponent = params[1];
+        opponentName = params[1];
     }
     @Override
     /**
@@ -120,7 +131,12 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
             addQuestion(params);
             operationURL = "http://130.238.250.231/addquestiontodb.php";
         }
-        else if (type.equals("add course")){
+        else if (type.equals("university list")){
+            allUniversties(params);
+            operationURL = "http://130.238.250.231/getuniversitiesfromdb.php";
+
+        }
+        else if (type.equals("added course")){
             addCourse(params);
             operationURL = "http://130.238.250.231/addcoursetodb.php";
     }
@@ -132,6 +148,13 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         else if(type.equals("my courses, from opponent")){
             myCourseListFromOpponent(params);
             operationURL = "http://130.238.250.231/getcoursesfromdb.php";
+
+        }
+        else if(type.equals("my courses, from challenge")){
+            myCourseListFromChallenge(params);
+            operationURL= "http://130.238.250.231/getcoursesfromdb.php";
+        }
+        else if(type.equals("my courses, from add courses")){
 
         }
             try {
@@ -205,15 +228,53 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
              */
             Intent i = new Intent(context, CourseActivity.class);
             Log.i("hello","hello");
-            Log.i("opponent",opponent);
+            Log.i("opponent",opponentName);
             Log.i("result",result);
             ArrayList<String> send = new ArrayList<String>();
             send.add("fromOpponentActivity");
-            send.add(opponent);
+            send.add(opponentName);
             // send the coursestring
             send.add(result);
             i.putExtra("prevActivity", send);
             context.startActivity(i);
+        }
+        else if (type.equals("my courses, from challenge")){
+            Intent i = new Intent(context,CourseActivity.class);
+            ArrayList<String> send = new ArrayList<String>();
+            send.add("fromChallengeActivity");
+            send.add(opponentName);
+            send.add(result);
+            i.putExtra("prevActivity",send );
+            context.startActivity(i);
+        }
+        else if(type.equals("add question")){
+            Intent i = new Intent(context,CreateQuestionActivity.class);
+            ArrayList<String> send = new ArrayList<String>();
+            send.add("fromQuestionActivity");
+            send.add(opponentName);
+            send.add(result);
+            i.putExtra("prevActivity",send );
+            context.startActivity(i);
+        }
+        else if(type.equals("added course")){
+            Intent i = new Intent(context,CreateQuestionActivity.class);
+            ArrayList<String> send = new ArrayList<String>();
+            send.add("fromAddCourseActivity");
+            send.add(courseName);
+            send.add(courseCode);
+            courseID = result;
+            send.add(courseID);
+            send.add(universityName);
+            Log.i("Background","I do somethong right");
+            Log.i("coursename",courseName);
+            Log.i("coursecode",courseCode);
+           // Log.i("courseID",courseID);
+            Log.i("universityname",universityName);
+            i.putExtra("prevActivity",send );
+            context.startActivity(i);
+        }
+        else if (type.equals("university list")){
+
         }
              // show a popup with the output
             else {

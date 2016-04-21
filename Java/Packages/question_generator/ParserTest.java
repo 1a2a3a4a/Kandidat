@@ -4,9 +4,10 @@ import java.net.*;
 import java.io.*;
 
 public class ParserTest {
+<<<<<<< HEAD
     public static void main(String[] args){
 	CQParser par = new CQParser();
-	par.generate("THIS IS SENTENCE ONE%Q%QUESTION1%Q%ALTERNATIVE1%Q%ALT2%Q%ALT3%N%THIS IS SENTENCE TWO%Q%QUESTION2%Q%ALTERNATIVE1%Q%ALT2%Q%ALT3%N%");
+	par.generateQuestions("THIS IS SENTENCE ONE%Q%QUESTION1%Q%ALTERNATIVE1%Q%ALT2%Q%ALT3%N%THIS IS SENTENCE TWO%Q%QUESTION2%Q%ALTERNATIVE1%Q%ALT2%Q%ALT3%N%");
 	Question q = new Question("Q1", "A1", "Alt1", "Alt2", "Alt3");
 	LinkedList q_list = par.getList();
 	System.out.println(par.toString());
@@ -16,7 +17,6 @@ public class ParserTest {
 
 	LinkedList u_list = par.getGeneratedUList("1%U%Uppsala UNI%U%UU%N%2%U%LINKOPING%U%LIU%N%");
 	System.out.println(par.utoString());
-
 
 	String text = "My name is who. My name is What. My name is chika chika.";
 	try{

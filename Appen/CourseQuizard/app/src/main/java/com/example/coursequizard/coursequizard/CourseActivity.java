@@ -62,6 +62,7 @@ public class CourseActivity extends AppCompatActivity {
         ArrayList<String> send = new ArrayList<String>();
         send.add("fromCourseActivity");
         send.add(opponentName);
+        send.add(courseName);
         send.add(courseCode);
         send.add(courseID);
         send.add(universityName);
@@ -115,9 +116,10 @@ public class CourseActivity extends AppCompatActivity {
             else if (message.get(0).equals("fromCreateQuestionActivity")){
                 data = message.get(1);
             }
+            else if(message.get(0).equals("fromChallengeActivity")){
+                data = message.get(2);
+            }
            CQParser parser = new CQParser();
-            Log.i("data0",message.get(0));
-                    Log.i("data1",message.get(1));
            courseList = parser.getGeneratedCList(data);
         }
 
