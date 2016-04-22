@@ -58,4 +58,7 @@ public class Course{
 	str += "name: " + this.name + "\n";
 	return str;
     }
+    public String toStringName(){
+        return this.name;
+    }
 }

@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -45,6 +46,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     String courseCode ="";
     String courseID ="";
     String universityName="";
+    String userName="";
     AlertDialog alertDialog;
     BackgroundWithServer (Context ctx) {
         context = ctx;
@@ -86,11 +88,13 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         courseName = params[1];
         courseCode = params[2];
         universityName = params[3];
+        String universityID=params[4];
 
         try {
             post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(courseName, "UTF-8") + "&"
                     + URLEncoder.encode("course_code", "UTF-8") + "=" + URLEncoder.encode(courseCode, "UTF-8") + "&"
-                    + URLEncoder.encode("uni_name", "UTF-8") + "=" + URLEncoder.encode(universityName, "UTF-8") + "&";
+                    + URLEncoder.encode("uni_name", "UTF-8") + "=" + URLEncoder.encode(universityName, "UTF-8") + "&"
+                    + URLEncoder.encode("uni_id", "UTF-8") + "=" + URLEncoder.encode(universityID, "UTF-8") + "&"        ;
 
 
         } catch (Exception e) {
@@ -120,6 +124,27 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         opponentName = params[1];
     }
 
+    private void getMyCourses(String ... params){
+        String user_name = params[1];
+        try {
+            this.post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void swapFavCourses(String[] params) {
+        String c_id = params[1];
+        String user_name = params[2];
+        try {
+            this.post_data = URLEncoder.encode("c_id", "UTF-8") + "=" + URLEncoder.encode(c_id, "UTF-8") + "&"
+                    +URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private void getSinglePlayerQuiz(String ... params){
                courseID = params[1];
                String limit = params[2];
@@ -147,11 +172,11 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
 
     }
     private void userlogin(String ... params){
-        String username = params[1];
+        userName = params[1];
         String password = params[2];
-        Log.i("username",username);
+        Log.i("username",userName);
         Log.i("password",password);
-        try{post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+        try{post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8") + "&"
                 + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
 
         } catch(Exception e){
@@ -186,7 +211,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 addQuestion(params);
                 operationURL = IP +"/addquestiontodb.php";
                 break;
-            case("university list"):
+            case("universitylist"):
                 allUniversties(params);
                 operationURL = IP + "/getuniversitiesfromdb.php";
                 break;
@@ -196,7 +221,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 break;
             case("all courses"):
                 myCourseList(params);
-                operationURL = IP + "getcoursesfromdb.php";
+                operationURL = IP + "/getcoursesfromdb.php";
                 break;
             case("my courses, from opponent"):
                 myCourseListFromOpponent(params);
@@ -210,6 +235,16 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 getSinglePlayerQuiz(params);
                 operationURL= IP + "/getquestionsfromdb.php";
                 break;
+            case ("get my courses"):
+                getMyCourses(params);
+                operationURL = IP + "/getmycoursesfromdb.php";
+                break;
+
+            case ("swap favorites"):
+                swapFavCourses(params);
+                operationURL = IP + "/swapfavoritestodb.php";
+                break;
+
             default:
                 operationURL = IP;
 
@@ -305,105 +340,134 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
      */
     @Override
     protected void onPostExecute(String result) {
-        if (type.equals("all courses")){
-            // send a string containing all the courses in the database and start the Course Activity
-            Intent i = new Intent(context,CourseActivity.class);
-            ArrayList<String> send = new ArrayList<String>();
-            send.add("fromCreateQuestionActivity");
-            send.add(result);
-            i.putExtra("prevActivity",send );
-            context.startActivity(i);
-
-        }
-        else if (type.equals("register")){
-            if(!(result.equals("User created"))){
-                alertDialog.setMessage(result);
-                alertDialog.show();
-            }
-            else{
-                Intent i = new Intent(context, LoginActivity.class);
+        switch (type) {
+            case "all courses": {
+                // send a string containing all the courses in the database and start the Course Activity
+                Intent i = new Intent(context, CourseActivity.class);
+                ArrayList<String> send = new ArrayList<String>();
+                send.add("fromCreateQuestionActivity");
+                send.add(result);
+                i.putExtra("prevActivity", send);
                 context.startActivity(i);
-            }
-        }
-        else if(type.equals("login")){
-            if(result.equals("Login successful!")){
-                Intent i = new Intent(context, MainActivity.class);
-                context.startActivity(i);
-            }
-            else{
-               alertDialog.setMessage(result);
-                alertDialog.show();
-            }
 
-        }
-        else if (type.equals("my courses, from opponent")){
+                break;
+            }
+            case "register":
+                if (!(result.equals("User created"))) {
+                    alertDialog.setMessage(result);
+                    alertDialog.show();
+                } else {
+                    Intent i = new Intent(context, LoginActivity.class);
+                    context.startActivity(i);
+                }
+                break;
+            case "login":
+                if (result.equals("Login successful!")) {
+                    Intent i = new Intent(context, MainActivity.class);
+                    SaveSharedData.setUserName(context,userName);
+                    context.startActivity(i);
+                } else {
+                    alertDialog.setMessage(result);
+                    alertDialog.show();
+                }
+
+                break;
+            case "my courses, from opponent": {
             /* send a string containing all the courses in the database
             / and a string containing the information about the opponent
              and start the Course Activity
              */
-            Intent i = new Intent(context, CourseActivity.class);
-            Log.i("hello","hello");
-            Log.i("opponent",opponentName);
-            Log.i("result",result);
-            ArrayList<String> send = new ArrayList<String>();
-            send.add("fromOpponentActivity");
-            send.add(opponentName);
-            // send the coursestring
-            send.add(result);
-            i.putExtra("prevActivity", send);
-            context.startActivity(i);
-        }
-        else if (type.equals("my courses, from challenge")){
-            Intent i = new Intent(context,CourseActivity.class);
-            ArrayList<String> send = new ArrayList<String>();
-            send.add("fromChallengeActivity");
-            send.add(opponentName);
-            send.add(result);
-            i.putExtra("prevActivity",send );
-            context.startActivity(i);
-        }
-        else if(type.equals("add question")){
-            Intent i = new Intent(context,CreateQuestionActivity.class);
-            ArrayList<String> send = new ArrayList<String>();
-            send.add("fromQuestionActivity");
-            send.add(opponentName);
-            send.add(result);
-            i.putExtra("prevActivity",send );
-            context.startActivity(i);
-        }
-        else if(type.equals("added course")){
-            Intent i = new Intent(context,CreateQuestionActivity.class);
-            ArrayList<String> send = new ArrayList<String>();
-            send.add("fromAddCourseActivity");
-            send.add(courseName);
-            send.add(courseCode);
-            courseID = result;
-            send.add(courseID);
-            send.add(universityName);
-            Log.i("Background","I do somethong right");
-            Log.i("coursename",courseName);
-            Log.i("coursecode",courseCode);
-           // Log.i("courseID",courseID);
-            Log.i("universityname",universityName);
-            i.putExtra("prevActivity",send );
-            context.startActivity(i);
-        }
-        else if (type.equals("university list")){
+                Intent i = new Intent(context, CourseActivity.class);
+               // Log.i("hello", "hello");
+               // Log.i("opponent", opponentName);
+              //  Log.i("result", result);
+                ArrayList<String> send = new ArrayList<String>();
+                send.add("fromOpponentActivity");
+                send.add(opponentName);
+                // send the coursestring
+                send.add(result);
+                i.putExtra("prevActivity", send);
+                context.startActivity(i);
+                break;
+            }
+            case "my courses, from challenge": {
+                Intent i = new Intent(context, CourseActivity.class);
+                ArrayList<String> send = new ArrayList<String>();
+                send.add("fromChallengeActivity");
+                send.add(opponentName);
+                send.add(result);
+                i.putExtra("prevActivity", send);
+                context.startActivity(i);
+                break;
+            }
+            case "add question": {
+                Intent i = new Intent(context, CreateQuestionActivity.class);
+                ArrayList<String> send = new ArrayList<String>();
+                send.add("fromQuestionActivity");
+                send.add(opponentName);
+                send.add(result);
+                i.putExtra("prevActivity", send);
+                context.startActivity(i);
+                break;
+            }
+            case "added course": {
+                Intent i = new Intent(context, CreateQuestionActivity.class);
+                ArrayList<String> send = new ArrayList<String>();
+                send.add("fromAddCourseActivity");
+                send.add(courseName);
+                send.add(courseCode);
+                courseID = result;
+                send.add(courseID);
+                send.add(universityName);
+                Log.i("Background", "I do somethong right");
+                Log.i("coursename", courseName);
+                Log.i("coursecode", courseCode);
+                // Log.i("courseID",courseID);
+                Log.i("universityname", universityName);
+                i.putExtra("prevActivity", send);
+                context.startActivity(i);
+                break;
+            }
+            case "singlePlayerMode": {
+                Intent i = new Intent(context, PlayGameActivity.class);
+                ArrayList<String> send = new ArrayList<String>();
+                send.add("fromSPChallengeActivity");
+                send.add(result);
+                i.putExtra("prevActivity", send);
+                context.startActivity(i);
+                break;
+            }
+            case "get my courses": {
+                Intent i = new Intent(context, MyCoursesActivity.class);
+                Log.i("result", result);
+                ArrayList<String> send = new ArrayList<String>();
+                send.add("fromMyProfileActivity");
+                send.add(result);
+                i.putExtra("prevActivity", send);
+                context.startActivity(i);
+                break;
+            }
+            case "swap favorites": {
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
 
-        }
-        else if (type.equals("singlePlayerMode")){
-            Intent i = new Intent(context,PlayGameActivity.class);
-            ArrayList<String> send = new ArrayList<String>();
-            send.add("fromSPChallengeActivity");
-            send.add(result);
-            i.putExtra("prevActivity",send );
-            context.startActivity(i);
-        }
-             // show a popup with the output
-            else {
-            Log.i("Result", result);
-            alertDialog.setMessage(result);
-            alertDialog.show();
+                Log.i("swap res", result);
+                // alertDialog.setMessage(result);
+                //Toast.show();
+                break;
+            }
+            case ("universitylist"):
+                Intent i = new Intent(context, AddCourseActivity.class);
+                ArrayList<String> send = new ArrayList<String>();
+                send.add("fromCourseActivity");
+                send.add(result);
+                i.putExtra("prevActivity", send);
+                context.startActivity(i);
+            // show a popup with the output
+            default:
+                Log.i("Result", result);
+                alertDialog.setMessage(result);
+                alertDialog.show();
+                break;
         }
     }
 

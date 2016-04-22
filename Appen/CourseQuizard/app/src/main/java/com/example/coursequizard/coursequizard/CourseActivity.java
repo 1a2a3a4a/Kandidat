@@ -95,11 +95,10 @@ public class CourseActivity extends AppCompatActivity {
      * Start the addcourse Actvitty
      */
     public void toAddCourseActivity(){
-        Intent i = new Intent(getApplicationContext(), AddCourseActivity.class);
-        ArrayList<String> send = new ArrayList<String>();
-        send.add("fromCourseActivity");
-        i.putExtra("prevActivity", send);
-        startActivity(i);
+        String type = "universitylist";
+        BackgroundWithServer bgws = new BackgroundWithServer(this);
+        bgws.execute(type);
+
     }
 
     /**

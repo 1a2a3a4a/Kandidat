@@ -83,12 +83,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Login = "false";
-        fromActivity();
-        if (!(Login.equals("skip"))) {
+        if(SaveSharedData.getUserName(MainActivity.this).length() == 0)
+        {
             toLoginActivity();
-
-        } else {
+        }
+        else {
 
             setContentView(R.layout.activity_main);
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
