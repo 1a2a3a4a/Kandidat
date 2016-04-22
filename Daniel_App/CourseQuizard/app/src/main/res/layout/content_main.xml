@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.coursequizard.coursequizard.MainActivity"
+    tools:showIn="@layout/app_bar_main">
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:text="My games"
+        android:id="@+id/cqMyGamesButton"
+        android:layout_marginTop="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/cqNewGameButton"
+        android:layout_alignStart="@+id/cqNewGameButton" />
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:text="New Game"
+        android:id="@+id/cqNewGameButton"
+        android:onClick="cqToOpponentActivity"
+        android:nestedScrollingEnabled="false"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/cqMyGamesButton"
+        android:layout_alignStart="@+id/cqCreateQuestionButton" />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:text="Create question"
+        android:id="@+id/cqCreateQuestionButton"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/cqNewGameButton"
+        android:onClick="toCreateQuestionActivity"
+        android:layout_centerHorizontal="true" />
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:text="Generate questions from text"
+        android:id="@+id/generateQuestionButton"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/cqCreateQuestionButton"
+        android:onClick="toUploadTextActivity"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
+
