@@ -63,22 +63,26 @@ public class ChallengeActivity extends AppCompatActivity {
      */
     public void toPlayGameActivity(View view){
         String type ="friendPlayerMode";
-
+        Log.i("type",type);
         // receiving the arguments
         courseAndOpponent();
         // do the backgroundcommunication with the server
         if(opponentName.toLowerCase().equals("random opponennt")){
-            type ="singlePlayerMode";
+            type ="randomPlayerMode";
+            String numberOfQuestions ="5";
             BackgroundWithServer bgws = new BackgroundWithServer(this);
-            bgws.execute(type,courseID);
+            bgws.execute(type,courseID,numberOfQuestions);
 
         }
-        else if(opponentName.toLowerCase().equals("single player")){
-            type ="randomPlayerMode";
+        else if(opponentName.toLowerCase().equals("singleplayer")){
+            Log.i("Single","Sinlgeplayer");
+            type ="singlePlayerMode";
             BackgroundWithServer bgws = new BackgroundWithServer(this);
-            bgws.execute(type,courseID);
+            String numberOfQuestions ="5";
+            bgws.execute(type,courseID,numberOfQuestions);
         }
         else {
+            Log.i("elsemode",type);
             BackgroundWithServer bgws = new BackgroundWithServer(this);
             bgws.execute(type, opponentName, courseID);
         }

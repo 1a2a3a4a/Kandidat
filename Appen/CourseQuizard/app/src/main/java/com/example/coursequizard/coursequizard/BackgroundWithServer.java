@@ -36,6 +36,7 @@ import java.util.ArrayList;
 public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     ArrayList<String> passCourseParameters = new ArrayList<String>();
     String operationURL="";
+    String IP = "http://130.238.250.231";
     String post_data = "";
     Context context;
     String type = "";
@@ -121,14 +122,41 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
 
     private void getSinglePlayerQuiz(String ... params){
                courseID = params[1];
+               String limit = params[2];
         try {
-            post_data = URLEncoder.encode("courseID", "UTF-8") + "=" + URLEncoder.encode(courseName, "UTF-8") + "&";
+            post_data = URLEncoder.encode("c_id", "UTF-8") + "=" + URLEncoder.encode(courseID, "UTF-8") + "&"
+                        + URLEncoder.encode("limit", "UTF-8") + "=" + URLEncoder.encode(limit, "UTF-8") + "&";
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+    private void register(String ... params) {
+        String username =  params[1];
+        String password = params[2];
+        String cpassword = params[3];
+        try {
+            post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+                    + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&"
+                    + URLEncoder.encode("password_confirm", "UTF-8") + "=" + URLEncoder.encode(cpassword, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    private void userlogin(String ... params){
+        String username = params[1];
+        String password = params[2];
+        Log.i("username",username);
+        Log.i("password",password);
+        try{post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+                + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
 
@@ -144,40 +172,86 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
 
     protected String doInBackground(String... params) {
         type = params[0];
+        switch(type){
+            case("login"):
+
+            userlogin(params);
+            operationURL = IP + "/login.php";
+                break;
+            case("register"):
+                register(params);
+                operationURL = IP + "/addusertodb.php";
+                break;
+            case("add question"):
+                addQuestion(params);
+                operationURL = IP +"/addquestiontodb.php";
+                break;
+            case("university list"):
+                allUniversties(params);
+                operationURL = IP + "/getuniversitiesfromdb.php";
+                break;
+            case("added course"):
+                addCourse(params);
+                operationURL = IP + "/addcoursetodb.php";
+                break;
+            case("all courses"):
+                myCourseList(params);
+                operationURL = IP + "getcoursesfromdb.php";
+                break;
+            case("my courses, from opponent"):
+                myCourseListFromOpponent(params);
+                operationURL = IP + "/getcoursesfromdb.php";
+                break;
+            case("my courses, from challenge"):
+                myCourseListFromChallenge(params);
+                operationURL= IP + "/getcoursesfromdb.php";
+                break;
+            case("singlePlayerMode"):
+                getSinglePlayerQuiz(params);
+                operationURL= IP + "/getquestionsfromdb.php";
+                break;
+            default:
+                operationURL = IP;
+
+
+
+        }
+        /*
         if(type.equals("add question")) {
             addQuestion(params);
-            operationURL = "http://130.238.250.231/addquestiontodb.php";
+            operationURL = IP +"/addquestiontodb.php";
         }
         else if (type.equals("university list")){
             allUniversties(params);
-            operationURL = "http://130.238.250.231/getuniversitiesfromdb.php";
+            operationURL = IP + "/getuniversitiesfromdb.php";
 
         }
         else if (type.equals("added course")){
             addCourse(params);
-            operationURL = "http://130.238.250.231/addcoursetodb.php";
+            operationURL = IP + "/addcoursetodb.php";
     }
-        else if(type.equals("my courses")){
+        else if(type.equals("all courses")){
             myCourseList(params);
-            operationURL = "http://130.238.250.231/getcoursesfromdb.php";
+            operationURL = IP + "getcoursesfromdb.php";
 
         }
         else if(type.equals("my courses, from opponent")){
             myCourseListFromOpponent(params);
-            operationURL = "http://130.238.250.231/getcoursesfromdb.php";
+            operationURL = IP + "/getcoursesfromdb.php";
 
         }
         else if(type.equals("my courses, from challenge")){
             myCourseListFromChallenge(params);
-            operationURL= "http://130.238.250.231/getcoursesfromdb.php";
+            operationURL= IP + "/getcoursesfromdb.php";
         }
         else if(type.equals("my courses, from add courses")){
 
         }
         else if(type.equals("singlePlayerMode")){
             getSinglePlayerQuiz(params);
-            operationURL="http://130.238.250.231/getquestionsfromdb.php";
+            operationURL= IP + "/getquestionsfromdb.php";
         }
+        */
             try {
                 URL url = new URL(operationURL);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
@@ -220,7 +294,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     @Override
     protected void onPreExecute() {
         alertDialog = new AlertDialog.Builder(context).create();
-        alertDialog.setTitle("Question status");
+        alertDialog.setTitle("Status");
     }
 
     /**
@@ -231,15 +305,35 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
      */
     @Override
     protected void onPostExecute(String result) {
-        if (type.equals("my courses")){
+        if (type.equals("all courses")){
             // send a string containing all the courses in the database and start the Course Activity
             Intent i = new Intent(context,CourseActivity.class);
-            String type = "my courses";
             ArrayList<String> send = new ArrayList<String>();
             send.add("fromCreateQuestionActivity");
             send.add(result);
             i.putExtra("prevActivity",send );
             context.startActivity(i);
+
+        }
+        else if (type.equals("register")){
+            if(!(result.equals("User created"))){
+                alertDialog.setMessage(result);
+                alertDialog.show();
+            }
+            else{
+                Intent i = new Intent(context, LoginActivity.class);
+                context.startActivity(i);
+            }
+        }
+        else if(type.equals("login")){
+            if(result.equals("Login successful!")){
+                Intent i = new Intent(context, MainActivity.class);
+                context.startActivity(i);
+            }
+            else{
+               alertDialog.setMessage(result);
+                alertDialog.show();
+            }
 
         }
         else if (type.equals("my courses, from opponent")){

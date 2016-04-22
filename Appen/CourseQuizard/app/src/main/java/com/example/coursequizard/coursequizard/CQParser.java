@@ -1,78 +1,174 @@
 package com.example.coursequizard.coursequizard;
+import com.example.coursequizard.coursequizard.Course;
+import com.example.coursequizard.coursequizard.Question;
+import com.example.coursequizard.coursequizard.University;
+
 
 import java.util.LinkedList;
 
+
 public class CQParser {
-    private LinkedList<Question> list;
-    private LinkedList<Course> clist;
+	private LinkedList<Question> qlist;
+	private LinkedList<Course> clist;
+	private LinkedList<University> ulist;
 
-
-    public  CQParser(){
-	list = new LinkedList<Question>();
-	clist = new LinkedList<Course>();
-
-	
-    }
-    
-    private void translateText(String text){
-	String splits[] = text.split("%N%");
-	for(int i=0; i < splits.length; i++){
-	    String sentence_splits[] = splits[i].split("%Q%");
-	    //System.out.print(splits[i] + " ");
-	    /*for(int y = 0; y < sentence_splits.length; y++){
-	      System.out.print(sentence_splits[y] + ", ");			
-	      }*/
-	    Question q = new Question(sentence_splits[0], sentence_splits[1], sentence_splits[2], sentence_splits[3], sentence_splits[4]);
-	    list.add(q);
-
-	    System.out.println("");
+	public  CQParser(){
+		qlist = new LinkedList<Question>();
+		clist = new LinkedList<Course>();
+		ulist = new LinkedList<University>();
 	}
-    }
-    private void courseParser(String text){
-	String splits[] = text.split("%N%");
-	for(int i=0; i < splits.length; i++){
-	    String sentence_splits[] = splits[i].split("%C%");
-	    Course c  = new Course(Integer.parseInt(sentence_splits[0]),
-				   Integer.parseInt(sentence_splits[1]),
-				   sentence_splits[2],
-				   sentence_splits[3],
-				   sentence_splits[4]);
-	    clist.add(c);
-	    System.out.println("");
-	}
-    }
 
-    public LinkedList<Question> generate(String text){
-	this.translateText(text);
-	return this.list;
-    }
 
-    public LinkedList<Question> getList(){
-	return this.list;
-    }
-    
-    public LinkedList<Course> getGeneratedCList(String courseText){
-	courseParser(courseText);
-	return this.clist;
-	
-    }
-    
-    public LinkedList<Course> getcList(){
-	return this.clist;
-    }
 
-    public String toString(){
-	String str = "";
-	for(int i=0; i < this.list.size(); i++){
-	    str += this.list.get(i).toString() + "\n";
+	//to be used with a coded string without Q_ID etc in it i.e when generation questions
+	public LinkedList<Question> generateQuestions(String text){
+		try {
+			this.translateText(text);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return this.qlist;
 	}
-	return str;
-    }
-    public String ctoString(){
-	String str = "";
-	for(int i=0; i < this.clist.size(); i++){
-	    str += this.clist.get(i).ctoString() + "\n";
+
+	private void translateText(String text) throws Exception{
+		//split sentences, marked by %N%
+		String splits[] = text.split("%N%");
+		//for each sentence
+		for(int i=0; i < splits.length; i++){
+			//split sentence into parts marked by %Q%
+			String sentence_splits[] = splits[i].split("%Q%");
+			if(splits.length != 5) throw new Exception("FORMATTING ERRROR ON QUESTION STRING");
+
+			//create a new question with the parts
+			Question q = new Question(sentence_splits[0], sentence_splits[1], sentence_splits[2], sentence_splits[3], sentence_splits[4]);
+			//add new question to the linkedlist
+			qlist.add(q);
+		}
 	}
-	return str;
-    }
+
+	//Use when you have a coded string with Q_ID etc in it i.e when fetching questions from database
+	public LinkedList<Question> toQList(String text){
+		this.questionParser(text);
+		return this.qlist;
+	}
+
+	private void questionParser(String text){
+		String splits[] = text.split("%N%");
+		for(int i=0; i < splits.length; i++){
+			String sentence_splits[] = splits[i].split("%Q%");
+			Question q = new Question(Integer.parseInt(sentence_splits[0]),
+					sentence_splits[1],
+					sentence_splits[2],
+					sentence_splits[3],
+					sentence_splits[4],
+					sentence_splits[5],
+					Integer.parseInt(sentence_splits[6]),
+					Integer.parseInt(sentence_splits[7]));
+			qlist.add(q);
+		}
+	}
+
+
+	//Use when having a coded string of courses
+	public LinkedList<Course> toClist(String courseText){
+		courseParser(courseText);
+		return this.clist;
+
+	}
+
+	private void courseParser(String text){
+		String splits[] = text.split("%N%");
+		for(int i=0; i < splits.length; i++){
+			String sentence_splits[] = splits[i].split("%C%");
+			Course c  = new Course(Integer.parseInt(sentence_splits[0]),
+					Integer.parseInt(sentence_splits[1]),
+					sentence_splits[2],
+					sentence_splits[3],
+					sentence_splits[4]);
+			clist.add(c);
+		}
+	}
+
+
+	//Use when having a coded University string
+	public LinkedList<University> toUList(String UniText){
+		universityParser(UniText);
+		return this.ulist;
+	}
+
+	private void universityParser(String text){
+		String splits[] = text.split("%N%");
+		for(int i=0; i < splits.length; i++){
+			String sentence_splits[] = splits[i].split("%U%");
+			University u  = new University(Integer.parseInt(sentence_splits[0]),
+					sentence_splits[1],
+					sentence_splits[2]);
+			ulist.add(u);
+		}
+	}
+
+	////////////////////////////////////////////////
+	/// Getters n Setters
+	////////////////////////////////////////////////
+
+	public LinkedList<Question> getQlist() {
+		return qlist;
+	}
+
+
+
+	public void setQlist(LinkedList<Question> qlist) {
+		this.qlist = qlist;
+	}
+
+
+
+	public LinkedList<Course> getClist() {
+		return clist;
+	}
+
+
+
+	public void setClist(LinkedList<Course> clist) {
+		this.clist = clist;
+	}
+
+
+
+	public LinkedList<University> getUlist() {
+		return ulist;
+	}
+
+
+
+	public void setUlist(LinkedList<University> ulist) {
+		this.ulist = ulist;
+	}
+
+
+	//////////////////////////////////
+	/// toString methods
+	///////////////////////////////////
+	public String toString(){
+		String str = "";
+		for(int i=0; i < this.qlist.size(); i++){
+			str += this.qlist.get(i).toString() + "\n";
+		}
+		return str;
+	}
+
+	public String ctoString(){
+		String str = "";
+		for(int i=0; i < this.clist.size(); i++){
+			str += this.clist.get(i).ctoString() + "\n";
+		}
+		return str;
+	}
+	public String utoString(){
+		String str = "";
+		for(int i=0; i < this.ulist.size(); i++){
+			str += this.ulist.get(i).utoString() + "\n";
+		}
+		return str;
+	}
 }

@@ -39,7 +39,7 @@ public class OpponentActivity extends AppCompatActivity {
      * @param view
      */
     public void singlePlayerButtonClicked(View view){
-        String sp = "Single Player";
+        String sp = "singleplayer";
         toNextActivity(sp);
 
     }

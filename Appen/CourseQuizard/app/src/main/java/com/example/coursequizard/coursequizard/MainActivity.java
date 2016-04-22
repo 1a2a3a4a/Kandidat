@@ -21,6 +21,7 @@ import java.util.ArrayList;
  */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    public String Login;
     /**
      * To the opponent activity
      * @param view main view
@@ -59,12 +60,39 @@ public class MainActivity extends AppCompatActivity
         startActivity(i);
 
     }
+    public void toLoginActivity(){
+        Intent i = new Intent(getApplicationContext(),LoginActivity.class);
+        ArrayList<String> send = new ArrayList<String>();
+        send.add("fromMainActivity");
+        i.putExtra("prevActivity",send );
+        startActivity(i);
+
+    }
+    public void fromActivity() {
+        try {
+            ArrayList<String> message = new ArrayList<String>();
+            message = getIntent().getExtras().getStringArrayList("prevActivity");
+            if (message.get(0).equals("fromLoginActivity")) {
+                Login = message.get(1);
+            }
+        }
+        catch(Exception e){
+
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        Login = "false";
+        fromActivity();
+        if (!(Login.equals("skip"))) {
+            toLoginActivity();
+
+        } else {
+
+            setContentView(R.layout.activity_main);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -76,15 +104,16 @@ public class MainActivity extends AppCompatActivity
             }
         });
 */
-         //navigationdrawer
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+            //navigationdrawer
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.setDrawerListener(toggle);
+            toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
+        }
     }
 
     @Override

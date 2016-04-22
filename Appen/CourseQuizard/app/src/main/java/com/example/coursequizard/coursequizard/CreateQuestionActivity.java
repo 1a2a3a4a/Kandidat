@@ -73,7 +73,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
     public void toCourseActivity(View view){
         String userID = "1337";
         //Intent i = new Intent(getApplicationContext(),CourseActivity.class);
-        String type = "my courses";
+        String type = "all courses";
         BackgroundWithServer bgws = new BackgroundWithServer(this);
 
         bgws.execute(type,userID);

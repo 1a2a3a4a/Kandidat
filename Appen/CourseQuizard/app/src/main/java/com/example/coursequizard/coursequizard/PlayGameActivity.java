@@ -3,10 +3,11 @@ package com.example.coursequizard.coursequizard;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
@@ -14,20 +15,25 @@ import java.util.Random;
 public class PlayGameActivity extends AppCompatActivity {
     AlertDialog alertDialog;
     public int questionIndex =0;
+    public String wrong = "";
+    public int wrongCount = 0;
     public int numberOfQuestions = 5;
-    public TextView questionTextView = (TextView) findViewById(R.id.questionTextView);
-    public Button   alt1Button       = (Button) findViewById(R.id.alt1Button);
-    public Button   alt2Button       = (Button) findViewById(R.id.alt2Button);
-    public Button   alt3Button       = (Button) findViewById(R.id.alt3Button);
-    public Button   alt4Button       = (Button) findViewById(R.id.alt4Button);
+    public ArrayList<String> userAnswers= new ArrayList<String>();
+    public ArrayList<String> correctAnswers = new ArrayList<String>();
+
+
+
+
+
     LinkedList<Question> questionList = new LinkedList<Question>();
 
       public void fromActivity(){
           ArrayList<String> message = new ArrayList<String>();
           message = getIntent().getExtras().getStringArrayList("prevActivity");
           if (message.get(0).equals("fromSPChallengeActivity")){
-              QuestionParser questionParser = new QuestionParser();
-              questionList = questionParser.QList(message.get(1));
+              CQParser questionParser = new CQParser();
+              Log.i("to parse",message.get(1) );
+              questionList = questionParser.toQList(message.get(1));
 
               }
 
@@ -42,6 +48,7 @@ public class PlayGameActivity extends AppCompatActivity {
         public ArrayList<String>  randomAlternativeList(ArrayList<String> alternativeList){
             ArrayList<String> randomizedList = new ArrayList<String>();
             while ( alternativeList.size() > 0) {
+                Log.i("looop","looopar");
                 int randomIndex = new Random().nextInt(alternativeList.size());
                 randomizedList.add(alternativeList.get(randomIndex));
                 alternativeList.remove(randomIndex);
@@ -49,6 +56,11 @@ public class PlayGameActivity extends AppCompatActivity {
             return randomizedList;
         }
     public void quizPrinter(){
+        TextView questionTextView = (TextView) findViewById(R.id.questionTextView);
+        Button   alt1Button       =  (Button) findViewById(R.id.alt1Button);
+        Button   alt2Button       = (Button) findViewById(R.id.alt2Button);
+        Button   alt3Button       = (Button) findViewById(R.id.alt3Button);
+        Button   alt4Button       = (Button) findViewById(R.id.alt4Button);
         String questionString = questionList.get(questionIndex).getQuestion();
         String answerString   = questionList.get(questionIndex).getAnswer();
         String alt1String     = questionList.get(questionIndex).getAlt1();
@@ -59,14 +71,25 @@ public class PlayGameActivity extends AppCompatActivity {
         alternativeList.add(alt1String);
         alternativeList.add(alt2String);
         alternativeList.add(alt3String);
-        alternativeList = randomAlternativeList(alternativeList);
+        Log.i("questiomstring",questionString);
+        Log.i("answer",answerString);
+        Log.i("alt1",alt1String);
+        Log.i("alt2",alt2String);
+        Log.i("alt3",alt3String);
         questionTextView.setText(questionString);
+        alternativeList = randomAlternativeList(alternativeList);
+
         alt1Button.setText(alternativeList.get(0));
         alt2Button.setText(alternativeList.get(1));
         alt3Button.setText(alternativeList.get(2));
         alt4Button.setText(alternativeList.get(3));
     }
     public void answer(View view ){
+        TextView questionTextView = (TextView) findViewById(R.id.textView);
+        Button   alt1Button       =  (Button) findViewById(R.id.alt1Button);
+        Button   alt2Button       = (Button) findViewById(R.id.alt2Button);
+        Button   alt3Button       = (Button) findViewById(R.id.alt3Button);
+        Button   alt4Button       = (Button) findViewById(R.id.alt4Button);
         String userAnswer = "";
         int alt = view.getId();
         switch(view.getId())
@@ -95,6 +118,17 @@ public class PlayGameActivity extends AppCompatActivity {
     }
 
     public void doGreen(String answerString){
+        Button   alt1Button       =  (Button) findViewById(R.id.alt1Button);
+        Button   alt2Button       = (Button) findViewById(R.id.alt2Button);
+        Button   alt3Button       = (Button) findViewById(R.id.alt3Button);
+        Button   alt4Button       = (Button) findViewById(R.id.alt4Button);
+        String alt1buttonstring = alt1Button.getText().toString();
+        Log.i("alt1string","innan");
+        Log.i("alt1string",alt1buttonstring);
+        Log.i("alt1string","efter");
+
+
+        alt1Button.setBackgroundColor(Color.BLUE);
 
         if (alt1Button.getText().toString().equals(answerString)){
             alt1Button.setBackgroundColor(Color.GREEN);
@@ -118,50 +152,87 @@ public class PlayGameActivity extends AppCompatActivity {
         userButton.setBackgroundColor(Color.RED);
 
     }
-
+    public void donothing(){
+        TextView questionTextView = (TextView) findViewById(R.id.questionTextView);
+        Button   alt1Button       =  (Button) findViewById(R.id.alt1Button);
+        Button   alt2Button       = (Button) findViewById(R.id.alt2Button);
+        Button   alt3Button       = (Button) findViewById(R.id.alt3Button);
+        Button   alt4Button       = (Button) findViewById(R.id.alt4Button);
+    }
     public void checkAnswer(String userAnswer,int alt) {
         Button userButton = (Button) findViewById(alt);
         String answerString = questionList.get(questionIndex).getAnswer();
-        doGreen(answerString);
-        if (!(userAnswer.equals(userAnswer))) {
-            doRed(userButton);
+        String questionString = questionList.get(questionIndex).getQuestion();
+        //doGreen(answerString);
+        if (!(userAnswer.equals(answerString))) {
+           //doRed(userButton);
+            wrongCount++;
+            wrong += "Question "  + String.valueOf(questionIndex + 1)  + ":\n"
+                    + questionString + "\n"
+                    + "Your answer: " + userAnswer + "\n"
+                    + "Correct answer: " + answerString + "\n";
         }
-        try {
-            Thread.sleep(3000);                 //1000 milliseconds is one second.
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
+
 
         nextQuestion();
     }
+    public void unclick(){
+        Button   alt1Button       =  (Button) findViewById(R.id.alt1Button);
+        Button   alt2Button       = (Button) findViewById(R.id.alt2Button);
+        Button   alt3Button       = (Button) findViewById(R.id.alt3Button);
+        Button   alt4Button       = (Button) findViewById(R.id.alt4Button);
+        alt1Button.setEnabled(false);
+        alt2Button.setEnabled(false);
+        alt3Button.setEnabled(false);
+        alt4Button.setEnabled(false);
+
+    }
+
     public void nextQuestion(){
+        String add = "";
+        /*
+        TextView questionTextView = (TextView) findViewById(R.id.textView);
+        Button   alt1Button       =  (Button) findViewById(R.id.alt1Button);
+        Button   alt2Button       = (Button) findViewById(R.id.alt2Button);
+        Button   alt3Button       = (Button) findViewById(R.id.alt3Button);
+        Button   alt4Button       = (Button) findViewById(R.id.alt4Button);
+        */
         questionIndex++;
+
         if (questionIndex >= numberOfQuestions){
-            alertDialog.setMessage("Quiz is done :D");
+            if (wrongCount == 0){
+                add = "You answered everything correctly :D\n";
+            }
+            if (wrongCount == 1){
+                add = String.valueOf(wrongCount) + " answer was wrong\n";
+
+            }
+            if (wrongCount > 1){
+                add  = String.valueOf(wrongCount) + " answers was wrong\n";
+
+            }
+            alertDialog.setMessage(" You made " + String.valueOf(numberOfQuestions- wrongCount)  + " of "  +String.valueOf(numberOfQuestions)  + " questions \n"  + add  + wrong );
             alertDialog.show();
+            unclick();
         }
         else {
+            /*
             alt1Button.setBackgroundColor(Color.GRAY);
             alt2Button.setBackgroundColor(Color.GRAY);
             alt3Button.setBackgroundColor(Color.GRAY);
             alt4Button.setBackgroundColor(Color.GRAY);
+            */
+
             quizPrinter();
+
         }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
-        alertDialog.setTitle("Your result");
-        alt1Button.setBackgroundColor(Color.GRAY);
-        alt2Button.setBackgroundColor(Color.GRAY);
-        alt3Button.setBackgroundColor(Color.GRAY);
-        alt4Button.setBackgroundColor(Color.GRAY);
-        alt1Button.setTransformationMethod(null);
-        alt2Button.setTransformationMethod(null);
-        alt3Button.setTransformationMethod(null);
-        alt4Button.setTransformationMethod(null);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_game);
+        alertDialog = new AlertDialog.Builder(PlayGameActivity.this).create();
+        alertDialog.setTitle("Your result");
         fromActivity();
         quizPrinter();
 

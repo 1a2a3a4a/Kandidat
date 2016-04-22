@@ -120,7 +120,7 @@ public class CourseActivity extends AppCompatActivity {
                 data = message.get(2);
             }
            CQParser parser = new CQParser();
-           courseList = parser.getGeneratedCList(data);
+           courseList = parser.toClist(data);
         }
 
 
