@@ -63,8 +63,13 @@ public class CreateQuestionActivity extends AppCompatActivity {
             courseTextView.setText(message.get(1));
             courseID = message.get(3);
        }
+       else if(message.get(0).equals("fromUploadTextActivity")){
+            CQParser parser = new CQParser();
+               LinkedList<Question> genQuestionList = parser.toQList(message.get(1));
 
-    }
+
+            }
+        }
 
     /**
      *  When user is going to enter course, start backgrond service and get courselist from server

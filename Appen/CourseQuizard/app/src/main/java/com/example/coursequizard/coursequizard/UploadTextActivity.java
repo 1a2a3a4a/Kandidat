@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * Upload text for automatic question generation. text is uploaded to python server using sockets.
@@ -21,7 +22,9 @@ public class UploadTextActivity extends AppCompatActivity {
     public String uploadText = new String();
     public void toCreateQuestionActivity(String questions){
         Intent i = new Intent(getApplicationContext(),CreateQuestionActivity.class);
-        String[] send =new String[] {"fromUploadTextActivity",questions};
+        ArrayList<String> send = new ArrayList<String>();
+        send.add("fromUploadTextActivity");
+        send.add(questions);
         i.putExtra("prevActivity",send );
         startActivity(i);
     }
@@ -62,7 +65,7 @@ public class UploadTextActivity extends AppCompatActivity {
         return response;
     }
     public void textToServer(String text){
-           String response = new String();
+           String response = "";
 
         try {
 
@@ -87,8 +90,9 @@ public class UploadTextActivity extends AppCompatActivity {
         catch (Exception e){
             Log.i("Send catch",e.toString());
         }
-        //toCreateQuestionActivity(response);
         Log.i("From Tony", response);
+        toCreateQuestionActivity(response);
+
     }
 
         public void uploadTextToGenerate(View view){
