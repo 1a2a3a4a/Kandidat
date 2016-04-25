@@ -31,7 +31,10 @@ public class CQParser {
 		for(int i=0; i < splits.length; i++){
 			//split sentence into parts marked by %Q%
 			String sentence_splits[] = splits[i].split("%Q%");
-			if(splits.length != 5) throw new Exception("FORMATTING ERRROR ON QUESTION STRING");
+			for(int y = 0; y < sentence_splits.length; y++){
+				System.out.println(sentence_splits[y]);
+			}
+			if(sentence_splits.length != 5) throw new Exception("FORMATTING ERRROR ON QUESTION STRING");
 
 			//create a new question with the parts
 			Question q = new Question(sentence_splits[0], sentence_splits[1], sentence_splits[2], sentence_splits[3], sentence_splits[4]);
@@ -64,7 +67,7 @@ public class CQParser {
 	
 	
 	//Use when having a coded string of courses
-	public LinkedList<Course> toClist(String courseText){
+	public LinkedList<Course> toCList(String courseText){
 		courseParser(courseText);
 		return this.clist;
 
