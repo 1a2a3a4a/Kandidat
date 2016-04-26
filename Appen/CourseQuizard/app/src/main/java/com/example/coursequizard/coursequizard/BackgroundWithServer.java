@@ -66,6 +66,12 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         String alt2 = params[4];
         String alt3 = params[5];
         String cID  = params[6];
+        Log.i("question",question);
+        Log.i("answer",answer);
+        Log.i("alt1",alt1);
+        Log.i("alt2",alt2);
+        Log.i("alt3",alt3);
+        Log.i("cid",cID);
         try {
             post_data = URLEncoder.encode("question", "UTF-8") + "=" + URLEncoder.encode(question, "UTF-8") + "&"
                     + URLEncoder.encode("answer", "UTF-8") + "=" + URLEncoder.encode(answer, "UTF-8") + "&"
@@ -322,11 +328,15 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 // the arguments to the URL
                 Log.i("innanwrite",params[0]);
                 bufferedWriter.write(post_data);
+
                 bufferedWriter.flush();
                 bufferedWriter.close();
                 outputStream.close();
+                Log.i("efterwrite",params[0]);
                 InputStream inputStream = httpURLConnection.getInputStream();
+                Log.i("efterinit",params[0]);
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                Log.i("efterread",params[0]);
                 //StringBuilder sb = new StringBuilder();
                 String result="";
                 String line="";
@@ -425,13 +435,13 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 break;
 
             case "add question":
-               Intent addquestioni = new Intent(context, CreateQuestionActivity.class);
+              /*Intent addquestioni = new Intent(context, CreateQuestionActivity.class);
                 send.add("fromQuestionActivity");
                 send.add(opponentName);
                 send.add(result);
                 addquestioni.putExtra("prevActivity", send);
                 context.startActivity(addquestioni);
-                break;
+               */ break;
 
             case "added course":
                 Intent addedcoursei = new Intent(context, CreateQuestionActivity.class);

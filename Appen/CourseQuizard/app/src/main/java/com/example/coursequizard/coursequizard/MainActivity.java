@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity
      */
 
     public void toCreateQuestionActivity(View view){
+        SaveSharedData.clearGenQuestions(MainActivity.this);
+        SaveSharedData.clearCurrentQuestion(MainActivity.this);
         Intent i = new Intent(getApplicationContext(),CreateQuestionActivity.class);
         ArrayList<String> send = new ArrayList<String>();
         send.add("fromMainActivity");

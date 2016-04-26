@@ -32,6 +32,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
     public String courseID ="";
     public int genlistcount =0  ;
     public LinkedList<Question> genQuestionList = new LinkedList<Question>();
+    public Question currentQuestion = new Question("","Answer","Alt1","Alt2","Alt3");
     public int toGenIndex =0;
     public int fromGenIndex = 0;
     public int localGenIndex =0;
@@ -62,15 +63,16 @@ public class CreateQuestionActivity extends AppCompatActivity {
        // if we have chosen the course for the question  we have to get the course ID
 
         if (message.get(0).equals("fromCourseActivity")){
+            currentQuestion =SaveSharedData.getCurrentQuestion(CreateQuestionActivity.this);
             courseTextView.setText(message.get(1));
-            courseID =message.get(2);
+            courseID =message.get(3);
             if (haveGenQuestions()){
 
             }
 
         }
        else if (message.get(0).equals("fromAddCourseActivity")) {
-
+            currentQuestion =SaveSharedData.getCurrentQuestion(CreateQuestionActivity.this);
             courseTextView.setText(message.get(1));
             courseID = message.get(3);
             if (haveGenQuestions()){
@@ -103,6 +105,23 @@ public class CreateQuestionActivity extends AppCompatActivity {
         String userID = "1337";
         //Intent i = new Intent(getApplicationContext(),CourseActivity.class);
         String type = "all courses";
+        Log.i("addquestion","add");
+        EditText editAnswerButton = (EditText) findViewById(R.id.editAnswerButton);
+        EditText editAlt1Button = (EditText) findViewById(R.id.editAlt1Button);
+        EditText editAlt2Button = (EditText) findViewById(R.id.editAlt2Button);
+        EditText editAlt3Button = (EditText) findViewById(R.id.editAlt3Button);
+        EditText questionTextView = (EditText) findViewById(R.id.questionTextView);
+        String question = questionTextView.getText().toString();
+        String answer = editAnswerButton.getText().toString();
+        String alt1 =        editAlt1Button.getText().toString();
+        String alt2 = editAlt2Button.getText().toString();
+        String alt3 = editAlt3Button.getText().toString();
+        currentQuestion.setQuestion(question);
+        currentQuestion.setAnswer(answer);
+        currentQuestion.setAlt1(alt1);
+        currentQuestion.setAlt2(alt2);
+        currentQuestion.setAlt3(alt3);
+        SaveSharedData.setCurrentQuestion(CreateQuestionActivity.this,currentQuestion);
         BackgroundWithServer bgws = new BackgroundWithServer(this);
 
         bgws.execute(type,userID);
@@ -134,10 +153,14 @@ public class CreateQuestionActivity extends AppCompatActivity {
         fromGenIndex++;
         localGenIndex++;
         SaveSharedData.setFromGenIndex(CreateQuestionActivity.this,fromGenIndex);
+        LinkedList<Question> oneQuestion = SaveSharedData.getGenQuestions(CreateQuestionActivity.this,localGenIndex,localGenIndex);
+        SaveSharedData.setCurrentQuestion(CreateQuestionActivity.this,oneQuestion.get(0));
         BackgroundWithServer bgws = new BackgroundWithServer(this);
 
         bgws.execute(type,question,answer,alt1,alt2,alt3, courseID);
-        setupGenView(localGenIndex);
+
+        setupCurrentQuestionView();
+        //setupGenView(localGenIndex);
         //CQ cq = new CQ();
        // cq.connect();
         /*cq.sendQuestionToDB(questionTextView.getText().toString(),
@@ -178,6 +201,19 @@ public class CreateQuestionActivity extends AppCompatActivity {
         editAlt2Button.setText("");
         editAlt3Button.setText("");
 
+    }
+    public void setupCurrentQuestionView(){
+        EditText editAnswerButton = (EditText) findViewById(R.id.editAnswerButton);
+        EditText editAlt1Button = (EditText) findViewById(R.id.editAlt1Button);
+        EditText editAlt2Button = (EditText) findViewById(R.id.editAlt2Button);
+        EditText editAlt3Button = (EditText) findViewById(R.id.editAlt3Button);
+        EditText questionTextView = (EditText) findViewById(R.id.questionTextView);
+        currentQuestion = SaveSharedData.getCurrentQuestion(CreateQuestionActivity.this);
+        questionTextView.setText(currentQuestion.getQuestion());
+        editAnswerButton.setText(currentQuestion.getAnswer());
+        editAlt1Button.setText(currentQuestion.getAlt1());
+        editAlt2Button.setText(currentQuestion.getAlt2());
+        editAlt3Button.setText(currentQuestion.getAlt3());
     }
     public void setupGenView(int i){
         EditText editAnswerButton = (EditText) findViewById(R.id.editAnswerButton);
@@ -248,6 +284,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
         genlistcount=0;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_question);
+        setupCurrentQuestionView();
         Log.i("oncreate","oncreate");
         if (haveGenQuestions()){
             Log.i("true","true");
@@ -257,7 +294,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
             Log.i("postfromgenindex",String.valueOf(fromGenIndex));
             genQuestionList= SaveSharedData.getGenQuestions(CreateQuestionActivity.this,fromGenIndex,toGenIndex);
             Log.i("Getting it ", genQuestionList.get(0).getQuestion());
-            setupGenView(0);
+            //setupGenView(0);
         }
         fromActivity();
 
