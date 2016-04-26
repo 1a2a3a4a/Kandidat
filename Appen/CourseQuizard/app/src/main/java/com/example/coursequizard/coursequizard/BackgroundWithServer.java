@@ -37,7 +37,7 @@ import java.util.ArrayList;
 public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     ArrayList<String> passCourseParameters = new ArrayList<String>();
     String operationURL="";
-    String IP = "http://130.238.250.231";
+    String IP = "http://www.borrowit.itvt16.student.it.uu.se/Dropbox";
     String post_data = "";
     Context context;
     String type = "";
@@ -171,6 +171,14 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         }
 
     }
+    private void uploadText(String ... params){
+        String text ="\"" + params[1] + "\"";
+        try{post_data = URLEncoder.encode("text", "UTF-8") + "=" + URLEncoder.encode(text, "UTF-8") + "&";
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
     private void userlogin(String ... params){
         userName = params[1];
         String password = params[2];
@@ -220,6 +228,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 operationURL = IP + "/addcoursetodb.php";
                 break;
             case("all courses"):
+                Log.i("innantryblock",params[0]);
                 myCourseList(params);
                 operationURL = IP + "/getcoursesfromdb.php";
                 break;
@@ -244,8 +253,14 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 swapFavCourses(params);
                 operationURL = IP + "/swapfavoritestodb.php";
                 break;
+            case ("Upload text"):{
+                uploadText(params);
+                operationURL = IP + "/generatequestions.php";
+                break;
+            }
 
             default:
+                Log.i("nocase","nocase");
                 operationURL = IP;
 
 
@@ -288,14 +303,24 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         }
         */
             try {
+                Log.i("tryblock",params[0]);
                 URL url = new URL(operationURL);
+                Log.i("tryblock2",params[0]);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                Log.i("tryblock3",params[0]);
                 httpURLConnection.setRequestMethod("POST");
+                Log.i("tryblock4",params[0]);
                 httpURLConnection.setDoOutput(true);
+                Log.i("tryblock5",params[0]);
                 httpURLConnection.setDoInput(true);
+                Log.i("tryblock6",params[0]);
+                Log.i("postdata",post_data);
+                Log.i("url",operationURL);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
+                Log.i("tryblock7",params[0]);
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 // the arguments to the URL
+                Log.i("innanwrite",params[0]);
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -340,79 +365,76 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
      */
     @Override
     protected void onPostExecute(String result) {
+        ArrayList<String> send = new ArrayList<String>();
         switch (type) {
-            case "all courses": {
+            case "all courses":
+                Log.i("postexecuteblock","weee");
                 // send a string containing all the courses in the database and start the Course Activity
-                Intent i = new Intent(context, CourseActivity.class);
-                ArrayList<String> send = new ArrayList<String>();
+                Intent allcoursesi = new Intent(context, CourseActivity.class);
                 send.add("fromCreateQuestionActivity");
                 send.add(result);
-                i.putExtra("prevActivity", send);
-                context.startActivity(i);
+                allcoursesi.putExtra("prevActivity", send);
+                context.startActivity(allcoursesi);
 
                 break;
-            }
+
             case "register":
                 if (!(result.equals("User created"))) {
                     alertDialog.setMessage(result);
                     alertDialog.show();
                 } else {
-                    Intent i = new Intent(context, LoginActivity.class);
-                    context.startActivity(i);
+                    Intent registeri = new Intent(context, LoginActivity.class);
+                    context.startActivity(registeri);
                 }
                 break;
             case "login":
                 if (result.equals("Login successful!")) {
-                    Intent i = new Intent(context, MainActivity.class);
+                    Intent logini = new Intent(context, MainActivity.class);
                     SaveSharedData.setUserName(context,userName);
-                    context.startActivity(i);
+                    context.startActivity(logini);
                 } else {
                     alertDialog.setMessage(result);
                     alertDialog.show();
                 }
 
                 break;
-            case "my courses, from opponent": {
+            case "my courses, from opponent":
             /* send a string containing all the courses in the database
             / and a string containing the information about the opponent
              and start the Course Activity
              */
-                Intent i = new Intent(context, CourseActivity.class);
+                Intent mycoursesfromopponenti = new Intent(context, CourseActivity.class);
                // Log.i("hello", "hello");
                // Log.i("opponent", opponentName);
               //  Log.i("result", result);
-                ArrayList<String> send = new ArrayList<String>();
                 send.add("fromOpponentActivity");
                 send.add(opponentName);
                 // send the coursestring
                 send.add(result);
-                i.putExtra("prevActivity", send);
-                context.startActivity(i);
+                mycoursesfromopponenti.putExtra("prevActivity", send);
+                context.startActivity(mycoursesfromopponenti);
                 break;
-            }
-            case "my courses, from challenge": {
-                Intent i = new Intent(context, CourseActivity.class);
-                ArrayList<String> send = new ArrayList<String>();
+
+            case "my courses, from challenge":
+                Intent mycoursesfromchallengei = new Intent(context, CourseActivity.class);
                 send.add("fromChallengeActivity");
                 send.add(opponentName);
                 send.add(result);
-                i.putExtra("prevActivity", send);
-                context.startActivity(i);
+                mycoursesfromchallengei.putExtra("prevActivity", send);
+                context.startActivity(mycoursesfromchallengei);
                 break;
-            }
-            case "add question": {
-                Intent i = new Intent(context, CreateQuestionActivity.class);
-                ArrayList<String> send = new ArrayList<String>();
+
+            case "add question":
+               Intent addquestioni = new Intent(context, CreateQuestionActivity.class);
                 send.add("fromQuestionActivity");
                 send.add(opponentName);
                 send.add(result);
-                i.putExtra("prevActivity", send);
-                context.startActivity(i);
+                addquestioni.putExtra("prevActivity", send);
+                context.startActivity(addquestioni);
                 break;
-            }
-            case "added course": {
-                Intent i = new Intent(context, CreateQuestionActivity.class);
-                ArrayList<String> send = new ArrayList<String>();
+
+            case "added course":
+                Intent addedcoursei = new Intent(context, CreateQuestionActivity.class);
                 send.add("fromAddCourseActivity");
                 send.add(courseName);
                 send.add(courseCode);
@@ -424,45 +446,52 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 Log.i("coursecode", courseCode);
                 // Log.i("courseID",courseID);
                 Log.i("universityname", universityName);
-                i.putExtra("prevActivity", send);
-                context.startActivity(i);
+                addedcoursei.putExtra("prevActivity", send);
+                context.startActivity(addedcoursei);
                 break;
-            }
-            case "singlePlayerMode": {
-                Intent i = new Intent(context, PlayGameActivity.class);
-                ArrayList<String> send = new ArrayList<String>();
+
+            case "singlePlayerMode":
+                Intent singleplayermodei = new Intent(context, PlayGameActivity.class);
                 send.add("fromSPChallengeActivity");
                 send.add(result);
-                i.putExtra("prevActivity", send);
-                context.startActivity(i);
+                singleplayermodei.putExtra("prevActivity", send);
+                context.startActivity(singleplayermodei);
                 break;
-            }
-            case "get my courses": {
-                Intent i = new Intent(context, MyCoursesActivity.class);
+
+            case "get my courses":
+                Intent getmycoursesi = new Intent(context, MyCoursesActivity.class);
                 Log.i("result", result);
-                ArrayList<String> send = new ArrayList<String>();
                 send.add("fromMyProfileActivity");
                 send.add(result);
-                i.putExtra("prevActivity", send);
-                context.startActivity(i);
+                getmycoursesi.putExtra("prevActivity", send);
+                context.startActivity(getmycoursesi);
                 break;
-            }
-            case "swap favorites": {
+
+
+            case "swap favorites":
                 Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
 
                 Log.i("swap res", result);
                 // alertDialog.setMessage(result);
                 //Toast.show();
                 break;
-            }
+
             case ("universitylist"):
-                Intent i = new Intent(context, AddCourseActivity.class);
-                ArrayList<String> send = new ArrayList<String>();
+                Intent universitylisti = new Intent(context, AddCourseActivity.class);
                 send.add("fromCourseActivity");
                 send.add(result);
-                i.putExtra("prevActivity", send);
-                context.startActivity(i);
+                universitylisti.putExtra("prevActivity", send);
+                context.startActivity(universitylisti);
             // show a popup with the output
+                break;
+            case ("Upload text"):
+             Intent uploadtexti = new Intent(context,CreateQuestionActivity.class);
+                Log.i("Second case","case");
+                send.add("fromUploadTextActivity");
+                send.add(result);
+                uploadtexti.putExtra("prevActivity",send );
+                context.startActivity(uploadtexti);
+                break;
             default:
                 Log.i("Result", result);
                 alertDialog.setMessage(result);

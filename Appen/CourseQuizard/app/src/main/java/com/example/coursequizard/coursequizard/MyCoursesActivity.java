@@ -58,7 +58,7 @@ public class MyCoursesActivity extends AppCompatActivity {
 
         CQParser parser = new CQParser();
 
-        myCourses = parser.toClist(data);
+        myCourses = parser.toCList(data);
     }
 
     private void generateListContent(){
