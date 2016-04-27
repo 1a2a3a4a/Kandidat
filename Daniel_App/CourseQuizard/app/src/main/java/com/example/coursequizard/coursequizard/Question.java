@@ -1,5 +1,6 @@
 package com.example.coursequizard.coursequizard;
 
+
 public class Question {
 	private int q_id = -1;
 	private String question = "";
@@ -10,22 +11,22 @@ public class Question {
 	private int c_id = -1;
 	private int rating = 0;
 	//private LinkedList tags = new LinkedList();
-	
+
 	public Question(String question, String answer, String alt1, String alt2, String alt3){
 		this.question = question;
 		this.answer = answer;
 		this.alt1 = alt1;
 		this.alt2 = alt2;
 		this.alt3 = alt3;
-	}	
+	}
 	public Question(int q_id, String question, String answer, String alt1, String alt2, String alt3, int c_id, int rating){
 		this.question = question;
 		this.answer = answer;
 		this.alt1 = alt1;
 		this.alt2 = alt2;
 		this.alt3 = alt3;
-	}	
-	
+	}
+
 	public int getQ_id() {
 		return q_id;
 	}

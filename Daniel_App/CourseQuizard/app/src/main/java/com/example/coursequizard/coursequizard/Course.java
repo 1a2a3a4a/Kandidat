@@ -24,13 +24,13 @@ public class Course{
     public int  getUni_ID(){
 	return this.Uni_ID;
     }
-    public String getUni_name_ID(){
+    public String getUni_name(){
 	return this.Uni_name;
     }
-    public String getCourse_code_ID(){
+    public String getCourse_code(){
 	return this.Course_code;
     }
-    public String getname(){
+    public String getName(){
 	return this.name;
     }
     public void setC_ID(int CID){

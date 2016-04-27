@@ -21,6 +21,14 @@ import java.util.ArrayList;
  */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    public String Login;
+
+    ////////////////////////////////
+    // Daniels Kod
+
+    //Slut på daniels kod
+    //////////////////////////////////
+
     /**
      * To the opponent activity
      * @param view main view
@@ -52,6 +60,8 @@ public class MainActivity extends AppCompatActivity
      */
 
     public void toCreateQuestionActivity(View view){
+        SaveSharedData.clearGenQuestions(MainActivity.this);
+        SaveSharedData.clearCurrentQuestion(MainActivity.this);
         Intent i = new Intent(getApplicationContext(),CreateQuestionActivity.class);
         ArrayList<String> send = new ArrayList<String>();
         send.add("fromMainActivity");
@@ -59,12 +69,43 @@ public class MainActivity extends AppCompatActivity
         startActivity(i);
 
     }
+    public void toMyGamesActivity(View view){
+        String type = "mygames";
+        BackgroundWithServer bgws = new BackgroundWithServer(this);
+        bgws.execute(type);
+    }
+    public void toLoginActivity(){
+        Intent i = new Intent(getApplicationContext(),LoginActivity.class);
+        ArrayList<String> send = new ArrayList<String>();
+        send.add("fromMainActivity");
+        i.putExtra("prevActivity",send );
+        startActivity(i);
+
+    }
+    public void fromActivity() {
+        try {
+            ArrayList<String> message = new ArrayList<String>();
+            message = getIntent().getExtras().getStringArrayList("prevActivity");
+            if (message.get(0).equals("fromLoginActivity")) {
+                Login = message.get(1);
+            }
+        }
+        catch(Exception e){
+
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        if(SaveSharedData.getUserName(MainActivity.this).length() == 0)
+        {
+            toLoginActivity();
+        }
+        else {
+
+            setContentView(R.layout.activity_main);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -76,15 +117,19 @@ public class MainActivity extends AppCompatActivity
             }
         });
 */
-         //navigationdrawer
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+            //navigationdrawer
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.setDrawerListener(toggle);
+            toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
+
+            BackgroundWithServer bgws = new BackgroundWithServer(this);
+            bgws.execute("friendlist");
+        }
     }
 
     @Override
@@ -148,6 +193,15 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
+        }
+        else if (id == R.id.nav_signOut) {
+                SaveSharedData.setUserName(MainActivity.this,"");
+                SaveSharedData.setUserName(MainActivity.this,"");
+            Intent i = new Intent(getApplicationContext(),LoginActivity.class);
+            ArrayList<String> send = new ArrayList<String>();
+            send.add("fromMainActivity");
+            i.putExtra("resetActivity",send );
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

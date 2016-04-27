@@ -28,12 +28,12 @@ public class MyCoursesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         this.fetchCourses();
-       super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_courses);
         ListView lv = (ListView) findViewById(R.id.listview);
 
         generateListContent();
-        lv.setAdapter(new MyListAdapter(this, R.layout.list_item, data));
+        lv.setAdapter(new MyListAdapter(this, R.layout.list_item, data, myCourses));
     }
 
 
@@ -58,7 +58,7 @@ public class MyCoursesActivity extends AppCompatActivity {
 
         CQParser parser = new CQParser();
 
-        myCourses = parser.toClist(data);
+        myCourses = parser.toCList(data);
     }
 
     private void generateListContent(){
@@ -67,7 +67,7 @@ public class MyCoursesActivity extends AppCompatActivity {
         }
     }
 
-    private class MyListAdapter extends ArrayAdapter<String> {
+  /*  private class MyListAdapter extends ArrayAdapter<String> {
         private int layout;
         private int buttonmode = 1;
 
@@ -83,13 +83,13 @@ public class MyCoursesActivity extends AppCompatActivity {
 
             //button.setImageResource(R.drawable.star_off);
             if(buttonmode == 1) {
-                            button.setImageResource(R.drawable.star_off);
-                            buttonmode = 0;
-                        }
-                        if(buttonmode == 0){
-                            button.setImageResource(R.drawable.star_on);
-                            buttonmode = 1;
-                        }
+                button.setImageResource(R.drawable.star_off);
+                buttonmode = 0;
+            }
+            if(buttonmode == 0){
+                button.setImageResource(R.drawable.star_on);
+                buttonmode = 1;
+            }
         }
 
         @Override
@@ -107,31 +107,21 @@ public class MyCoursesActivity extends AppCompatActivity {
             }
             mainView = (ViewHolder) convertView.getTag();
             final ImageButton iB = mainView.button;
-                iB.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+            iB.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                      /*  if(buttonmode == 1) {
-                            iB.setImageResource(R.drawable.star_off);
-                            buttonmode = 0;
-                        }
-                        if(buttonmode == 0){
-                            iB.setImageResource(R.drawable.star_on);
-                            buttonmode = 1;
-                        }*/
-                        swapFavorite(position);
-                        swapButton(iB);
-                        //iB.setImageResource(R.drawable.star_off);
-                        //Toast.makeText(getContext(), "Button was clicked for list item" + position, Toast.LENGTH_SHORT).show();
-                    }
-                });
+
+                    swapFavorite(position);
+                    swapButton(iB);
+                    //iB.setImageResource(R.drawable.star_off);
+                    //Toast.makeText(getContext(), "Button was clicked for list item" + position, Toast.LENGTH_SHORT).show();
+                /*}
+            });
             mainView.text.setText(getItem(position));
 
             return convertView;
         }
-    }
-    public class ViewHolder{
-        ImageButton button;
-        TextView text;
-    }
+    } */
+
 }

@@ -59,57 +59,68 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:layout_column="0"
             android:layout_row="0"
             android:layout_gravity="fill"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:text="Alt1"
-            android:id="@+id/alt1Button" />
+            android:id="@+id/alt1Button"
+            android:onClick="answer" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:layout_column="0"
             android:layout_row="1"
             android:layout_gravity="fill"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:text="Alt3"
-            android:id="@+id/alt3Button" />
+            android:id="@+id/alt3Button"
+            android:onClick="answer" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:layout_column="1"
             android:layout_row="0"
             android:layout_gravity="fill"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:text="Alt2"
-            android:id="@+id/alt2Button" />
+            android:id="@+id/alt2Button"
+            android:nestedScrollingEnabled="false"
+            android:onClick="answer" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:layout_column="1"
             android:layout_row="1"
             android:layout_gravity="fill"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:text="alt4"
-            android:id="@+id/alt4Button" />
+            android:id="@+id/alt4Button"
+            android:onClick="answer" />
 
     </GridLayout>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:text="New Text"
-        android:id="@+id/textView2"
+        android:id="@+id/questionTextView"
         android:layout_alignParentTop="true"
         android:layout_marginTop="71dp"
         android:layout_alignParentEnd="true" />
+
+
 
 
 </RelativeLayout>

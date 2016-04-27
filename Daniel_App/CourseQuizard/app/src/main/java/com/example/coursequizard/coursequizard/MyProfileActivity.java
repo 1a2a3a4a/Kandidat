@@ -14,10 +14,18 @@ public class MyProfileActivity extends AppCompatActivity {
 
     }
 
+    public void toAllCoursesActivity(View view){
+        BackgroundWithServer bgws = new BackgroundWithServer(this);
+        String type = "get all courses";
+        //TODO IMPLEMENT USER
+        //String username = "Daniel";
+        bgws.execute(type);
+    }
+
 
     public void toMyCoursesActivity(View view){
         //Intent i = new Intent(getApplicationContext(), MyCoursesActivity.class);
-       // ArrayList<String> send = new ArrayList<String>();
+        // ArrayList<String> send = new ArrayList<String>();
         //send.add(opponent);
         //send.add(course);
         //i.putExtra("Opponent and Course", send);
