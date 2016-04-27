@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     ArrayList<String> passCourseParameters = new ArrayList<String>();
     String operationURL="";
+    String IP = "http://www.borrowit.itvt16.student.it.uu.se/Dropbox";
     String post_data = "";
     Context context;
     String type = "";
@@ -44,13 +46,10 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     String courseCode ="";
     String courseID ="";
     String universityName="";
+    String userName="";
     AlertDialog alertDialog;
     BackgroundWithServer (Context ctx) {
         context = ctx;
-    }
-
-    public BackgroundWithServer() {
-
     }
 
 
@@ -89,11 +88,13 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         courseName = params[1];
         courseCode = params[2];
         universityName = params[3];
+        String universityID=params[4];
 
         try {
             post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(courseName, "UTF-8") + "&"
                     + URLEncoder.encode("course_code", "UTF-8") + "=" + URLEncoder.encode(courseCode, "UTF-8") + "&"
-                    + URLEncoder.encode("uni_name", "UTF-8") + "=" + URLEncoder.encode(universityName, "UTF-8") + "&";
+                    + URLEncoder.encode("uni_name", "UTF-8") + "=" + URLEncoder.encode(universityName, "UTF-8") + "&"
+                    + URLEncoder.encode("uni_id", "UTF-8") + "=" + URLEncoder.encode(universityID, "UTF-8") + "&"        ;
 
 
         } catch (Exception e) {
@@ -123,10 +124,33 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         opponentName = params[1];
     }
 
+    private void getMyCourses(String ... params){
+        String user_name = params[1];
+        try {
+            this.post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void swapFavCourses(String[] params) {
+        String c_id = params[1];
+        String user_name = params[2];
+        try {
+            this.post_data = URLEncoder.encode("c_id", "UTF-8") + "=" + URLEncoder.encode(c_id, "UTF-8") + "&"
+                    +URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private void getSinglePlayerQuiz(String ... params){
                courseID = params[1];
+               String limit = params[2];
         try {
-            post_data = URLEncoder.encode("courseID", "UTF-8") + "=" + URLEncoder.encode(courseName, "UTF-8") + "&";
+            post_data = URLEncoder.encode("c_id", "UTF-8") + "=" + URLEncoder.encode(courseID, "UTF-8") + "&"
+                        + URLEncoder.encode("limit", "UTF-8") + "=" + URLEncoder.encode(limit, "UTF-8") + "&";
 
 
         } catch (Exception e) {
@@ -134,34 +158,48 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         }
 
     }
-
-    // TONY KOD VVVVVVVVVVVV LOGIN, REGISTER VVVVVVVVV
-
     private void register(String ... params) {
         String username =  params[1];
         String password = params[2];
         String cpassword = params[3];
         try {
             post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
-                       + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&"
-                       + URLEncoder.encode("password_confirm", "UTF-8") + "=" + URLEncoder.encode(cpassword, "UTF-8");
+                    + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&"
+                    + URLEncoder.encode("password_confirm", "UTF-8") + "=" + URLEncoder.encode(cpassword, "UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-    private void userlogin(String ... params){
-        String username = params[1];
-        String password = params[2];
-        try{post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
-                      + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
+    private void uploadText(String ... params){
+        String text ="\"" + params[1] + "\"";
+        try{post_data = URLEncoder.encode("text", "UTF-8") + "=" + URLEncoder.encode(text, "UTF-8") + "&";
 
         } catch(Exception e){
             e.printStackTrace();
         }
     }
-    // TONY KOD ^^^^^^ LOGIN REGISTER ^^^^^^^^^^
+    private void userlogin(String ... params){
+        userName = params[0];
+        String password = params[2];
+        Log.i("username",userName);
+        Log.i("password",password);
+        try{post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8") + "&"
+                + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
 
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    private void getFriendlist(String ... params){
+        userName = SaveSharedData.getUserName(context);
+        Log.i("username", userName);
+        try{post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8");
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
     @Override
@@ -173,59 +211,125 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
 
     protected String doInBackground(String... params) {
         type = params[0];
+        switch(type){
+            case("login"):
+
+            userlogin(params);
+            operationURL = IP + "/login.php";
+                break;
+            case("register"):
+                register(params);
+                operationURL = IP + "/addusertodb.php";
+                break;
+            case("add question"):
+                addQuestion(params);
+                operationURL = IP +"/addquestiontodb.php";
+                break;
+            case("universitylist"):
+                allUniversties(params);
+                operationURL = IP + "/getuniversitiesfromdb.php";
+                break;
+            case("added course"):
+                addCourse(params);
+                operationURL = IP + "/addcoursetodb.php";
+                break;
+            case("all courses"):
+                Log.i("innantryblock",params[0]);
+                myCourseList(params);
+                operationURL = IP + "/getcoursesfromdb.php";
+                break;
+            case("my courses, from opponent"):
+                myCourseListFromOpponent(params);
+                operationURL = IP + "/getcoursesfromdb.php";
+                break;
+            case("my courses, from challenge"):
+                myCourseListFromChallenge(params);
+                operationURL= IP + "/getcoursesfromdb.php";
+                break;
+            case("singlePlayerMode"):
+                getSinglePlayerQuiz(params);
+                operationURL= IP + "/getquestionsfromdb.php";
+                break;
+            case ("get my courses"):
+                getMyCourses(params);
+                operationURL = IP + "/getmycoursesfromdb.php";
+                break;
+
+            case ("swap favorites"):
+                swapFavCourses(params);
+                operationURL = IP + "/swapfavoritestodb.php";
+                break;
+            case ("Upload text"):{
+                uploadText(params);
+                operationURL = IP + "/generatequestions.php";
+                break;
+            }
+            case("friendlist"):
+                getFriendlist();
+                operationURL = IP + "/getfriendlistfromdb.php";
+                break;
+            default:
+                Log.i("nocase","nocase");
+                operationURL = IP;
+
+
+
+        }
+        /*
         if(type.equals("add question")) {
             addQuestion(params);
-            operationURL = "http://130.238.250.231/addquestiontodb.php";
+            operationURL = IP +"/addquestiontodb.php";
         }
-        //vvvvvvvvvv TONYS/MIN IFSATS vvvvvvv
-        else if(type.equals("login")) {
-            userlogin(params);
-            operationURL = "http://130.238.250.231/getuserfromdb.php";
-        }
-        else if(type.equals("register")){
-            register(params);
-            operationURL = "http://130.238.250.231/addusertodb.php";
-        }
-        // ^^^^^MIN KOD ABOVE ^^
         else if (type.equals("university list")){
             allUniversties(params);
-            operationURL = "http://130.238.250.231/getuniversitiesfromdb.php";
+            operationURL = IP + "/getuniversitiesfromdb.php";
 
         }
         else if (type.equals("added course")){
             addCourse(params);
-            operationURL = "http://130.238.250.231/addcoursetodb.php";
+            operationURL = IP + "/addcoursetodb.php";
     }
-        else if(type.equals("my courses")){
+        else if(type.equals("all courses")){
             myCourseList(params);
-            operationURL = "http://130.238.250.231/getcoursesfromdb.php";
+            operationURL = IP + "getcoursesfromdb.php";
 
         }
         else if(type.equals("my courses, from opponent")){
             myCourseListFromOpponent(params);
-            operationURL = "http://130.238.250.231/getcoursesfromdb.php";
+            operationURL = IP + "/getcoursesfromdb.php";
 
         }
         else if(type.equals("my courses, from challenge")){
             myCourseListFromChallenge(params);
-            operationURL= "http://130.238.250.231/getcoursesfromdb.php";
+            operationURL= IP + "/getcoursesfromdb.php";
         }
         else if(type.equals("my courses, from add courses")){
 
         }
         else if(type.equals("singlePlayerMode")){
             getSinglePlayerQuiz(params);
-            operationURL="http://130.238.250.231/getquestionsfromdb.php";
+            operationURL= IP + "/getquestionsfromdb.php";
         }
+        */
             try {
+                Log.i("tryblock",params[0]);
                 URL url = new URL(operationURL);
+                Log.i("tryblock2",params[0]);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                Log.i("tryblock3",params[0]);
                 httpURLConnection.setRequestMethod("POST");
+                Log.i("tryblock4",params[0]);
                 httpURLConnection.setDoOutput(true);
+                Log.i("tryblock5",params[0]);
                 httpURLConnection.setDoInput(true);
+                Log.i("tryblock6",params[0]);
+                Log.i("postdata",post_data);
+                Log.i("url",operationURL);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
+                Log.i("tryblock7",params[0]);
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 // the arguments to the URL
+                Log.i("innanwrite",params[0]);
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -259,7 +363,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     @Override
     protected void onPreExecute() {
         alertDialog = new AlertDialog.Builder(context).create();
-        alertDialog.setTitle("Question status");
+        alertDialog.setTitle("Status");
     }
 
     /**
@@ -270,109 +374,154 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
      */
     @Override
     protected void onPostExecute(String result) {
-        if (type.equals("my courses")){
-            // send a string containing all the courses in the database and start the Course Activity
-            Intent i = new Intent(context,CourseActivity.class);
-            String type = "my courses";
-            ArrayList<String> send = new ArrayList<String>();
-            send.add("fromCreateQuestionActivity");
-            send.add(result);
-            i.putExtra("prevActivity",send );
-            context.startActivity(i);
+        ArrayList<String> send = new ArrayList<String>();
+        switch (type) {
+            case "all courses":
+                Log.i("postexecuteblock","weee");
+                // send a string containing all the courses in the database and start the Course Activity
+                Intent allcoursesi = new Intent(context, CourseActivity.class);
+                send.add("fromCreateQuestionActivity");
+                send.add(result);
+                allcoursesi.putExtra("prevActivity", send);
+                context.startActivity(allcoursesi);
 
-        }
-        //MIN KOD VVVVV
-        else if (type.equals("register")){
-            if(!(result.equals("User created"))){
-                alertDialog.setMessage(result);
-                alertDialog.show();
-            }
-            else{
-                Intent i = new Intent(context, LoginActivity.class);
-                context.startActivity(i);
-            }
-        }
-        else if(type.equals("login")){
-            if(result.equals("Login sucessful!")){
-                Intent i = new Intent(context, MainActivity.class);
-                context.startActivity(i);
-            }
-            else{
-                alertDialog.setMessage(result);
-                alertDialog.show();
-            }
+                break;
 
-        }
+            case "register":
+                if (!(result.equals("User created"))) {
+                    alertDialog.setMessage(result);
+                    alertDialog.show();
+                } else {
+                    Intent registeri = new Intent(context, LoginActivity.class);
+                    context.startActivity(registeri);
+                }
+                break;
+            case "login":
+                if (result.equals("Login successful!")) {
+                    Intent logini = new Intent(context, MainActivity.class);
+                    SaveSharedData.setUserName(context,userName);
+                    context.startActivity(logini);
+                } else {
+                    alertDialog.setMessage(result);
+                    alertDialog.show();
+                }
 
-        //MIN KOD ^^^^
-        else if (type.equals("my courses, from opponent")){
+                break;
+            case "my courses, from opponent":
             /* send a string containing all the courses in the database
             / and a string containing the information about the opponent
              and start the Course Activity
              */
-            Intent i = new Intent(context, CourseActivity.class);
-            Log.i("hello","hello");
-            Log.i("opponent",opponentName);
-            Log.i("result",result);
-            ArrayList<String> send = new ArrayList<String>();
-            send.add("fromOpponentActivity");
-            send.add(opponentName);
-            // send the coursestring
-            send.add(result);
-            i.putExtra("prevActivity", send);
-            context.startActivity(i);
-        }
-        else if (type.equals("my courses, from challenge")){
-            Intent i = new Intent(context,CourseActivity.class);
-            ArrayList<String> send = new ArrayList<String>();
-            send.add("fromChallengeActivity");
-            send.add(opponentName);
-            send.add(result);
-            i.putExtra("prevActivity",send );
-            context.startActivity(i);
-        }
-        else if(type.equals("add question")){
-            Intent i = new Intent(context,CreateQuestionActivity.class);
-            ArrayList<String> send = new ArrayList<String>();
-            send.add("fromQuestionActivity");
-            send.add(opponentName);
-            send.add(result);
-            i.putExtra("prevActivity",send );
-            context.startActivity(i);
-        }
-        else if(type.equals("added course")){
-            Intent i = new Intent(context,CreateQuestionActivity.class);
-            ArrayList<String> send = new ArrayList<String>();
-            send.add("fromAddCourseActivity");
-            send.add(courseName);
-            send.add(courseCode);
-            courseID = result;
-            send.add(courseID);
-            send.add(universityName);
-            Log.i("Background","I do somethong right");
-            Log.i("coursename",courseName);
-            Log.i("coursecode",courseCode);
-           // Log.i("courseID",courseID);
-            Log.i("universityname",universityName);
-            i.putExtra("prevActivity",send );
-            context.startActivity(i);
-        }
-        else if (type.equals("university list")){
+                Intent mycoursesfromopponenti = new Intent(context, CourseActivity.class);
+               // Log.i("hello", "hello");
+               // Log.i("opponent", opponentName);
+              //  Log.i("result", result);
+                send.add("fromOpponentActivity");
+                send.add(opponentName);
+                // send the coursestring
+                send.add(result);
+                mycoursesfromopponenti.putExtra("prevActivity", send);
+                context.startActivity(mycoursesfromopponenti);
+                break;
 
-        }
-        else if (type.equals("singlePlayerMode")){
-            Intent i = new Intent(context,PlayGameActivity.class);
-            ArrayList<String> send = new ArrayList<String>();
-            send.add("fromSPChallengeActivity");
-            send.add(result);
-            i.putExtra("prevActivity",send );
-            context.startActivity(i);
-        }
-             // show a popup with the output
-            else {
-            Log.i("Result", result);
-            alertDialog.setMessage(result);
-            alertDialog.show();
+            case "my courses, from challenge":
+                Intent mycoursesfromchallengei = new Intent(context, CourseActivity.class);
+                send.add("fromChallengeActivity");
+                send.add(opponentName);
+                send.add(result);
+                mycoursesfromchallengei.putExtra("prevActivity", send);
+                context.startActivity(mycoursesfromchallengei);
+                break;
+
+            case "add question":
+               Intent addquestioni = new Intent(context, CreateQuestionActivity.class);
+                send.add("fromQuestionActivity");
+                send.add(opponentName);
+                send.add(result);
+                addquestioni.putExtra("prevActivity", send);
+                context.startActivity(addquestioni);
+                break;
+
+            case "added course":
+                Intent addedcoursei = new Intent(context, CreateQuestionActivity.class);
+                send.add("fromAddCourseActivity");
+                send.add(courseName);
+                send.add(courseCode);
+                courseID = result;
+                send.add(courseID);
+                send.add(universityName);
+                Log.i("Background", "I do somethong right");
+                Log.i("coursename", courseName);
+                Log.i("coursecode", courseCode);
+                // Log.i("courseID",courseID);
+                Log.i("universityname", universityName);
+                addedcoursei.putExtra("prevActivity", send);
+                context.startActivity(addedcoursei);
+                break;
+
+            case "singlePlayerMode":
+                Intent singleplayermodei = new Intent(context, PlayGameActivity.class);
+                send.add("fromSPChallengeActivity");
+                send.add(result);
+                singleplayermodei.putExtra("prevActivity", send);
+                context.startActivity(singleplayermodei);
+                break;
+
+            case "get my courses":
+                Intent getmycoursesi = new Intent(context, MyCoursesActivity.class);
+                Log.i("result", result);
+                send.add("fromMyProfileActivity");
+                send.add(result);
+                getmycoursesi.putExtra("prevActivity", send);
+                context.startActivity(getmycoursesi);
+                break;
+
+
+            case "swap favorites":
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+
+                Log.i("swap res", result);
+                // alertDialog.setMessage(result);
+                //Toast.show();
+                break;
+
+            case ("universitylist"):
+                Intent universitylisti = new Intent(context, AddCourseActivity.class);
+                send.add("fromCourseActivity");
+                send.add(result);
+                universitylisti.putExtra("prevActivity", send);
+                context.startActivity(universitylisti);
+            // show a popup with the output
+                break;
+            case ("Upload text"):
+             Intent uploadtexti = new Intent(context,CreateQuestionActivity.class);
+                Log.i("Second case","case");
+                send.add("fromUploadTextActivity");
+                send.add(result);
+                uploadtexti.putExtra("prevActivity",send );
+                context.startActivity(uploadtexti);
+                break;
+            case("friendlist"):
+                if(result == null){
+                    result = "Nofriends";
+                }
+
+                Log.i("result", result);
+                ArrayList<String> friend = new ArrayList<String>();
+                String[] friends = result.split("%U%");
+                int length = friends.length; // length of coded friendlist string[]
+                Log.i("friendlistlength", String.valueOf(length));
+                for(int i = 0; i < length; i++){
+                    friend.add(friends[i]); //add all friends in friendlist
+                }
+                SaveSharedData.setFriendList(context, friend);
+                Log.i("friendlist done!", "hej");
+                break;
+            default:
+                Log.i("Result", result);
+                alertDialog.setMessage(result);
+                alertDialog.show();
+                break;
         }
     }
 
