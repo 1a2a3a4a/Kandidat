@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -119,4 +120,23 @@ public class SaveSharedData
     {
         return getSharedPreferences(ctx).getString(PREF_USER_NAME, "");
     }
+    //tony kod vvvv
+    public static ArrayList<String> getFriendList(Context ctx){
+        ArrayList<String> friendList = new ArrayList<String>();
+        int n = getSharedPreferences(ctx).getInt("numberoffriends", 0);
+        for(int i = 0; i < n; i++){
+            friendList.add(getSharedPreferences(ctx).getString("friend_" + i, ""));
+        }
+        return friendList;
+    }
+    public static void setFriendList(Context ctx, ArrayList<String> friendList){
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        int length = friendList.size();
+        for(int i = 0; i < length; i++){
+            editor.putString("friend_" + i, friendList.get(i));
+        }
+        editor.putInt("numberoffriends",friendList.size());
+        editor.apply();
+    }
+    // tony kod ^^^^^^
 }

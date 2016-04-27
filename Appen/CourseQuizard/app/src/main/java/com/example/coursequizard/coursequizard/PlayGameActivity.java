@@ -16,6 +16,7 @@ public class PlayGameActivity extends AppCompatActivity {
     AlertDialog alertDialog;
     public int questionIndex =0;
     public String wrong = "";
+    public String gameID ="";
     public int wrongCount = 0;
     public int numberOfQuestions = 5;
     public ArrayList<String> userAnswers= new ArrayList<String>();
@@ -28,10 +29,11 @@ public class PlayGameActivity extends AppCompatActivity {
     LinkedList<Question> questionList = new LinkedList<Question>();
 
       public void fromActivity(){
+          CQParser questionParser = new CQParser();
           ArrayList<String> message = new ArrayList<String>();
           message = getIntent().getExtras().getStringArrayList("prevActivity");
           if (message.get(0).equals("fromSPChallengeActivity")){
-              CQParser questionParser = new CQParser();
+
               Log.i("to parse",message.get(1) );
               questionList = questionParser.toQList(message.get(1));
 
@@ -41,7 +43,7 @@ public class PlayGameActivity extends AppCompatActivity {
 
           }
           else if(message.get(0).equals("fromFPChallengeActivity")){
-
+              questionList = questionParser.toQList(message.get(1));
           }
           numberOfQuestions = questionList.size();
       }
@@ -163,6 +165,8 @@ public class PlayGameActivity extends AppCompatActivity {
         Button userButton = (Button) findViewById(alt);
         String answerString = questionList.get(questionIndex).getAnswer();
         String questionString = questionList.get(questionIndex).getQuestion();
+        userAnswers.add(userAnswer);
+        correctAnswers.add(answerString);
         //doGreen(answerString);
         if (!(userAnswer.equals(answerString))) {
            //doRed(userButton);
@@ -187,7 +191,12 @@ public class PlayGameActivity extends AppCompatActivity {
         alt4Button.setEnabled(false);
 
     }
-
+    public void sendResults(){
+        String type = "sendresult";
+        String score = String.valueOf(numberOfQuestions - wrongCount);
+        BackgroundWithServer bgws =new BackgroundWithServer(this);
+        bgws.execute(type,gameID,score,userAnswers.get(0),userAnswers.get(1),userAnswers.get(2),userAnswers.get(3),userAnswers.get(4));
+    }
     public void nextQuestion(){
         String add = "";
         /*
@@ -200,6 +209,9 @@ public class PlayGameActivity extends AppCompatActivity {
         questionIndex++;
 
         if (questionIndex >= numberOfQuestions){
+            if (!(gameID.equals(""))) {
+                sendResults();
+            }
             if (wrongCount == 0){
                 add = "You answered everything correctly :D\n";
             }

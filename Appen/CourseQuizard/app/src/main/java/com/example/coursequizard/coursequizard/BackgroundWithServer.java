@@ -185,6 +185,40 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
             e.printStackTrace();
         }
     }
+
+    private void sendResult(String ... params){
+        String username = SaveSharedData.getUserName(context);
+        String gameID = params[1];
+        String score  = params [2];
+        try {
+            post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+                    + URLEncoder.encode("gameID", "UTF-8") + "=" + URLEncoder.encode(gameID, "UTF-8") + "&"
+                    + URLEncoder.encode("score", "UTF-8") + "=" + URLEncoder.encode(score, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void friendGame(String ... params){
+       String userName = SaveSharedData.getUserName(context);
+       String opponentName = params[1];
+       String courseID = params[2];
+        try {
+            post_data = URLEncoder.encode("by_user", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8") + "&"
+                    + URLEncoder.encode("to_user", "UTF-8") + "=" + URLEncoder.encode(opponentName, "UTF-8") + "&"
+                    + URLEncoder.encode("course_id", "UTF-8") + "=" + URLEncoder.encode(courseID, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    private void myGames(String ... params){
+        String userName = SaveSharedData.getUserName(context);
+        try {
+            post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void userlogin(String ... params){
         userName = params[1];
         String password = params[2];
@@ -197,7 +231,15 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
             e.printStackTrace();
         }
     }
+    private void getFriendlist(String ... params){
+        userName = SaveSharedData.getUserName(context);
+        Log.i("username", userName);
+        try{post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8");
 
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
 
@@ -264,7 +306,22 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 operationURL = IP + "/generatequestions.php";
                 break;
             }
-
+            case ("Friendplayermode"):
+                friendGame(params);
+                operationURL = IP + "/addgametodb.php";
+                break;
+            case("sendresult"):
+                sendResult(params);
+                operationURL = IP + "/updategametodb.php";
+                break;
+            case("mygames"):
+                myGames(params);
+                operationURL = IP + "getmygamesfromdb.php";
+                break;
+            case("friendlist"):
+                getFriendlist();
+                operationURL = IP + "/getfriendlistfromdb.php";
+                break;
             default:
                 Log.i("nocase","nocase");
                 operationURL = IP;
@@ -502,9 +559,49 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 uploadtexti.putExtra("prevActivity",send );
                 context.startActivity(uploadtexti);
                 break;
+
+            case ("Friendplayermode"):
+                Intent friendplayermodei = new Intent(context,MainActivity.class);
+                send.add("fromFPChallengeActivity");
+                send.add(result);
+                friendplayermodei.putExtra("prevActivity", send);
+                context.startActivity(friendplayermodei);
+
+                /*
+                Intent friendplayermodei = new Intent(context,PlayGameActivity.class);
+                send.add("fromFPChallengeActivity");
+                send.add(result);
+                friendplayermodei.putExtra("prevActivity", send);
+                context.startActivity(friendplayermodei);
+                */
+                break;
+            case("mygames"):
+                Intent mygamesi = new Intent(context,MyGamesActivity.class);
+                send.add("fromMainActivity");
+                send.add(result);
+                mygamesi.putExtra("prevActivity", send);
+                context.startActivity(mygamesi);
+                break;
+            case("friendlist"):
+                if(result == null){
+                    result = "Nofriends";
+                }
+
+                Log.i("result", result);
+                ArrayList<String> friend = new ArrayList<String>();
+                String[] friends = result.split("%U%");
+                int length = friends.length; // length of coded friendlist string[]
+                Log.i("friendlistlength", String.valueOf(length));
+                for(int i = 0; i < length; i++){
+                    friend.add(friends[i]); //add all friends in friendlist
+                }
+                SaveSharedData.setFriendList(context, friend);
+                Log.i("friendlist done!", "hej");
+                break;
             default:
-                Log.i("Result", result);
-                alertDialog.setMessage(result);
+                // Log.i("Result", result);
+                //alertDialog.setMessage(result);
+                Log.i("Error","default");
                 alertDialog.show();
                 break;
         }

@@ -62,6 +62,11 @@ public class MainActivity extends AppCompatActivity
         startActivity(i);
 
     }
+    public void toMyGamesActivity(View view){
+        String type = "mygames";
+        BackgroundWithServer bgws = new BackgroundWithServer(this);
+        bgws.execute(type);
+    }
     public void toLoginActivity(){
         Intent i = new Intent(getApplicationContext(),LoginActivity.class);
         ArrayList<String> send = new ArrayList<String>();
@@ -114,6 +119,9 @@ public class MainActivity extends AppCompatActivity
 
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
+
+            BackgroundWithServer bgws = new BackgroundWithServer(this);
+            bgws.execute("friendlist");
         }
     }
 
@@ -178,6 +186,15 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
+        }
+        else if (id == R.id.nav_signOut) {
+                SaveSharedData.setUserName(MainActivity.this,"");
+                SaveSharedData.setUserName(MainActivity.this,"");
+            Intent i = new Intent(getApplicationContext(),LoginActivity.class);
+            ArrayList<String> send = new ArrayList<String>();
+            send.add("fromMainActivity");
+            i.putExtra("resetActivity",send );
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

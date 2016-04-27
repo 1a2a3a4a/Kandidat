@@ -94,20 +94,7 @@ public class OpponentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_opponent);
         ListView friendsListView = (ListView) findViewById(R.id.friendsListView);
         //ArrayList<String> myFriends = new ArrayList<String>();
-        myFriends.add("Daniel");
-        myFriends.add("Simon");
-        myFriends.add("Tony");
-        myFriends.add("A");
-        myFriends.add("B");
-        myFriends.add("C");
-        myFriends.add("D");
-        myFriends.add("E");
-        myFriends.add("F");
-        myFriends.add("G");
-        myFriends.add("H");
-        myFriends.add("I");
-        myFriends.add("J");
-        myFriends.add("K");
+        myFriends = SaveSharedData.getFriendList(OpponentActivity.this);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,myFriends);
         friendsListView.setAdapter(arrayAdapter);
         // a listener for the friendlist

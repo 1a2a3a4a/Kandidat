@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Opponent"
-        android:id="@+id/opponentTextView"
+        android:id="@+id/opponentNameTextView"
         android:layout_marginStart="71dp"
         android:layout_marginTop="88dp"
         android:layout_alignParentTop="true"
@@ -23,10 +23,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Course"
-        android:id="@+id/courseTextView"
+        android:id="@+id/courseNameTextView"
         android:layout_marginTop="59dp"
         android:layout_below="@+id/editOpponentImageButton"
-        android:layout_alignStart="@+id/opponentTextView" />
+        android:layout_alignStart="@+id/opponentNameTextView" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
         android:id="@+id/editOpponentImageButton"
         android:layout_marginEnd="35dp"
         android:src="@drawable/ic_mode_edit_black_18dp"
-        android:layout_alignTop="@+id/opponentTextView"
+        android:layout_alignTop="@+id/opponentNameTextView"
         android:layout_alignParentEnd="true"
         android:onClick="toOpponentActivity" />
 
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/editCourseImageButton"
         android:src="@drawable/ic_mode_edit_black_18dp"
-        android:layout_alignTop="@+id/courseTextView"
+        android:layout_alignTop="@+id/courseNameTextView"
         android:layout_alignStart="@+id/editOpponentImageButton"
         android:onClick="toCourseActivity" />
 

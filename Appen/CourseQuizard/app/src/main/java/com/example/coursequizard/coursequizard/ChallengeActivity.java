@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -83,6 +82,7 @@ public class ChallengeActivity extends AppCompatActivity {
         }
         else {
             Log.i("elsemode",type);
+            type ="friendPlayerMode";
             BackgroundWithServer bgws = new BackgroundWithServer(this);
             bgws.execute(type, opponentName, courseID);
         }
@@ -124,8 +124,8 @@ public class ChallengeActivity extends AppCompatActivity {
         // get the variables fdrom the previous Opponnent and Course activities
         courseAndOpponent();
 
-        TextView courseTextView = (TextView) findViewById(R.id.courseTextView);
-        TextView opponentTextView = (TextView) findViewById(R.id.opponentTextView);
+        TextView courseTextView = (TextView) findViewById(R.id.courseNameTextView);
+        TextView opponentTextView = (TextView) findViewById(R.id.opponentNameTextView);
         // Enter the course name and opponent name to the textfields to clearify for the user.
         courseTextView.setText(courseName);
         opponentTextView.setText(opponentName);

@@ -59,6 +59,9 @@ public class LoginActivity extends AppCompatActivity {
         final EditText username = (EditText) findViewById(R.id.loginusernameText);
         final EditText password = (EditText) findViewById(R.id.loginpwtext);
     }
+    @Override
+    public void onBackPressed() {
+    }
 
 
 }
