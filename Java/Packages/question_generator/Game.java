@@ -10,9 +10,11 @@ public class Game{
     private int User1_score;
     private int User2_score;
     private int Game_status;
+    private String Game_status_string;
+    private String course_name;
     private String sent_by;
     
-    public Game(int g_id, int Q1, int Q2, int Q3, int  Q4, int Q5, String User_1, String User_2, int User1_score,  int User2_score, int Game_status, String sent_by){
+    public Game(int g_id, int Q1, int Q2, int Q3, int  Q4, int Q5, String User_1, String User_2, int User1_score,  int User2_score, int Game_status, String sent_by,String course_name){
 	this.g_id = g_id;
 	this.Q1 = Q1;
 	this.Q1 = Q2;
@@ -23,7 +25,10 @@ public class Game{
 	this.User1_score = User1_score;
 	this.User2_score = User2_score;
 	this.Game_status = 0;
+	this.Game_status_string = "";
 	this.sent_by = sent_by;
+	this.course_name = course_name;
+	
     }
     
     public int getG_id(){
@@ -63,10 +68,15 @@ public class Game{
     public int getGame_status(){
 	return this.Game_status;
     }
+    public String getGame_status_string(){
+    	return this.Game_status_string;
+    }
     public String getSent_by(){
 	return this.sent_by;
     }
-
+    public String getcourse_name(){
+    	return this.courseName();
+    }
     public void setg_id(int g_id){
 	this.g_id = g_id;
     }
@@ -97,8 +107,15 @@ public class Game{
     public void setUser2_score(int s2){
 	this.User2_score = s2;
     }
-    public void setGame_statuss(int status){
+    public void setGame_status(int status){
 	this.Game_status = status;
+    }
+    public void setGame_status_string(String status){
+	this.Game_status_string = status;
+    }
+    
+    public void setCourse_name(string cName){
+    	this.course_name=cName;
     }
     public void setSent_by(String sentby){
 	this.sent_by = sentby;
