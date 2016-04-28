@@ -118,6 +118,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     }
     private void allUniversties(String ... params){
     }
+
     private void myCourseListFromChallenge(String ... params){
         opponentName = params[1];
     }
@@ -255,9 +256,8 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         type = params[0];
         switch(type){
             case("login"):
-
-            userlogin(params);
-            operationURL = IP + "/login.php";
+                userlogin(params);
+                operationURL = IP + "/login.php";
                 break;
             case("register"):
                 register(params);
@@ -277,7 +277,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 break;
             case("all courses"):
                 Log.i("innantryblock",params[0]);
-                myCourseList(params);
+               // myCourseList(params);
                 operationURL = IP + "/getcoursesfromdb.php";
                 break;
             case("my courses, from opponent"):
@@ -326,7 +326,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
             //Daniels Kod
             case "get all courses":{
                 getAllCourses();
-                operationURL = IP + "/getfriendlistfromdb.php";
+                operationURL = IP + "/getcoursesfromdb.php";
                 break;
             }
             //Slut Daniels kod
@@ -338,74 +338,39 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
 
 
         }
-        /*
-        if(type.equals("add question")) {
-            addQuestion(params);
-            operationURL = IP +"/addquestiontodb.php";
-        }
-        else if (type.equals("university list")){
-            allUniversties(params);
-            operationURL = IP + "/getuniversitiesfromdb.php";
 
-        }
-        else if (type.equals("added course")){
-            addCourse(params);
-            operationURL = IP + "/addcoursetodb.php";
-    }
-        else if(type.equals("all courses")){
-            myCourseList(params);
-            operationURL = IP + "getcoursesfromdb.php";
-
-        }
-        else if(type.equals("my courses, from opponent")){
-            myCourseListFromOpponent(params);
-            operationURL = IP + "/getcoursesfromdb.php";
-
-        }
-        else if(type.equals("my courses, from challenge")){
-            myCourseListFromChallenge(params);
-            operationURL= IP + "/getcoursesfromdb.php";
-        }
-        else if(type.equals("my courses, from add courses")){
-
-        }
-        else if(type.equals("singlePlayerMode")){
-            getSinglePlayerQuiz(params);
-            operationURL= IP + "/getquestionsfromdb.php";
-        }
-        */
             try {
                 Log.i("tryblock",params[0]);
                 URL url = new URL(operationURL);
-                Log.i("tryblock2",params[0]);
+                //Log.i("tryblock2",params[0]);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
-                Log.i("tryblock3",params[0]);
+                //Log.i("tryblock3",params[0]);
                 httpURLConnection.setRequestMethod("POST");
-                Log.i("tryblock4",params[0]);
+                //Log.i("tryblock4",params[0]);
                 httpURLConnection.setDoOutput(true);
-                Log.i("tryblock5",params[0]);
+                //Log.i("tryblock5",params[0]);
                 httpURLConnection.setDoInput(true);
-                Log.i("tryblock6",params[0]);
+                //Log.i("tryblock6",params[0]);
                 Log.i("postdata",post_data);
                 Log.i("url",operationURL);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
-                Log.i("tryblock7",params[0]);
+                //Log.i("tryblock7",params[0]);
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 // the arguments to the URL
-                Log.i("innanwrite",params[0]);
+                //Log.i("innanwrite",params[0]);
                 bufferedWriter.write(post_data);
 
                 bufferedWriter.flush();
                 bufferedWriter.close();
                 outputStream.close();
-                Log.i("efterwrite",params[0]);
+                //Log.i("efterwrite",params[0]);
                 InputStream inputStream = httpURLConnection.getInputStream();
-                Log.i("efterinit",params[0]);
+                //Log.i("efterinit",params[0]);
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
-                Log.i("efterread",params[0]);
+                //Log.i("efterread",params[0]);
                 //StringBuilder sb = new StringBuilder();
-                String result="";
-                String line="";
+                String result = "";
+                String line = "";
                 //Read line by line the output from the server.
                 while((line = bufferedReader.readLine())!= null) {
                     result += line;
@@ -613,12 +578,15 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 SaveSharedData.setFriendList(context, friend);
                 Log.i("friendlist done!", "hej");
                 break;
-            /////////////////////////////////////7
+            /////////////////////////////////////
             //Daniels Kod
             case "get all courses":{
                 Log.i("result", result);
+                Intent allCi = new Intent(context, CourseActivity.class);
                 send.add("fromMyProfileActivity");
                 send.add(result);
+                allCi.putExtra("prevActivity", send);
+                context.startActivity(allCi);
                 break;
             }
             //Slut på Daniels kod
