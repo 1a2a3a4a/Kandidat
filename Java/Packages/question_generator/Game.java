@@ -17,9 +17,10 @@ public class Game{
     public Game(int g_id, int Q1, int Q2, int Q3, int  Q4, int Q5, String User_1, String User_2, int User1_score,  int User2_score, int Game_status, String sent_by,String course_name){
 	this.g_id = g_id;
 	this.Q1 = Q1;
-	this.Q1 = Q2;
-	this.Q1 = Q3;	
-	this.Q1 = Q4;
+	this.Q2 = Q2;
+	this.Q3 = Q3;	
+	this.Q4 = Q4;
+	this.Q5 = Q5;
 	this.User_1 = User_1;
 	this.User_2 = User_2;
 	this.User1_score = User1_score;
@@ -51,6 +52,9 @@ public class Game{
     public int getQ4(){
 	return this.Q4;
     }
+    public int getQ5({
+    	return this.Q5;
+    	)
     
     public String getUser_1(){
 	return this.User_1;
@@ -95,6 +99,9 @@ public class Game{
 	this.Q4 = Q;
     }
 
+    public void setQ5(int Q){
+    	this.Q5 = Q;
+    }
     public void setUser_1(String U1){
 	this.User_1 = U1;
     }
