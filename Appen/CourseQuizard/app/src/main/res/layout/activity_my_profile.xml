@@ -27,5 +27,25 @@
         android:id="@+id/button2"
         android:layout_alignTop="@+id/button"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="47dp" />
+        android:layout_marginEnd="47dp"
+        android:onClick="toAllCoursesActivity" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Friends"
+        android:id="@+id/myFriendsButton"
+        android:layout_marginTop="39dp"
+        android:layout_below="@+id/button"
+        android:layout_alignStart="@+id/button"
+        android:onClick="myFriends" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Friend"
+        android:id="@+id/addFriendButton"
+        android:layout_alignTop="@+id/myFriendsButton"
+        android:layout_alignStart="@+id/button2"
+        android:onClick="addFriend"
+        android:layout_alignEnd="@+id/button2" />
 </RelativeLayout>

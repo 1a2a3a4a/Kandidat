@@ -1,6 +1,6 @@
 package com.example.coursequizard.coursequizard;
 
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.example.coursequizard.coursequizard.dummy.DummyContent;
 import com.example.coursequizard.coursequizard.dummy.DummyContent.DummyItem;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /*
@@ -26,32 +28,96 @@ import java.util.List;
  * interface.
  */
 public class GameItemFragment extends ListFragment {
+    public static final String ARG_SECTION_NUMBER = "section_number";
 
     // TODO: Customize parameter argument names
     //private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     //private int mColumnCount = 1;
    // private OnListFragmentInteractionListener mListener;
-    private ArrayList<GameItem> myGames = new ArrayList<GameItem>();
+    private ArrayList<Game> myGames = new ArrayList<Game>();
+    private ArrayList<Game> opTurnGames = new ArrayList<Game>();
+    private ArrayList<Game> myTurnGames = new ArrayList<Game>();
+    private ArrayList<Game> finishedGames = new ArrayList<Game>();
     private Runnable viewParts;
     private GameItemAdapter myAdapter;
     private int mIndex;
+    private int myInt =3;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public GameItemFragment(){
+
     }
     public void toExtendedGameInfo(String gID){
 
+    }
+    public void fromActivity(){
+        ArrayList<String> message = new ArrayList<String>();
+        message = getActivity().getIntent().getExtras().getStringArrayList("prevActivity");
+        if (message.get(0).equals("fromMainActivity")){
+            String unparsedMyGames = message.get(1);
+            CQParser parser = new CQParser();
+            Log.i("intent",unparsedMyGames);
+            myGames= parser.toGList(unparsedMyGames);
+            Log.i("intent",myGames.get(0).getUser_1());
+            myGamesSort();
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Bundle extras = getActivity().getIntent().getExtras();
+        //myGames  = extras.getParcelableArrayList("arraylist");
+        fromActivity();
+        Log.i("first game",myGames.get(0).getUser_2());
         View rootView = inflater.inflate(R.layout.fragment_gameitem_list, container, false);
-        myAdapter = new GameItemAdapter(getActivity(),R.layout.fragment_gameitem, myGames);
+        Bundle bundle = this.getArguments();
+        myInt = bundle.getInt("gameList", 3);
+
+
+        Log.i("beforeswitch", "beforeswitch");
+        Log.i("totalsize", String.valueOf(myGames.size()));
+
+        /*myTurnGames.clear();
+        opTurnGames.clear();
+        finishedGames.clear();
+        */
+        switch(myInt){
+            case(0):
+                ListView lva = (ListView) rootView.findViewById(android.R.id.list);
+                Log.i("myturn", "myturn");
+                Log.i("myturn size", String.valueOf(myTurnGames.size()));
+                myAdapter = new GameItemAdapter(getActivity(), R.layout.fragment_gameitem, android.R.id.list, myTurnGames);
+
+                lva.setAdapter(myAdapter);
+                break;
+            case(1):
+                ListView lvb = (ListView) rootView.findViewById(android.R.id.list);
+                Log.i("opturn", "opturn");
+                Log.i("opturn size", String.valueOf(opTurnGames.size()));
+                myAdapter = new GameItemAdapter(getActivity(), R.layout.fragment_gameitem, android.R.id.list, opTurnGames);
+                lvb.setAdapter(myAdapter);
+                break;
+            case(2):
+                ListView lvc = (ListView) rootView.findViewById(android.R.id.list);
+                Log.i("finito", "finito");
+                Log.i("finished size", String.valueOf(finishedGames.size()));
+                myAdapter = new GameItemAdapter(getActivity(), R.layout.fragment_gameitem, android.R.id.list, finishedGames);
+                lvc.setAdapter(myAdapter);
+                break;
+            default:
+                ListView lvd = (ListView) rootView.findViewById(android.R.id.list);
+                myAdapter = new GameItemAdapter(getActivity(), R.layout.fragment_gameitem, android.R.id.list, myGames);
+                lvd.setAdapter(myAdapter);
+                break;
+        }
+
+        Log.i("afterinit","woohooh");
 
 
         return rootView;
@@ -59,9 +125,73 @@ public class GameItemFragment extends ListFragment {
     }
     @Override
     public void onListItemClick(ListView l,View v,int position,long id){
-        GameItem gameItemChosen = myAdapter.getItem(position);
-        String gID = String.valueOf(gameItemChosen.getGameID());
-        toExtendedGameInfo(gID);
+        Log.i("clickclick","click");
+        Game gameItemChosen = myAdapter.getItem(position);
+        String gID = String.valueOf(gameItemChosen.getG_id());
+        Log.i("gid",gID);
+        Log.i("tab",String.valueOf(myInt));
+        if (myInt ==0) {
+            toPlayGameActivity(gID);
+        }
+    }
+
+    public void toPlayGameActivity(String qID){
+
+    }
+    public void myGamesSort(){
+       ArrayList<Game> tempopTurnGames = new ArrayList<Game>();
+         ArrayList<Game> tempmyTurnGames = new ArrayList<Game>();
+         ArrayList<Game> tempfinishedGames = new ArrayList<Game>();
+        String userName = SaveSharedData.getUserName(getActivity());
+        int size = myGames.size();
+        for (int i =0; i<  size; i++){
+            Game g = myGames.get(i);
+            switch(g.getGame_status()){
+                //pending
+                case(0):
+                    if (userName.equals(g.getUser_1())){
+                        tempopTurnGames.add(g);
+                    }
+                    else {
+                        tempmyTurnGames.add(g);
+                    }
+                    break;
+                // user 2 turn
+                case(1):
+                    if (userName.equals(g.getUser_1())){
+                        tempopTurnGames.add(g);
+                    }
+                    else {
+                        tempmyTurnGames.add(g);
+                    }
+                    break;
+                // user 1 turn
+                case(2):
+                    if (userName.equals(g.getUser_1())){
+                        tempmyTurnGames.add(g);
+                    }
+                    else {
+                        tempopTurnGames.add(g);
+                    }
+                    break;
+                //finished
+                case(3):
+                    tempfinishedGames.add(g);
+                    break;
+                default :
+                    break;
+
+
+
+            }
+        }
+        finishedGames= tempfinishedGames;
+        opTurnGames= tempopTurnGames;
+        myTurnGames = tempmyTurnGames;
+        //tempfinishedGames.clear();
+        //tempopTurnGames.clear();
+        //tempmyTurnGames.clear();
+
     }
 
 /*

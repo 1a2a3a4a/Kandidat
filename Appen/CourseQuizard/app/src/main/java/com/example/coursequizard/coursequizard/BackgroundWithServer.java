@@ -239,6 +239,18 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         } catch(Exception e){
             e.printStackTrace();
         }
+
+    }
+    private void friendRequest(String addFriend){
+        userName = SaveSharedData.getUserName(context);
+        Log.i("username friend request", userName);
+        Log.i("im adding friend:", addFriend);
+        try{post_data = URLEncoder.encode("by_user", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8") + "&"
+                + URLEncoder.encode("to_user", "UTF-8") + "=" + URLEncoder.encode(addFriend, "UTF-8");
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
 
@@ -316,11 +328,19 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 break;
             case("mygames"):
                 myGames(params);
-                operationURL = IP + "getmygamesfromdb.php";
+                operationURL = IP + "/getmygamesfromdb.php";
                 break;
             case("friendlist"):
                 getFriendlist();
                 operationURL = IP + "/getfriendlistfromdb.php";
+                break;
+            case "get all courses":{
+                operationURL = IP + "/getcoursesfromdb.php";
+                break;
+            }
+            case("friend request"):
+                friendRequest(params[1]);
+                operationURL = IP + "/addfriendrequesttodb.php";
                 break;
             default:
                 Log.i("nocase","nocase");
@@ -579,6 +599,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 Intent mygamesi = new Intent(context,MyGamesActivity.class);
                 send.add("fromMainActivity");
                 send.add(result);
+                Log.i("mygamesunparsed",result);
                 mygamesi.putExtra("prevActivity", send);
                 context.startActivity(mygamesi);
                 break;
@@ -597,6 +618,18 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 }
                 SaveSharedData.setFriendList(context, friend);
                 Log.i("friendlist done!", "hej");
+                break;
+            case "get all courses":{
+                Log.i("result", result);
+                Intent allCi = new Intent(context, CourseActivity.class);
+                send.add("fromMyProfileActivity");
+                send.add(result);
+                allCi.putExtra("prevActivity", send);
+                context.startActivity(allCi);
+                break;
+            }
+            case("friend request"):
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
                 break;
             default:
                 // Log.i("Result", result);

@@ -44,7 +44,11 @@
             android:label="@string/title_activity_login" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MyCoursesActivity" />
-        <activity android:name=".MyGamesActivity"></activity>
+        <activity
+            android:name=".MyGamesActivity"
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+        <activity android:name=".FriendsActivity" />
+        <activity android:name=".FriendRequestActivity"></activity>
     </application>
 
 </manifest>

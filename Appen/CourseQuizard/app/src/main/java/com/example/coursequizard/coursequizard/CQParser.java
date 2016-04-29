@@ -4,6 +4,7 @@ import com.example.coursequizard.coursequizard.Question;
 import com.example.coursequizard.coursequizard.University;
 
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 
@@ -11,11 +12,12 @@ public class CQParser {
 	private LinkedList<Question> qlist;
 	private LinkedList<Course> clist;
 	private LinkedList<University> ulist;
-
+	private ArrayList<Game> glist;
 	public  CQParser(){
 		qlist = new LinkedList<Question>();
 		clist = new LinkedList<Course>();
 		ulist = new LinkedList<University>();
+		glist = new ArrayList<Game>();
 	}
 
 
@@ -110,9 +112,43 @@ public class CQParser {
 		}
 	}
 
+	public ArrayList<Game> toGList(String text){
+		gameParser(text);
+		return this.glist;
+	}
+
+	private void gameParser(String text){
+		String splits[] = text.split("%N%");
+		for(int i = 0; i < splits.length; i++){
+			String sentence_splits[] = splits[i].split("%G%");
+			Game g = new Game(Integer.parseInt(sentence_splits[0]),
+					Integer.parseInt(sentence_splits[1]),
+					Integer.parseInt(sentence_splits[2]),
+					Integer.parseInt(sentence_splits[3]),
+					Integer.parseInt(sentence_splits[4]),
+					Integer.parseInt(sentence_splits[5]),
+					sentence_splits[6],
+					sentence_splits[7],
+					Integer.parseInt(sentence_splits[8]),
+					Integer.parseInt(sentence_splits[9]),
+					Integer.parseInt(sentence_splits[10]),
+					sentence_splits[11],
+					sentence_splits[12]);
+			glist.add(g);
+		}
+
+	}
 	////////////////////////////////////////////////
 	/// Getters n Setters
 	////////////////////////////////////////////////
+
+	public ArrayList<Game> getGList(){
+		return this.glist;
+	}
+
+	public void setGList(ArrayList<Game> glist){
+		this.glist = glist;
+	}
 
 	public LinkedList<Question> getQlist() {
 		return qlist;

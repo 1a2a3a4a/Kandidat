@@ -20,7 +20,8 @@
         android:layout_marginTop="50dp"
         android:layout_alignParentTop="true"
         android:layout_alignEnd="@+id/cqNewGameButton"
-        android:layout_alignStart="@+id/cqNewGameButton" />
+        android:layout_alignStart="@+id/cqNewGameButton"
+        android:onClick="toMyGamesActivity" />
     <Button
         android:layout_width="200dp"
         android:layout_height="80dp"
