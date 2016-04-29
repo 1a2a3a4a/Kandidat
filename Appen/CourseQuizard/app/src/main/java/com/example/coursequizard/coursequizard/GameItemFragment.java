@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.coursequizard.coursequizard.dummy.DummyContent;
 import com.example.coursequizard.coursequizard.dummy.DummyContent.DummyItem;
@@ -128,15 +129,26 @@ public class GameItemFragment extends ListFragment {
         Log.i("clickclick","click");
         Game gameItemChosen = myAdapter.getItem(position);
         String gID = String.valueOf(gameItemChosen.getG_id());
+        int stateInt = gameItemChosen.getGame_status();
         Log.i("gid",gID);
         Log.i("tab",String.valueOf(myInt));
+        Log.i("state",String.valueOf(stateInt));
         if (myInt ==0) {
+            if (stateInt==0 || stateInt ==2)
             toPlayGameActivity(gID);
+            else{
+                String type = "updatestate";
+                BackgroundWithServer bgws =new BackgroundWithServer(getActivity());
+                bgws.execute(type,gID);
+                Toast.makeText(getActivity(), "You have canceled this game, 0 score have been sent", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
     public void toPlayGameActivity(String qID){
-
+        String type = "quiz from my games";
+        BackgroundWithServer bgws =new BackgroundWithServer(getActivity());
+        bgws.execute(type,qID);
     }
     public void myGamesSort(){
        ArrayList<Game> tempopTurnGames = new ArrayList<Game>();
@@ -144,8 +156,13 @@ public class GameItemFragment extends ListFragment {
          ArrayList<Game> tempfinishedGames = new ArrayList<Game>();
         String userName = SaveSharedData.getUserName(getActivity());
         int size = myGames.size();
-        for (int i =0; i<  size; i++){
-            Game g = myGames.get(i);
+        for (int j =0; j<  size; j++){
+            Game g = myGames.get(j);
+            Log.i("gameid",String.valueOf(g.getG_id()));
+            Log.i("User1 Score",String.valueOf(g.getUser1_score()));
+            Log.i("User2 Score",String.valueOf(g.getUser2_score()));
+            Log.i("gamelist sent by",g.getSent_by());
+            Log.i("gamelist state",String.valueOf(g.getGame_status()));
             switch(g.getGame_status()){
                 //pending
                 case(0):
@@ -176,6 +193,14 @@ public class GameItemFragment extends ListFragment {
                     break;
                 //finished
                 case(3):
+                    if (userName.equals(g.getUser_1())){
+                        tempmyTurnGames.add(g);
+                    }
+                    else {
+                        tempopTurnGames.add(g);
+                    }
+                    break;
+                case(4):
                     tempfinishedGames.add(g);
                     break;
                 default :

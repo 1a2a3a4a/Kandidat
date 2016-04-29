@@ -28,7 +28,6 @@ public class CourseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
-
         // Parse the string from the php script
         toParserHandler();
 
@@ -47,34 +46,41 @@ public class CourseActivity extends AppCompatActivity {
                 toAddCourseActivity();
             }
         });
-
+        fromActivityFab(fab);
 
     }
-
+    public void fromActivityFab (FloatingActionButton fab){
+        fab.setVisibility(View.INVISIBLE);
+        ArrayList<String> message = new ArrayList<String>();
+        message = getIntent().getExtras().getStringArrayList("prevActivity");
+       if (message.get(0).equals("fromCreateQuestionActivity")){
+           fab.setVisibility(View.VISIBLE);
+        }
+    }
     /**
      * recieve the unparsed string and parse it to a linked list
      */
     public void toParserHandler() {
         Log.i("parserhandler", "");
-        String data = "";
+        String datas = "";
         ArrayList<String> message = new ArrayList<String>();
 
         message = getIntent().getExtras().getStringArrayList("prevActivity");
         Log.i("message 0:", message.get(0));
         if (message.get(0).equals("fromOpponentActivity")) {
-            data = message.get(2);
+            datas = message.get(2);
         }
         else if (message.get(0).equals("fromCreateQuestionActivity")){
-            data = message.get(1);
+            datas = message.get(1);
         }
         else if(message.get(0).equals("fromChallengeActivity")){
-            data = message.get(2);
+            datas = message.get(2);
         }
         else if(message.get(0).equals("fromMyProfileActivity")){
-            data = message.get(1);
+            datas = message.get(1);
         }
         CQParser parser = new CQParser();
-        courseList = parser.toCList(data);
+        courseList = parser.toCList(datas);
     }
 
 

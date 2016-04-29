@@ -30,7 +30,7 @@ public class Game implements Parcelable {
         this.User_2 = User_2;
         this.User1_score = User1_score;
         this.User2_score = User2_score;
-        this.Game_status = 0;
+        this.Game_status = Game_status;
         this.Game_status_string = "";
         this.sent_by = sent_by;
         this.course_name = course_name;

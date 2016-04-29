@@ -65,7 +65,7 @@ public class GameItemAdapter extends ArrayAdapter<Game> {
             String opponentScoreName = "´s score";
             if (gameScore != null) {
                 // check if user is user1/sentby
-                if (SaveSharedData.getUserName(getContext()).equals(i.getUser_1())) {
+                if (SaveSharedData.getUserName(getContext()).toLowerCase().equals(i.getUser_1().toLowerCase())) {
                     opponentScore = String.valueOf(i.getUser2_score());
                     userScore = String.valueOf(i.getUser1_score());
                     String score = userScore + " - " + opponentScore;
@@ -94,17 +94,23 @@ public class GameItemAdapter extends ArrayAdapter<Game> {
                     //2 user 1
                     // 3 finished
                     switch(i.getGame_status()){
+                        case(0):
+                            i.setGame_status_string( "state 0");
+                            break;
                         case(1):
-                            i.setGame_status_string(user_2_turn + " turn");
+                            i.setGame_status_string("state 1");
                             break;
                         case(2):
-                            i.setGame_status_string(user_1_turn + " turn");
+                            i.setGame_status_string("state 2");
                             break;
                         case(3):
-                            i.setGame_status_string("Game Finished");
+                            i.setGame_status_string("state 3");
+                            break;
+                        case(4):
+                            i.setGame_status_string("state 4");
                             break;
                         default:
-                            i.setGame_status_string("Pending");
+                            i.setGame_status_string("Fel");
                             break;
                     }
                     stateMessage.setText(i.getGame_status_string());

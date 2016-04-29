@@ -45,7 +45,12 @@ public class PlayGameActivity extends AppCompatActivity {
           else if(message.get(0).equals("fromFPChallengeActivity")){
               questionList = questionParser.toQList(message.get(1));
           }
+          else if(message.get(0).equals("fromMyGamesActivity")){
+              questionList = questionParser.toQList(message.get(1));
+              gameID = message.get(2);
+          }
           numberOfQuestions = questionList.size();
+
       }
         public ArrayList<String>  randomAlternativeList(ArrayList<String> alternativeList){
             ArrayList<String> randomizedList = new ArrayList<String>();
