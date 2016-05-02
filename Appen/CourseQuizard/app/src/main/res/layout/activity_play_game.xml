@@ -120,7 +120,15 @@
         android:layout_marginTop="71dp"
         android:layout_alignParentEnd="true" />
 
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="To main menu"
+        android:id="@+id/gameDoneButton"
+        android:layout_alignBottom="@+id/questionTextView"
+        android:layout_centerHorizontal="true"
+        android:onClick="toMainActivity"
+        android:nestedScrollingEnabled="true" />
 
 
 </RelativeLayout>

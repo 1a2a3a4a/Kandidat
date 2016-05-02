@@ -114,13 +114,33 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
      */
 
     private void myCourseList(String ... params ){
-        String userID = params[1];
+        //String userID = params[1];
+        String username = SaveSharedData.getUserName(context);
+        String universityID = "1";
+        try {
+            post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+                    + URLEncoder.encode("uni_id", "UTF-8") + "=" + URLEncoder.encode(universityID, "UTF-8");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
     private void allUniversties(String ... params){
     }
     private void myCourseListFromChallenge(String ... params){
         opponentName = params[1];
+        String username = SaveSharedData.getUserName(context);
+        String universityID = "1";
+        try {
+            post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+                    + URLEncoder.encode("uni_id", "UTF-8") + "=" + URLEncoder.encode(universityID, "UTF-8");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     /**
      * Fitting the arguments to the specific URL
@@ -128,7 +148,18 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
      */
 
     private void myCourseListFromOpponent(String ... params){
+
         opponentName = params[1];
+        String username = SaveSharedData.getUserName(context);
+        String universityID = "1";
+        try {
+            post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+                    + URLEncoder.encode("uni_id", "UTF-8") + "=" + URLEncoder.encode(universityID, "UTF-8");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void getMyCourses(String ... params){
@@ -142,14 +173,14 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
 
     private void swapFavCourses(String[] params) {
         String c_id = params[1];
-        String user_name = "Daniel";
+        String user_name =  SaveSharedData.getUserName(context);
         try {
             this.post_data = URLEncoder.encode("c_id", "UTF-8") + "=" + URLEncoder.encode(c_id, "UTF-8") + "&"
                     +URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
+}
+}
 
 
     private void getSinglePlayerQuiz(String ... params){
@@ -311,15 +342,15 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
             case("all courses"):
                 Log.i("innantryblock",params[0]);
                 myCourseList(params);
-                operationURL = IP + "/getcoursesfromdb.php";
+                operationURL = IP + "/getcourselistsfromdb.php";
                 break;
             case("my courses, from opponent"):
                 myCourseListFromOpponent(params);
-                operationURL = IP + "/getcoursesfromdb.php";
+                operationURL = IP + "/getcourselistsfromdb.php";
                 break;
             case("my courses, from challenge"):
                 myCourseListFromChallenge(params);
-                operationURL= IP + "/getcoursesfromdb.php";
+                operationURL= IP + "/getcourselistsfromdb.php";
                 break;
             case("singlePlayerMode"):
                 getSinglePlayerQuiz(params);
@@ -356,7 +387,8 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 operationURL = IP + "/getfriendlistfromdb.php";
                 break;
             case "get all courses":{
-                operationURL = IP + "/getcoursesfromdb.php";
+                myCourseList(params);
+                operationURL = IP + "/getcourselistsfromdb.php";
                 break;
             }
             case("friend request"):
@@ -374,6 +406,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 operationURL = IP + "/updategamestatustodb.php";
                 break;
             default:
+
                 Log.i("nocase","nocase");
                 operationURL = IP;
 

@@ -75,7 +75,7 @@ public class CourseAdapter extends ArrayAdapter<Course> {
                 int pos = (Integer) view.getTag(R.id.course_star_position);
                 Course courseChosen = c.get(pos);
                 Log.i("pushed on course", courseChosen.getName());
-                //swapFavorite(courseChosen);
+                swapFavorite(courseChosen);
                String editTag= swapButton(courseStar,(String) view.getTag(R.id.course_star_image));
                 view.setTag(R.id.course_star_image,editTag);
             }

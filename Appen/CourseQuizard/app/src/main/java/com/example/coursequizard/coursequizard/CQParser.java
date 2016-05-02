@@ -80,8 +80,24 @@ public class CQParser {
 		return this.clist;
 
 	}
+	public ArrayList<ArrayList<Course>> toCLists(String courseText){
+		ArrayList<ArrayList<Course>> courseLists = new ArrayList<ArrayList<Course>>();
+		ArrayList<Course> myCourses = new ArrayList<Course>();
+		ArrayList<Course> uniCourses = new ArrayList<Course>();
+		ArrayList<Course> allCourses = new ArrayList<Course>();
+		String[] splits = courseText.split("%U%");
+		myCourses =courseParser(splits[0]);
+		uniCourses =courseParser(splits[1]);
+		allCourses =courseParser(splits[2]);
+		courseLists.add(myCourses);
+		courseLists.add(uniCourses);
+		courseLists.add(allCourses);
+		return courseLists;
 
-	private void courseParser(String text){
+	}
+
+	private ArrayList<Course> courseParser(String text){
+		ArrayList<Course> courseList = new ArrayList<Course>();
 		String splits[] = text.split("%N%");
 		for(int i=0; i < splits.length; i++){
 			String sentence_splits[] = splits[i].split("%C%");
@@ -90,8 +106,9 @@ public class CQParser {
 					sentence_splits[2],
 					sentence_splits[3],
 					sentence_splits[4]);
-			clist.add(c);
+			courseList.add(c);
 		}
+		return courseList;
 	}
 
 

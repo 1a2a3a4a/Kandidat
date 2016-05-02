@@ -1,19 +1,24 @@
 package com.example.coursequizard.coursequizard;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.support.v7.app.AlertDialog;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
 public class PlayGameActivity extends AppCompatActivity {
-    AlertDialog alertDialog;
+    AlertDialog.Builder alertDialog;
     public int questionIndex =0;
     public String wrong = "";
     public String gameID ="";
@@ -92,7 +97,6 @@ public class PlayGameActivity extends AppCompatActivity {
         alt4Button.setText(alternativeList.get(3));
     }
     public void answer(View view ){
-        TextView questionTextView = (TextView) findViewById(R.id.textView);
         Button   alt1Button       =  (Button) findViewById(R.id.alt1Button);
         Button   alt2Button       = (Button) findViewById(R.id.alt2Button);
         Button   alt3Button       = (Button) findViewById(R.id.alt3Button);
@@ -230,6 +234,8 @@ public class PlayGameActivity extends AppCompatActivity {
             }
             alertDialog.setMessage(" You made " + String.valueOf(numberOfQuestions- wrongCount)  + " of "  +String.valueOf(numberOfQuestions)  + " questions \n"  + add  + wrong );
             alertDialog.show();
+            View gameDoneButton = findViewById(R.id.gameDoneButton);
+            gameDoneButton.setVisibility(View.VISIBLE);
             unclick();
         }
         else {
@@ -248,10 +254,28 @@ public class PlayGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_game);
-        alertDialog = new AlertDialog.Builder(PlayGameActivity.this).create();
+        View gameDoneButton = findViewById(R.id.gameDoneButton);
+        gameDoneButton.setVisibility(View.GONE);
+        alertDialog = new AlertDialog.Builder(PlayGameActivity.this);
         alertDialog.setTitle("Your result");
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //do things
+            }
+        });
         fromActivity();
         quizPrinter();
+
+    }
+    @Override
+    public void onBackPressed() {
+    }
+    public void toMainActivity(View view){
+        Intent i = new Intent(getApplicationContext(),MainActivity.class);
+        ArrayList<String> send = new ArrayList<String>();
+        send.add("fromPlayGameActivity");
+        i.putExtra("prevActivity",send );
+        startActivity(i);
 
     }
 }

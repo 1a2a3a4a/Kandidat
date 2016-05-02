@@ -50,6 +50,7 @@ public class CourseFragment extends ListFragment  {
     private ArrayList<Course> myCourses = new ArrayList<Course>();
     private ArrayList<Course> universityCourses = new ArrayList<>();
     private ArrayList<Course> allCourses = new ArrayList<>();
+    private ArrayList<ArrayList<Course>> courseLists = new ArrayList<ArrayList<Course>>();
     private int myInt;
     private CourseAdapter myAdapter;
 
@@ -161,8 +162,16 @@ public class CourseFragment extends ListFragment  {
         else if(message.get(0).equals("fromMyProfileActivity")){
             datas = message.get(1);
         }
+        Log.i("unparsedcourselists","unp");
+        Log.i("unparsedcourselists",datas);
         CQParser parser = new CQParser();
-       allCourses = parser.toCList(datas);
+      // allCourses = parser.toCList(datas);
+        courseLists = parser.toCLists(datas);
+        myCourses = courseLists.get(0);
+        universityCourses = courseLists.get(1);
+        allCourses =courseLists.get(2);
+
+
     }
     public void toAddCourseActivity(){
         String type = "universitylist";
