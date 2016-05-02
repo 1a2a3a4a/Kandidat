@@ -10,12 +10,12 @@ import java.util.LinkedList;
 
 public class CQParser {
 	private LinkedList<Question> qlist;
-	private LinkedList<Course> clist;
+	private ArrayList<Course> clist;
 	private LinkedList<University> ulist;
 	private ArrayList<Game> glist;
 	public  CQParser(){
 		qlist = new LinkedList<Question>();
-		clist = new LinkedList<Course>();
+		clist = new ArrayList<Course>();
 		ulist = new LinkedList<University>();
 		glist = new ArrayList<Game>();
 	}
@@ -75,7 +75,7 @@ public class CQParser {
 
 
 	//Use when having a coded string of courses
-	public LinkedList<Course> toCList(String courseText){
+	public ArrayList<Course> toCList(String courseText){
 		courseParser(courseText);
 		return this.clist;
 
@@ -162,13 +162,13 @@ public class CQParser {
 
 
 
-	public LinkedList<Course> getClist() {
+	public ArrayList<Course> getClist() {
 		return clist;
 	}
 
 
 
-	public void setClist(LinkedList<Course> clist) {
+	public void ArrayList(ArrayList<Course> clist) {
 		this.clist = clist;
 	}
 

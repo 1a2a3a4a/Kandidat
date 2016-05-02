@@ -23,7 +23,7 @@ import java.util.LinkedList;
 public class MyCoursesActivity extends AppCompatActivity {
 
     private ArrayList<String> data = new ArrayList<String>();
-    private LinkedList<Course> myCourses = new LinkedList<Course>();
+    private ArrayList<Course> myCourses = new ArrayList<Course>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

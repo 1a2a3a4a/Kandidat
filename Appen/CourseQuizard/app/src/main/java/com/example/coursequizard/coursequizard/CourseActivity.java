@@ -1,44 +1,48 @@
 package com.example.coursequizard.coursequizard;
 
-import android.content.Intent;
-        import android.content.SharedPreferences;
-        import android.preference.PreferenceManager;
-        import android.support.design.widget.FloatingActionButton;
-        import android.support.design.widget.Snackbar;
-        import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.View;
-        import android.widget.AdapterView;
-        import android.widget.ArrayAdapter;
-        import android.widget.ListView;
 
-        import java.util.ArrayList;
-        import java.util.LinkedList;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
-/**
- * This class is for the CourseActivity: A scrollable list of all available courses, if the specific course does not exist then the users add one by tapping the floating button.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class CourseActivity extends AppCompatActivity {
 
-    public LinkedList<Course> courseList = new LinkedList<Course>();
-    private ArrayList<String> data = new ArrayList<String>();
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private ArrayList<Course> myCourses;
+    private ArrayList<Course> uniCourses;
+    private ArrayList<Course> allCourses;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
-        // Parse the string from the php script
-        toParserHandler();
 
-        // enable interaction with the courselistview
-        ListView coursesListView = (ListView) findViewById(R.id.coursesListView);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        populateData();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        coursesListView.setAdapter(new MyListAdapter(this, R.layout.list_item, data, courseList));
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
 
-        // Listener of the floating button
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,52 +51,15 @@ public class CourseActivity extends AppCompatActivity {
             }
         });
         fromActivityFab(fab);
-
     }
-    public void fromActivityFab (FloatingActionButton fab){
+    private void fromActivityFab (FloatingActionButton fab){
         fab.setVisibility(View.INVISIBLE);
         ArrayList<String> message = new ArrayList<String>();
         message = getIntent().getExtras().getStringArrayList("prevActivity");
-       if (message.get(0).equals("fromCreateQuestionActivity")){
-           fab.setVisibility(View.VISIBLE);
+        if (message.get(0).equals("fromCreateQuestionActivity")){
+            fab.setVisibility(View.VISIBLE);
         }
     }
-    /**
-     * recieve the unparsed string and parse it to a linked list
-     */
-    public void toParserHandler() {
-        Log.i("parserhandler", "");
-        String datas = "";
-        ArrayList<String> message = new ArrayList<String>();
-
-        message = getIntent().getExtras().getStringArrayList("prevActivity");
-        Log.i("message 0:", message.get(0));
-        if (message.get(0).equals("fromOpponentActivity")) {
-            datas = message.get(2);
-        }
-        else if (message.get(0).equals("fromCreateQuestionActivity")){
-            datas = message.get(1);
-        }
-        else if(message.get(0).equals("fromChallengeActivity")){
-            datas = message.get(2);
-        }
-        else if(message.get(0).equals("fromMyProfileActivity")){
-            datas = message.get(1);
-        }
-        CQParser parser = new CQParser();
-        courseList = parser.toCList(datas);
-    }
-
-
-    private void populateData() {
-        for(int i =0; i < courseList.size(); i++) {
-            data.add(courseList.get(i).toStringName());
-        }
-    }
-
-    /**
-     * Start the addcourse Actvitty
-     */
     public void toAddCourseActivity(){
         String type = "universitylist";
         BackgroundWithServer bgws = new BackgroundWithServer(this);
@@ -101,7 +68,21 @@ public class CourseActivity extends AppCompatActivity {
     }
 
 
+    private void setupViewPager(ViewPager viewPager) {
+        CourseFragmentAdapter adapter = new CourseFragmentAdapter(getSupportFragmentManager());
+        adapter.addFragment(new CourseFragment(), "my courses", myCourses);
+        adapter.addFragment(new CourseFragment(), " uni courses", uniCourses);
+        adapter.addFragment(new CourseFragment(), "all", allCourses);
+        viewPager.setAdapter(adapter);
+    }
 
-
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+                break;
+        }
+        return true;
+    }
 }

@@ -36,7 +36,8 @@
         </activity>
         <activity android:name=".SearchResultsActivity" />
         <activity android:name=".ChallengeActivity" />
-        <activity android:name=".CourseActivity" />
+        <activity android:name=".CourseActivity"
+            android:theme="@style/MyMaterialTheme"/>
         <activity android:name=".UploadTextActivity" />
         <activity android:name=".AddCourseActivity" />
         <activity
@@ -46,7 +47,7 @@
         <activity android:name=".MyCoursesActivity" />
         <activity
             android:name=".MyGamesActivity"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+            android:theme="@style/MyMaterialTheme" />
         <activity android:name=".FriendsActivity" />
         <activity android:name=".FriendRequestActivity"></activity>
     </application>

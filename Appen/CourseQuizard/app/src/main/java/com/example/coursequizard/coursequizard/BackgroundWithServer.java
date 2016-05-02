@@ -142,7 +142,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
 
     private void swapFavCourses(String[] params) {
         String c_id = params[1];
-        String user_name = params[2];
+        String user_name = "Daniel";
         try {
             this.post_data = URLEncoder.encode("c_id", "UTF-8") + "=" + URLEncoder.encode(c_id, "UTF-8") + "&"
                     +URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8");

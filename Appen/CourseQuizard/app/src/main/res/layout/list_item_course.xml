@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:weightSum="1">
+
+    <ImageButton
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:id="@+id/list_item_course_button"
+        android:src="@drawable/star_on"
+        android:layout_gravity="right"
+        android:onClick="clickar"
+        android:scaleType="fitCenter"
+        android:focusableInTouchMode="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="gq"
+        android:id="@+id/list_item_course_name"
+        android:textSize="25sp"
+        android:layout_alignParentTop="true"
+
+        android:layout_toEndOf="@+id/list_item_course_button" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="gq"
+        android:id="@+id/list_item_course_code"
+        android:layout_below="@+id/list_item_course_name"
+        android:layout_toEndOf="@+id/list_item_course_button" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="gq"
+        android:id="@+id/list_item_course_university"
+        android:layout_below="@+id/list_item_course_code"
+        android:layout_toEndOf="@+id/list_item_course_button" />
+
+</RelativeLayout>

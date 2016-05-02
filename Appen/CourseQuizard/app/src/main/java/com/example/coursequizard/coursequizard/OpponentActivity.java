@@ -72,7 +72,9 @@ public class OpponentActivity extends AppCompatActivity {
      * @param menu
      * @return
      */
+     /*
     @Override
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
@@ -81,12 +83,11 @@ public class OpponentActivity extends AppCompatActivity {
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
                 (SearchView) menu.findItem(R.id.searchFriend).getActionView();
-
-
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
         return true;
     }
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
