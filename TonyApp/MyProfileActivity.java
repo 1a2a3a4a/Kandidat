@@ -13,7 +13,13 @@ public class MyProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_profile);
 
     }
-
+    public void toAllCoursesActivity(View view){
+        BackgroundWithServer bgws = new BackgroundWithServer(this);
+        String type = "get all courses";
+        //TODO IMPLEMENT USER
+        //String username = "Daniel";
+        bgws.execute(type);
+    }
 
     public void toMyCoursesActivity(View view){
         //Intent i = new Intent(getApplicationContext(), MyCoursesActivity.class);
@@ -24,11 +30,10 @@ public class MyProfileActivity extends AppCompatActivity {
         //startActivity(i);
         BackgroundWithServer bgws = new BackgroundWithServer(this);
         String type = "get my courses";
-        //TODO IMPLEMENT USER DONE!
+        //TODO IMPLEMENT USER
         String username = SaveSharedData.getUserName(MyProfileActivity.this);
         bgws.execute(type, username);
     }
-
     public void myFriends(View view){
         BackgroundWithServer bgws = new BackgroundWithServer(MyProfileActivity. this);
         bgws.execute("friendlist" );
@@ -36,7 +41,11 @@ public class MyProfileActivity extends AppCompatActivity {
         startActivity(i);
     }
     public void addFriend(View view){
-        Intent i = new Intent(MyProfileActivity.this, FriendRequest.class);
+        Intent i = new Intent(MyProfileActivity.this, FriendRequestActivity.class);
         startActivity(i);
+    }
+    public void toPendingActivity(View view){
+        BackgroundWithServer bgws = new BackgroundWithServer(MyProfileActivity.this);
+        bgws.execute("pending");
     }
 }

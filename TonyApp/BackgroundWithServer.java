@@ -266,8 +266,10 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     private void getFriendlist(String ... params){
         userName = SaveSharedData.getUserName(context);
         Log.i("username", userName);
-        try{post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8");
+        try {
+            post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8") + "&"
 
+                    + URLEncoder.encode("rel_status", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8");
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -319,6 +321,16 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     }
 
 
+    private void pending(){
+        String username = SaveSharedData.getUserName(context);
+        try {
+            post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+
+                    + URLEncoder.encode("rel_status", "UTF-8") + "=" + URLEncoder.encode("0", "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     /**
@@ -420,6 +432,10 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
             case("delete friend"):
                 deleteFriend(params[1]);
                 operationURL = IP + "/updaterelationstodb.php";
+                break;
+            case("pending"):
+                pending();
+                operationURL = IP + "/getfriendlistfromdb.php";
                 break;
             default:
 
@@ -728,6 +744,13 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 break;
             case("delete friend"):
                 Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+                break;
+            case("pending"):
+                Intent i = new Intent(context, PendingActivity.class);
+                send.add("fromMyProfileActivity");
+                send.add(result);
+                i.putExtra("prevActivity", send);
+                context.startActivity(i);
                 break;
             default:
                 // Log.i("Result", result);
