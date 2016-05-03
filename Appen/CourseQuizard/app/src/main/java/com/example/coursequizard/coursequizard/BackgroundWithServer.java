@@ -116,7 +116,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     private void myCourseList(String ... params ){
         //String userID = params[1];
         String username = SaveSharedData.getUserName(context);
-        String universityID = "1";
+        String universityID = SaveSharedData.getMyUniversityID(context);
         try {
             post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
                     + URLEncoder.encode("uni_id", "UTF-8") + "=" + URLEncoder.encode(universityID, "UTF-8");
@@ -132,7 +132,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     private void myCourseListFromChallenge(String ... params){
         opponentName = params[1];
         String username = SaveSharedData.getUserName(context);
-        String universityID = "1";
+        String universityID = SaveSharedData.getMyUniversityID(context);
         try {
             post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
                     + URLEncoder.encode("uni_id", "UTF-8") + "=" + URLEncoder.encode(universityID, "UTF-8");
@@ -151,7 +151,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
 
         opponentName = params[1];
         String username = SaveSharedData.getUserName(context);
-        String universityID = "1";
+        String universityID = SaveSharedData.getMyUniversityID(context);
         try {
             post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
                     + URLEncoder.encode("uni_id", "UTF-8") + "=" + URLEncoder.encode(universityID, "UTF-8");
@@ -368,6 +368,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 allUniversties(params);
                 operationURL = IP + "/getuniversitiesfromdb.php";
                 break;
+
             case("added course"):
                 addCourse(params);
                 operationURL = IP + "/addcoursetodb.php";
@@ -450,6 +451,10 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 pending();
                 operationURL = IP + "/getfriendlistfromdb.php";
                 break;
+            case("profile universitylist"):
+                allUniversties(params);
+                operationURL = IP + "/getuniversitiesfromdb.php";
+                break;
             default:
 
                 Log.i("nocase","nocase");
@@ -458,42 +463,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
 
 
         }
-        /*
-        if(type.equals("add question")) {
-            addQuestion(params);
-            operationURL = IP +"/addquestiontodb.php";
-        }
-        else if (type.equals("university list")){
-            allUniversties(params);
-            operationURL = IP + "/getuniversitiesfromdb.php";
 
-        }
-        else if (type.equals("added course")){
-            addCourse(params);
-            operationURL = IP + "/addcoursetodb.php";
-    }
-        else if(type.equals("all courses")){
-            myCourseList(params);
-            operationURL = IP + "getcoursesfromdb.php";
-
-        }
-        else if(type.equals("my courses, from opponent")){
-            myCourseListFromOpponent(params);
-            operationURL = IP + "/getcoursesfromdb.php";
-
-        }
-        else if(type.equals("my courses, from challenge")){
-            myCourseListFromChallenge(params);
-            operationURL= IP + "/getcoursesfromdb.php";
-        }
-        else if(type.equals("my courses, from add courses")){
-
-        }
-        else if(type.equals("singlePlayerMode")){
-            getSinglePlayerQuiz(params);
-            operationURL= IP + "/getquestionsfromdb.php";
-        }
-        */
             try {
                 Log.i("tryblock",params[0]);
                 URL url = new URL(operationURL);
@@ -767,6 +737,13 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 send.add(result);
                 i.putExtra("prevActivity", send);
                 context.startActivity(i);
+                break;
+            case("profile universitylist"):
+                Intent profileuniversitylisti = new Intent(context,MyProfileActivity.class);
+                send.add("fromMainActivity");
+                send.add(result);
+                profileuniversitylisti.putExtra("prevActivity",send );
+                context.startActivity(profileuniversitylisti);
                 break;
             default:
                 // Log.i("Result", result);

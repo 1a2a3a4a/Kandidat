@@ -12,7 +12,9 @@ import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -48,8 +50,30 @@ public class UploadTextActivity extends AppCompatActivity {
             if(counter == 0) {
                 EditText textEditText = (EditText) findViewById(R.id.textEditText);
                 counter = 1;
-                String uploadThisText = textEditText.getText().toString();
-                throughphp(uploadThisText);
+                String convertThisText = textEditText.getText().toString();
+                String converted ="";
+                String tempString ="";
+
+                BufferedReader reader = new BufferedReader(
+                        new StringReader(convertThisText));
+
+                try {
+                    while ((tempString = reader.readLine()) != null) {
+
+                        if (tempString.length() > 0){
+
+                            converted +=tempString;
+                        }
+                        else{
+                            converted +=" ";
+                        }
+
+                    }
+
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+                throughphp(converted);
 
             }
             else{

@@ -7,6 +7,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +27,7 @@ public class PlayGameActivity extends AppCompatActivity {
     public int numberOfQuestions = 5;
     public ArrayList<String> userAnswers= new ArrayList<String>();
     public ArrayList<String> correctAnswers = new ArrayList<String>();
-
+    private Toolbar toolbar;
 
 
 
@@ -252,8 +253,17 @@ public class PlayGameActivity extends AppCompatActivity {
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_game);
+        /*toolbar = (Toolbar) findViewById(R.id.toolbarplaygame);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+        // getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        */
         View gameDoneButton = findViewById(R.id.gameDoneButton);
         gameDoneButton.setVisibility(View.GONE);
         alertDialog = new AlertDialog.Builder(PlayGameActivity.this);

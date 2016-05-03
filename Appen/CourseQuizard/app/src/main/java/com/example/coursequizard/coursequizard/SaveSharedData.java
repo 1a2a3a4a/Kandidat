@@ -199,4 +199,24 @@ public class SaveSharedData
         return getSharedPreferences(ctx).getInt("MyCoursesSize", 0);
     }
 */
+    public static void setMyUniversityName(Context ctx, String universityName)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString("MyUniversityName", universityName);
+        editor.commit();
+    }
+    public static void setMyUniversityID(Context ctx, String universityID)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString("MyUniversityID", universityID);
+        editor.commit();
+    }
+    public static String getMyUniversityName(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString("MyUniversityName", "Uppsala University");
+    }
+    public static String getMyUniversityID(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString("MyUniversityID", "1");
+    }
 }

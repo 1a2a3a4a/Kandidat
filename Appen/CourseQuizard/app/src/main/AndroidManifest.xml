@@ -28,7 +28,8 @@
         <activity android:name=".NewGameActivity" />
         <activity android:name=".CreateQuestionActivity" />
         <activity android:name=".MyProfileActivity" />
-        <activity android:name=".PlayGameActivity" />
+        <activity android:name=".PlayGameActivity"
+           />
         <activity android:name=".OpponentActivity">
             <meta-data
                 android:name="android.app.searchable"

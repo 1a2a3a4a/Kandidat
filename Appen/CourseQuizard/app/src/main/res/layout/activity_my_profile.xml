@@ -56,4 +56,35 @@
         android:layout_centerVertical="true"
         android:layout_alignStart="@+id/myFriendsButton"
         android:onClick="toPendingActivity" />
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/universitySpinnerProfile"
+        android:layout_below="@+id/pendingButton"
+        android:layout_marginTop="54dp"
+        android:layout_toEndOf="@+id/pendingButton"
+        android:clickable="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="University:"
+        android:id="@+id/universityTextViewProfile"
+        android:layout_alignTop="@+id/universitySpinnerProfile"
+        android:layout_alignStart="@+id/pendingButton"
+        android:layout_alignBottom="@+id/universitySpinnerProfile"
+        android:layout_alignEnd="@+id/pendingButton"
+        android:textAlignment="center"
+        android:textColor="#070707"
+        android:textSize="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save universitychanges"
+        android:id="@+id/universityEditButton"
+        android:layout_below="@+id/universitySpinnerProfile"
+        android:layout_centerHorizontal="true"
+        android:onClick="editMyUniversity"
+        android:nestedScrollingEnabled="false" />
 </RelativeLayout>

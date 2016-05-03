@@ -90,9 +90,20 @@ public class MainActivity extends AppCompatActivity
 
         }
     }
+    public void updateNav(){
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.getHeaderView(0);
+        TextView nameText = (TextView) header.findViewById(R.id.navHeaderUserName);
+        TextView universityText = (TextView) header.findViewById(R.id.navHeaderUniversity);
+        nameText.setText(SaveSharedData.getUserName(MainActivity.this));
+        universityText.setText(SaveSharedData.getMyUniversityName(MainActivity.this));
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if(SaveSharedData.getUserName(MainActivity.this).length() == 0)
         {
             toLoginActivity();
@@ -122,14 +133,26 @@ public class MainActivity extends AppCompatActivity
             drawer.setDrawerListener(toggle);
             toggle.syncState();
 
+
+            updateNav();
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
             View header = navigationView.getHeaderView(0);
             TextView nameText = (TextView) header.findViewById(R.id.navHeaderUserName);
+            TextView universityText = (TextView) header.findViewById(R.id.navHeaderUniversity);
             nameText.setText(SaveSharedData.getUserName(MainActivity.this));
+            universityText.setText(SaveSharedData.getMyUniversityName(MainActivity.this));
             BackgroundWithServer bgws = new BackgroundWithServer(this);
             bgws.execute("friendlist");
         }
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        updateNav();
+        //When BACK BUTTON is pressed, the activity on the stack is restarted
+        //Do what you want on the refresh procedure here
     }
 /*
     @Override
@@ -174,11 +197,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
-            Intent i = new Intent(getApplicationContext(),MyProfileActivity.class);
-            ArrayList<String> send = new ArrayList<String>();
-            send.add("fromMainActivity");
-            i.putExtra("prevActivity",send );
-            startActivity(i);
+            String type ="profile universitylist";
+            BackgroundWithServer bgws = new BackgroundWithServer(MainActivity.this);
+            bgws.execute(type);
+
         } else if (id == R.id.nav_signOut) {
             SaveSharedData.setUserName(MainActivity.this, "");
             SaveSharedData.setUserName(MainActivity.this, "");

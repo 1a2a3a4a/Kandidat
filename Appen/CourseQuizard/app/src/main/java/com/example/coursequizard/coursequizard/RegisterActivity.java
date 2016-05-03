@@ -16,13 +16,23 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 */
 public class RegisterActivity extends AppCompatActivity {
+    String[] invalidUsernames = {"single player","singleplayer","randomopponent", "random opponent", "admin", "simontest","simontest2"};
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     //private GoogleApiClient client;
+    public boolean invalidUsername(String username){
+        for (int i =0; i < invalidUsernames.length; i++){
+            Log.i("invalidrunning","invalid");
+            if (username.equals(invalidUsernames[i])){
+                return true;
+            }
 
+        }
+        return false;
+    }
     public void register(View view) {
         EditText username = (EditText) findViewById(R.id.usernameText);
         EditText password = (EditText) findViewById(R.id.passwordText);
@@ -34,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         BackgroundWithServer bgws = new BackgroundWithServer(this);
 
 
-        if (!(usernameString.matches("") || passwordString.matches("") || cpasswordString.matches(""))) {
+        if (!(usernameString.matches("") || passwordString.matches("") || cpasswordString.matches("") || invalidUsername(usernameString.toLowerCase()))) {
             bgws.execute("register", usernameString, passwordString, cpasswordString);
             //få tillbaka ett ok sen gå tillbaka till loginaktiviteten eller att det redan finns och returna.
             return;
