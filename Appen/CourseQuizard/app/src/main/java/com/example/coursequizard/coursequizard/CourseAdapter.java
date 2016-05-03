@@ -19,17 +19,20 @@ public class CourseAdapter extends ArrayAdapter<Course> {
     private Context context1;
     private ArrayList<Course> c = new ArrayList<Course>();
     private int p;
+    private ArrayList<Course> myCourses = new ArrayList<Course>();
 
-    public CourseAdapter(Context context, int textViewResourceId, ArrayList<Course> objects) {
+    public CourseAdapter(Context context, int textViewResourceId, ArrayList<Course> objects,ArrayList<Course> myCoursesComp ) {
         super(context, textViewResourceId, objects);
         //this.objects = objects;
         this.c = objects;
+        this.myCourses= myCoursesComp;
     }
 
-    public CourseAdapter(Context context, int resource, int textViewResourceId, ArrayList<Course> items) {
+    public CourseAdapter(Context context, int resource, int textViewResourceId, ArrayList<Course> items,ArrayList<Course> myCoursesComp) {
         super(context, resource, textViewResourceId, items);
         this.context1 = context;
         this.c =items;
+        this.myCourses= myCoursesComp;
     }
 
     public String swapButton(ImageButton button,String tag){
@@ -46,8 +49,6 @@ public class CourseAdapter extends ArrayAdapter<Course> {
     private void swapFavorite(Course course){
         BackgroundWithServer b = new BackgroundWithServer(getContext());
         String type = "swap favorites";
-        //TODO IMPLEMENT USER
-        String user_name = "Daniel";
         String c_id = "" + course.getC_ID();
         b.execute(type, c_id);
     }
@@ -66,9 +67,15 @@ public class CourseAdapter extends ArrayAdapter<Course> {
         }
         Course i = getItem(position);
       final ImageButton courseStar = (ImageButton) v.findViewById(R.id.list_item_course_button);
+        courseStar.setImageResource(R.drawable.star_off);
        // courseStar.setTag(position);
         courseStar.setTag(R.id.course_star_position,position);
-        courseStar.setTag(R.id.course_star_image,"on");
+        courseStar.setTag(R.id.course_star_image,"off");
+         if (checkMyCourses(i)){
+             courseStar.setImageResource(R.drawable.star_on);
+             courseStar.setTag(R.id.course_star_image,"on");
+         }
+
        courseStar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -77,6 +84,9 @@ public class CourseAdapter extends ArrayAdapter<Course> {
                 Log.i("pushed on course", courseChosen.getName());
                 swapFavorite(courseChosen);
                String editTag= swapButton(courseStar,(String) view.getTag(R.id.course_star_image));
+                if (editTag.equals("on")){
+                    myCourses.add(courseChosen);
+                }
                 view.setTag(R.id.course_star_image,editTag);
             }
 
@@ -104,5 +114,13 @@ public class CourseAdapter extends ArrayAdapter<Course> {
 
         }
         return v;
+    }
+    public boolean checkMyCourses(Course course){
+        Log.i("Checking","Checking");
+        Log.i("coursename",course.getName());
+        if(myCourses == null) {
+            return false;
+        }
+       return myCourses.contains(course);
     }
 }

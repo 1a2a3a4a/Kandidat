@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
  * Upload text for automatic question generation. text is uploaded to python server using sockets.
  */
 public class UploadTextActivity extends AppCompatActivity {
+    int counter = 0;
     public String uploadText = new String();
     public void toCreateQuestionActivity(String questions){
         Intent i = new Intent(getApplicationContext(),CreateQuestionActivity.class);
@@ -41,10 +43,21 @@ public class UploadTextActivity extends AppCompatActivity {
         }
 
         public void uploadTextToGenerate(View view){
+
             //Button generateButton = (Button) findViewById(R.id.generateButton);
-            EditText textEditText = (EditText) findViewById(R.id.textEditText);
-            String uploadThisText = textEditText.getText().toString();
-            throughphp(uploadThisText);
+            if(counter == 0) {
+                EditText textEditText = (EditText) findViewById(R.id.textEditText);
+                counter = 1;
+                String uploadThisText = textEditText.getText().toString();
+                throughphp(uploadThisText);
+
+            }
+            else{
+                counter++;
+            }
+            if(counter >= 10){
+                Toast.makeText(UploadTextActivity.this, "DIBIDBDIDBI DONT touch that...", Toast.LENGTH_SHORT).show();
+            }
            // MyAsyncTask clientTask = new MyAsyncTask();
            // clientTask.execute();
 

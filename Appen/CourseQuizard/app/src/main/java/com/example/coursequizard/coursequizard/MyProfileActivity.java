@@ -44,4 +44,8 @@ public class MyProfileActivity extends AppCompatActivity {
         Intent i = new Intent(MyProfileActivity.this, FriendRequestActivity.class);
         startActivity(i);
     }
+    public void toPendingActivity(View view){
+        BackgroundWithServer bgws = new BackgroundWithServer(MyProfileActivity.this);
+        bgws.execute("pending");
+    }
 }

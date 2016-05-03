@@ -1,5 +1,7 @@
 package com.example.coursequizard.coursequizard;
 
+import android.util.Log;
+
 public class Course{
     private int C_ID;
     private int Uni_ID;
@@ -61,4 +63,17 @@ public class Course{
     public String toStringName(){
         return this.name;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        if(obj instanceof Course) {
+            Course course = (Course) obj;
+            Log.i("equals method", "equalsmethod");
+            Log.i(String.valueOf(this.C_ID), String.valueOf(course.C_ID));
+            return this.C_ID == course.C_ID;
+        }
+        return false;
+    }
 }
+
+

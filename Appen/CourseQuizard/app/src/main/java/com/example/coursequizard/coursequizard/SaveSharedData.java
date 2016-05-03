@@ -138,5 +138,65 @@ public class SaveSharedData
         editor.putInt("numberoffriends",friendList.size());
         editor.apply();
     }
-    // tony kod ^^^^^^
+    /*
+    public static void setMyCourses(Context ctx, ArrayList<Course> myCourses){
+
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        int j =0;
+        for (int i =0; i< myCourses.size(); i++){
+            Log.i("setloop",myCourses.get(i).getName());
+            editor.putInt("MyCoursesC_ID_" + i,myCourses.get(i).getC_ID());
+            editor.putInt("MyCoursesUni_ID_" + i,myCourses.get(i).getUni_ID());
+            editor.putString("MyCoursesUni_name_" + i,myCourses.get(i).getUni_name());
+            editor.putString("MyCoursesCourse_code_" + i,myCourses.get(i).getCourse_code());
+            editor.putString("MyCoursesName_" + i,myCourses.get(i).getName());
+            j=i;
+        }
+        setMyCoursesSize(ctx,j+1);
+        editor.commit();
+    }
+    public static ArrayList<Course> getMyCourses(Context ctx){
+        ArrayList<Course> myCourses = new ArrayList<Course>();
+        int myCoursesSize = getSharedPreferences(ctx).getInt("MyCoursesSize", 0);
+        for (int i = 0; i< myCoursesSize ; i++){
+            int courseID = getSharedPreferences(ctx).getInt("MyCoursesC_ID_" +i, -1);
+            int uniID  =  getSharedPreferences(ctx).getInt("MyCoursesUni_ID_" +i, -1);
+            String uniName  =  getSharedPreferences(ctx).getString("MyCoursesUni_name_" +i, "");
+            String courseCode  =  getSharedPreferences(ctx).getString("MyCoursesCourse_Code_" +i, "");
+            String courseName  =  getSharedPreferences(ctx).getString("MyCoursesName_" +i, "");
+            Course oneCourse = new Course(courseID,uniID,uniName,courseCode,courseName);
+        }
+        return myCourses;
+    }
+    public static void addMyCourse(Context ctx, Course myCourse){
+        int i = getSharedPreferences(ctx).getInt("MyCoursesSize", 0);
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putInt("MyCoursesC_ID_" + i,myCourse.getC_ID());
+        editor.putInt("MyCoursesUni_ID_" + i,myCourse.getUni_ID());
+        editor.putString("MyCoursesUni_name_" + i,myCourse.getUni_name());
+        editor.putString("MyCoursesCourse_code_" + i,myCourse.getCourse_code());
+        editor.putString("MyCoursesName_" + i,myCourse.getName());
+        editor.putInt("MyCoursesSize", i+1);
+        editor.commit();
+    }
+    public static void removeMyCourse(Context ctx, Course myCourse){
+        int i = getSharedPreferences(ctx).getInt("MyCoursesSize", 0);
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putInt("MyCoursesC_ID_" + i,myCourse.getC_ID());
+        editor.putInt("MyCoursesUni_ID_" + i,myCourse.getUni_ID());
+        editor.putString("MyCoursesUni_name_" + i,myCourse.getUni_name());
+        editor.putString("MyCoursesCourse_code_" + i,myCourse.getCourse_code());
+        editor.putString("MyCoursesName_" + i,myCourse.getName());
+        editor.putInt("MyCoursesSize", i+1);
+        editor.commit();
+    }
+    public static void  setMyCoursesSize(Context ctx, int myCoursesSize){
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putInt("MyCoursesSize", myCoursesSize);
+        editor.commit();
+    }
+    public static int  getMyCoursesSize(Context ctx){
+        return getSharedPreferences(ctx).getInt("MyCoursesSize", 0);
+    }
+*/
 }

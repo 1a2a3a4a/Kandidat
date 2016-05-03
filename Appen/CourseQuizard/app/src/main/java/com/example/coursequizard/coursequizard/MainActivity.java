@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity
      * @param view main view
      */
     public void cqToOpponentActivity(View view){
+        BackgroundWithServer bgws = new BackgroundWithServer(this);
+        bgws.execute("friendlist");
         Intent i = new Intent(getApplicationContext(),OpponentActivity.class);
         ArrayList<String> send = new ArrayList<String>();
         send.add("fromMainActivity");

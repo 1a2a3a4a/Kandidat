@@ -266,7 +266,8 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     private void getFriendlist(String ... params){
         userName = SaveSharedData.getUserName(context);
         Log.i("username", userName);
-        try{post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8");
+        try{post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8")+ "&"
+                + URLEncoder.encode("rel_status", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8");;
 
         } catch(Exception e){
             e.printStackTrace();
@@ -305,7 +306,39 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
             e.printStackTrace();
         }
     }
+    private void randomGame(String ... params){
+        String username = SaveSharedData.getUserName(context);
+        String courseID = params[1];
+        try {
+            post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+                    + URLEncoder.encode("c_id", "UTF-8") + "=" + URLEncoder.encode(courseID, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void deleteFriend(String friendToDelete) {
+        String username = SaveSharedData.getUserName(context);
+        try {
+            post_data = URLEncoder.encode("by_user", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+                    + URLEncoder.encode("to_user", "UTF-8") + "=" + URLEncoder.encode(friendToDelete, "UTF-8") + "&"
+                    + URLEncoder.encode("intent", "UTF-8") + "=" + URLEncoder.encode("0", "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void pending(){
+        String username = SaveSharedData.getUserName(context);
+        try {
+            post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+
+                    + URLEncoder.encode("rel_status", "UTF-8") + "=" + URLEncoder.encode("0", "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     @Override
@@ -404,6 +437,18 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
             case("updatestate"):
                 updateState(params);
                 operationURL = IP + "/updategamestatustodb.php";
+                break;
+            case("randomPlayerMode"):
+                randomGame(params);
+                operationURL = IP + "/randomopponentgame.php";
+                break;
+            case("delete friend"):
+                deleteFriend(params[1]);
+                operationURL = IP + "/updaterelationstodb.php";
+                break;
+            case("pending"):
+                pending();
+                operationURL = IP + "/getfriendlistfromdb.php";
                 break;
             default:
 
@@ -709,6 +754,19 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 break;
             case("updatestate"):
 
+                break;
+            case("randomPlayerMode"):
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+                break;
+            case("delete friend"):
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+                break;
+            case("pending"):
+                Intent i = new Intent(context, PendingActivity.class);
+                send.add("fromMyProfileActivity");
+                send.add(result);
+                i.putExtra("prevActivity", send);
+                context.startActivity(i);
                 break;
             default:
                 // Log.i("Result", result);

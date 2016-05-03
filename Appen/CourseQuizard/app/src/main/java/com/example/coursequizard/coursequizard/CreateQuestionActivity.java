@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.DataOutputStream;
 import java.net.Socket;
@@ -58,6 +59,8 @@ public class CreateQuestionActivity extends AppCompatActivity {
      */
    public void fromActivity(){
         TextView courseTextView = (TextView) findViewById(R.id.courseCreateQuestionTextView);
+       View skipGenButton = findViewById(R.id.skipGenButton);
+       skipGenButton.setVisibility(View.GONE);
        ArrayList<String>  message = new ArrayList<String>();
         message = getIntent().getExtras().getStringArrayList("prevActivity");
        // if we have chosen the course for the question  we have to get the course ID
@@ -67,7 +70,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
             courseTextView.setText(message.get(1));
             courseID =message.get(3);
             if (haveGenQuestions()){
-
+                skipGenButton.setVisibility(View.VISIBLE);
             }
 
         }
@@ -76,10 +79,11 @@ public class CreateQuestionActivity extends AppCompatActivity {
             courseTextView.setText(message.get(1));
             courseID = message.get(3);
             if (haveGenQuestions()){
-
+                skipGenButton.setVisibility(View.VISIBLE);
             }
        }
        else if(message.get(0).equals("fromUploadTextActivity")){
+            skipGenButton.setVisibility(View.VISIBLE);
             CQParser parser = new CQParser();
             Log.i("toparser",message.get(1));
                genQuestionList = parser.generateQuestions(message.get(1));
@@ -136,6 +140,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
      *  read all the parameters from the view and use them as the arguments for the php script to insert question in database
      * @param view add questionbutton
      */
+
     public void addQuestion(View view){
         Log.i("addquestion","add");
         EditText editAnswerButton = (EditText) findViewById(R.id.editAnswerButton);
@@ -149,17 +154,52 @@ public class CreateQuestionActivity extends AppCompatActivity {
         String alt2 = editAlt2Button.getText().toString();
         String alt3 = editAlt3Button.getText().toString();
         String type = "add question";
+        if (anyStringEmpty(question,answer,alt1,alt2,alt3,courseID)){
+            String message ="";
+            if (question.equals("")){
+                message+="question field ";
 
-        fromGenIndex++;
-        localGenIndex++;
-        SaveSharedData.setFromGenIndex(CreateQuestionActivity.this,fromGenIndex);
-        LinkedList<Question> oneQuestion = SaveSharedData.getGenQuestions(CreateQuestionActivity.this,localGenIndex,localGenIndex);
-        SaveSharedData.setCurrentQuestion(CreateQuestionActivity.this,oneQuestion.get(0));
-        BackgroundWithServer bgws = new BackgroundWithServer(this);
+            }
+            if (answer.equals("")){
+                message+="answer field ";
 
-        bgws.execute(type,question,answer,alt1,alt2,alt3, courseID);
+            }
+            if (alt1.equals("")){
+                message+="alt1 field ";
 
-        setupCurrentQuestionView();
+            }
+            if (alt2.equals("")){
+                message+="alt2 field ";
+
+            }
+            if (alt3.equals("")){
+                message+="alt3 field ";
+
+            }
+            if (courseID.equals("")){
+                message +="course field ";
+
+            }
+            if (message.length() > 17){
+                message +="are empty";
+            }
+            if (message.length() <= 17){
+                message += "is empty";
+            }
+            Toast.makeText(CreateQuestionActivity.this, message, Toast.LENGTH_SHORT).show();
+        }
+        else {
+            fromGenIndex++;
+            localGenIndex++;
+            SaveSharedData.setFromGenIndex(CreateQuestionActivity.this, fromGenIndex);
+            LinkedList<Question> oneQuestion = SaveSharedData.getGenQuestions(CreateQuestionActivity.this, localGenIndex, localGenIndex);
+            SaveSharedData.setCurrentQuestion(CreateQuestionActivity.this, oneQuestion.get(0));
+            BackgroundWithServer bgws = new BackgroundWithServer(this);
+
+            bgws.execute(type, question, answer, alt1, alt2, alt3, courseID);
+
+            setupCurrentQuestionView();
+        }
         //setupGenView(localGenIndex);
         //CQ cq = new CQ();
        // cq.connect();
@@ -182,6 +222,15 @@ public class CreateQuestionActivity extends AppCompatActivity {
 
 
         //cq.disconnect();
+    }
+    private boolean anyStringEmpty(String ... params){
+        int length =  params.length;
+        for (int i =0; i< length; i++){
+          if (params[i].equals("")){
+              return true;
+          };
+        }
+        return false;
     }
 
     /**
@@ -209,6 +258,10 @@ public class CreateQuestionActivity extends AppCompatActivity {
         EditText editAlt3Button = (EditText) findViewById(R.id.editAlt3Button);
         EditText questionTextView = (EditText) findViewById(R.id.questionTextView);
         currentQuestion = SaveSharedData.getCurrentQuestion(CreateQuestionActivity.this);
+        if(currentQuestion.getQuestion().equals("")){
+            View skipGenButton = findViewById(R.id.skipGenButton);
+            skipGenButton.setVisibility(View.GONE);
+        }
         questionTextView.setText(currentQuestion.getQuestion());
         editAnswerButton.setText(currentQuestion.getAnswer());
         editAlt1Button.setText(currentQuestion.getAlt1());
@@ -233,8 +286,21 @@ public class CreateQuestionActivity extends AppCompatActivity {
      * go to the main menu
      */
     public void toMainActivity(View view){
+        SaveSharedData.setFromGenIndex(CreateQuestionActivity.this,0);
+        SaveSharedData.setToGenIndex(CreateQuestionActivity.this,0);
+        SaveSharedData.clearGenQuestions(CreateQuestionActivity.this);
         Intent i = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(i);
+
+
+    }
+    public void skipGenQuestion(View view){
+        fromGenIndex++;
+        localGenIndex++;
+        SaveSharedData.setFromGenIndex(CreateQuestionActivity.this,fromGenIndex);
+        LinkedList<Question> oneQuestion = SaveSharedData.getGenQuestions(CreateQuestionActivity.this,localGenIndex,localGenIndex);
+        SaveSharedData.setCurrentQuestion(CreateQuestionActivity.this,oneQuestion.get(0));
+        setupCurrentQuestionView();
     }
 
     /**
@@ -271,6 +337,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
          Log.i("bool","bool");
          LinkedList<Question> have = new LinkedList<Question>();
          have = SaveSharedData.getGenQuestions(CreateQuestionActivity.this, 0, 0);
+         Log.i("have",have.get(0).getQuestion());
          if (have.get(0).getQuestion().equals("")) {
              Log.i("bool","false");
              return false;
@@ -280,14 +347,20 @@ public class CreateQuestionActivity extends AppCompatActivity {
 
      }
     @Override
+    public void onBackPressed() {
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         genlistcount=0;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_question);
+
         setupCurrentQuestionView();
         Log.i("oncreate","oncreate");
         if (haveGenQuestions()){
             Log.i("true","true");
+
+
             toGenIndex = SaveSharedData.getToGenIndex(CreateQuestionActivity.this);
             Log.i("prefromgenindex",String.valueOf(fromGenIndex));
             fromGenIndex =  SaveSharedData.getFromGenIndex(CreateQuestionActivity.this);

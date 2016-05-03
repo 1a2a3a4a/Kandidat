@@ -195,21 +195,21 @@ public class CourseFragment extends ListFragment  {
                 ListView lva = (ListView) rootView.findViewById(android.R.id.list);
                 Log.i("mycourses", "mycourses");
                 Log.i("mycourses size", String.valueOf(myCourses.size()));
-                myAdapter = new CourseAdapter(getActivity(), R.layout.list_item_course, android.R.id.list, myCourses);
+                myAdapter = new CourseAdapter(getActivity(), R.layout.list_item_course, android.R.id.list, myCourses,myCourses);
                 lva.setAdapter(myAdapter);
                 break;
             case(1):
                 ListView lvb = (ListView) rootView.findViewById(android.R.id.list);
                 Log.i("unicourses", "unicourses");
                 Log.i("unicourses size", String.valueOf(universityCourses.size()));
-                myAdapter = new CourseAdapter(getActivity(), R.layout.list_item_course, android.R.id.list, universityCourses);
+                myAdapter = new CourseAdapter(getActivity(), R.layout.list_item_course, android.R.id.list, universityCourses,myCourses);
                 lvb.setAdapter(myAdapter);
                 break;
             case(2):
                 ListView lvc = (ListView) rootView.findViewById(android.R.id.list);
                 Log.i("allcourses", "allcourses");
                 Log.i("allcourses size", String.valueOf(allCourses.size()));
-                myAdapter = new CourseAdapter(getActivity(), R.layout.list_item_course, android.R.id.list, allCourses);
+                myAdapter = new CourseAdapter(getActivity(), R.layout.list_item_course, android.R.id.list, allCourses,myCourses);
                 lvc.setAdapter(myAdapter);
                 break;
             default:

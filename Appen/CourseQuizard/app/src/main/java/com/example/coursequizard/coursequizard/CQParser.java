@@ -98,15 +98,17 @@ public class CQParser {
 
 	private ArrayList<Course> courseParser(String text){
 		ArrayList<Course> courseList = new ArrayList<Course>();
-		String splits[] = text.split("%N%");
-		for(int i=0; i < splits.length; i++){
-			String sentence_splits[] = splits[i].split("%C%");
-			Course c  = new Course(Integer.parseInt(sentence_splits[0]),
-					Integer.parseInt(sentence_splits[1]),
-					sentence_splits[2],
-					sentence_splits[3],
-					sentence_splits[4]);
-			courseList.add(c);
+		if (!text.equals("EMPTY")) {
+			String splits[] = text.split("%N%");
+			for (int i = 0; i < splits.length; i++) {
+				String sentence_splits[] = splits[i].split("%C%");
+				Course c = new Course(Integer.parseInt(sentence_splits[0]),
+						Integer.parseInt(sentence_splits[1]),
+						sentence_splits[2],
+						sentence_splits[3],
+						sentence_splits[4]);
+				courseList.add(c);
+			}
 		}
 		return courseList;
 	}

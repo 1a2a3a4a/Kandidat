@@ -66,7 +66,7 @@ public class ChallengeActivity extends AppCompatActivity {
         // receiving the arguments
         courseAndOpponent();
         // do the backgroundcommunication with the server
-        if(opponentName.toLowerCase().equals("random opponennt")){
+        if(opponentName.toLowerCase().equals("random opponent")){
             type ="randomPlayerMode";
             String numberOfQuestions ="5";
             BackgroundWithServer bgws = new BackgroundWithServer(this);

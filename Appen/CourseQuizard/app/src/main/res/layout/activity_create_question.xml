@@ -126,7 +126,9 @@
         android:id="@+id/questionTextView"
         android:hint="Enter question here"
         android:layout_above="@+id/tableLayout"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:maxLength="95"
+        android:longClickable="false" />
 
     <Button
         android:layout_width="wrap_content"
@@ -159,20 +161,28 @@
     <TextView
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:hint="Press icon to edit course"
+        android:hint="Press here to edit course"
+        android:background="@drawable/border"
+        android:maxLines="2"
+        android:maxLength="80"
         android:id="@+id/courseCreateQuestionTextView"
-        android:layout_below="@+id/cancelButton"
+        android:clickable="true"
+        android:onClick="toCourseActivity"
+        android:textSize="18dp"
+        android:layout_below="@+id/skipGenButton"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="42dp"
-        android:layout_above="@+id/questionTextView" />
-    <ImageButton
+        android:layout_alignEnd="@+id/questionTextView" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editCourseCreateQuestionImageButton"
-        android:src="@drawable/ic_mode_edit_black_18dp"
-        android:onClick="toCourseActivity"
-        android:layout_alignBottom="@+id/courseCreateQuestionTextView"
-        android:layout_alignParentEnd="true"
-        android:clickable="true" />
+        android:text="Skip"
+        android:id="@+id/skipGenButton"
+        android:layout_below="@+id/clearButton"
+        android:layout_alignEnd="@+id/clearButton"
+        android:layout_alignStart="@+id/clearButton"
+        android:onClick="skipGenQuestion"
+        android:nestedScrollingEnabled="false" />
 
 </RelativeLayout>

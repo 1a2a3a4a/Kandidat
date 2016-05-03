@@ -48,4 +48,12 @@
         android:layout_alignStart="@+id/button2"
         android:onClick="addFriend"
         android:layout_alignEnd="@+id/button2" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Friend Requests"
+        android:id="@+id/pendingButton"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/myFriendsButton"
+        android:onClick="toPendingActivity" />
 </RelativeLayout>
