@@ -49,12 +49,18 @@ public class FriendsActivity extends AppCompatActivity {
             }
             mainView = (ViewHolder) convertView.getTag();
             final Button iB = mainView.button;
+            iB.setTag(position);
             iB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getContext(), "Friend deleted R.I.P.", Toast.LENGTH_SHORT).show();
+                    int position = (Integer)iB.getTag(); // the position in the list index
+                    ArrayList<String> friendList = SaveSharedData.getFriendList(FriendsActivity.this);
+                    String friendToDelete  = friendList.get(position);
+                   BackgroundWithServer bgws = new BackgroundWithServer(FriendsActivity.this);
+                    bgws.execute("delete friend", friendToDelete);
                 }
             });
+
             mainView.text.setText(getItem(position));
 
             return convertView;

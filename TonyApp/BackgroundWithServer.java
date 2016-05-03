@@ -47,6 +47,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     String courseID ="";
     String universityName="";
     String userName="";
+    String gameID="";
     AlertDialog alertDialog;
     BackgroundWithServer (Context ctx) {
         context = ctx;
@@ -113,13 +114,33 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
      */
 
     private void myCourseList(String ... params ){
-        String userID = params[1];
+        //String userID = params[1];
+        String username = SaveSharedData.getUserName(context);
+        String universityID = "1";
+        try {
+            post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+                    + URLEncoder.encode("uni_id", "UTF-8") + "=" + URLEncoder.encode(universityID, "UTF-8");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
     private void allUniversties(String ... params){
     }
     private void myCourseListFromChallenge(String ... params){
         opponentName = params[1];
+        String username = SaveSharedData.getUserName(context);
+        String universityID = "1";
+        try {
+            post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+                    + URLEncoder.encode("uni_id", "UTF-8") + "=" + URLEncoder.encode(universityID, "UTF-8");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     /**
      * Fitting the arguments to the specific URL
@@ -127,7 +148,18 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
      */
 
     private void myCourseListFromOpponent(String ... params){
+
         opponentName = params[1];
+        String username = SaveSharedData.getUserName(context);
+        String universityID = "1";
+        try {
+            post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+                    + URLEncoder.encode("uni_id", "UTF-8") + "=" + URLEncoder.encode(universityID, "UTF-8");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void getMyCourses(String ... params){
@@ -141,14 +173,14 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
 
     private void swapFavCourses(String[] params) {
         String c_id = params[1];
-        String user_name = params[2];
+        String user_name =  SaveSharedData.getUserName(context);
         try {
             this.post_data = URLEncoder.encode("c_id", "UTF-8") + "=" + URLEncoder.encode(c_id, "UTF-8") + "&"
                     +URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
+}
+}
 
 
     private void getSinglePlayerQuiz(String ... params){
@@ -192,7 +224,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         String score  = params [2];
         try {
             post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
-                    + URLEncoder.encode("gameID", "UTF-8") + "=" + URLEncoder.encode(gameID, "UTF-8") + "&"
+                    + URLEncoder.encode("game_id", "UTF-8") + "=" + URLEncoder.encode(gameID, "UTF-8") + "&"
                     + URLEncoder.encode("score", "UTF-8") + "=" + URLEncoder.encode(score, "UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
@@ -205,7 +237,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         try {
             post_data = URLEncoder.encode("by_user", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8") + "&"
                     + URLEncoder.encode("to_user", "UTF-8") + "=" + URLEncoder.encode(opponentName, "UTF-8") + "&"
-                    + URLEncoder.encode("course_id", "UTF-8") + "=" + URLEncoder.encode(courseID, "UTF-8");
+                    + URLEncoder.encode("c_id", "UTF-8") + "=" + URLEncoder.encode(courseID, "UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -239,8 +271,8 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         } catch(Exception e){
             e.printStackTrace();
         }
-    }
 
+    }
     private void friendRequest(String addFriend){
         userName = SaveSharedData.getUserName(context);
         Log.i("username friend request", userName);
@@ -252,6 +284,40 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
             e.printStackTrace();
         }
     }
+    private void quizFromMyGames(String ... params){
+        String username = SaveSharedData.getUserName(context);
+        gameID = params[1];
+        try {
+            post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+                    + URLEncoder.encode("game_id", "UTF-8") + "=" + URLEncoder.encode(gameID, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void updateState(String ... params){
+        String username = SaveSharedData.getUserName(context);
+        String gameID = params[1];
+        try {
+            post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+                    + URLEncoder.encode("game_id", "UTF-8") + "=" + URLEncoder.encode(gameID, "UTF-8") + "&"
+                    + URLEncoder.encode("score", "UTF-8") + "=" + URLEncoder.encode("0", "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void deleteFriend(String friendToDelete) {
+        String username = SaveSharedData.getUserName(context);
+        try {
+            post_data = URLEncoder.encode("by_user", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+                    + URLEncoder.encode("to_user", "UTF-8") + "=" + URLEncoder.encode(friendToDelete, "UTF-8") + "&"
+                    + URLEncoder.encode("intent", "UTF-8") + "=" + URLEncoder.encode("0", "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     @Override
@@ -288,15 +354,15 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
             case("all courses"):
                 Log.i("innantryblock",params[0]);
                 myCourseList(params);
-                operationURL = IP + "/getcoursesfromdb.php";
+                operationURL = IP + "/getcourselistsfromdb.php";
                 break;
             case("my courses, from opponent"):
                 myCourseListFromOpponent(params);
-                operationURL = IP + "/getcoursesfromdb.php";
+                operationURL = IP + "/getcourselistsfromdb.php";
                 break;
             case("my courses, from challenge"):
                 myCourseListFromChallenge(params);
-                operationURL= IP + "/getcoursesfromdb.php";
+                operationURL= IP + "/getcourselistsfromdb.php";
                 break;
             case("singlePlayerMode"):
                 getSinglePlayerQuiz(params);
@@ -316,27 +382,47 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 operationURL = IP + "/generatequestions.php";
                 break;
             }
-            case ("Friendplayermode"):
+            case ("friendPlayerMode"):
                 friendGame(params);
                 operationURL = IP + "/addgametodb.php";
                 break;
             case("sendresult"):
                 sendResult(params);
-                operationURL = IP + "/updategametodb.php";
+                operationURL = IP + "/updategamestatustodb.php";
                 break;
             case("mygames"):
                 myGames(params);
-                operationURL = IP + "getmygamesfromdb.php";
+                operationURL = IP + "/getmygamesfromdb.php";
                 break;
             case("friendlist"):
                 getFriendlist();
                 operationURL = IP + "/getfriendlistfromdb.php";
                 break;
+            case "get all courses":{
+                myCourseList(params);
+                operationURL = IP + "/getcourselistsfromdb.php";
+                break;
+            }
             case("friend request"):
                 friendRequest(params[1]);
                 operationURL = IP + "/addfriendrequesttodb.php";
                 break;
+
+            case("quiz from my games"):
+                 quizFromMyGames(params);
+                Log.i("quizfrommygames","quizfrommygames");
+                 operationURL = IP + "/getgamequestionsfromdb.php";
+                break;
+            case("updatestate"):
+                updateState(params);
+                operationURL = IP + "/updategamestatustodb.php";
+                break;
+            case("delete friend"):
+                deleteFriend(params[1]);
+                operationURL = IP + "/updaterelationstodb.php";
+                break;
             default:
+
                 Log.i("nocase","nocase");
                 operationURL = IP;
 
@@ -574,10 +660,11 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 context.startActivity(uploadtexti);
                 break;
 
-            case ("Friendplayermode"):
+            case ("friendPlayerMode"):
                 Intent friendplayermodei = new Intent(context,MainActivity.class);
                 send.add("fromFPChallengeActivity");
                 send.add(result);
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
                 friendplayermodei.putExtra("prevActivity", send);
                 context.startActivity(friendplayermodei);
 
@@ -593,6 +680,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 Intent mygamesi = new Intent(context,MyGamesActivity.class);
                 send.add("fromMainActivity");
                 send.add(result);
+                Log.i("mygamesunparsed",result);
                 mygamesi.putExtra("prevActivity", send);
                 context.startActivity(mygamesi);
                 break;
@@ -612,7 +700,33 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 SaveSharedData.setFriendList(context, friend);
                 Log.i("friendlist done!", "hej");
                 break;
+            case "get all courses":{
+                Log.i("result", result);
+                Intent allCi = new Intent(context, CourseActivity.class);
+                send.add("fromMyProfileActivity");
+                send.add(result);
+                allCi.putExtra("prevActivity", send);
+                context.startActivity(allCi);
+                break;
+            }
             case("friend request"):
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+                break;
+            case("quiz from my games"):
+                Intent qfmgi = new Intent(context, PlayGameActivity.class);
+                send.add("fromMyGamesActivity");
+                send.add(result);
+                send.add(gameID);
+                qfmgi.putExtra("prevActivity", send);
+                context.startActivity(qfmgi);
+                break;
+            case("sendresult"):
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+                break;
+            case("updatestate"):
+
+                break;
+            case("delete friend"):
                 Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
                 break;
             default:
