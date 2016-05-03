@@ -73,6 +73,7 @@ public class PendingActivity extends AppCompatActivity {
             iB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    iB.setClickable(false);
                     int position = (Integer)iB.getTag(); // the position in the list index
                     String friendToAdd  = pendingList.get(position);
 
