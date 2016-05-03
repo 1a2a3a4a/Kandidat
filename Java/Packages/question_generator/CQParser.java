@@ -1,20 +1,22 @@
 import java.util.LinkedList;
+import java.util.ArrayList;
+
 
 
 public class CQParser {
-    private LinkedList<Question> qlist;
-    private LinkedList<Course> clist;
-    private LinkedList<University> ulist;
-    private LinkedList<Game> glist;
+	private LinkedList<Question> qlist;
+	private ArrayList<Course> clist;
+	private LinkedList<University> ulist;
+	private ArrayList<Game> glist;
 	public  CQParser(){
 		qlist = new LinkedList<Question>();
-		clist = new LinkedList<Course>();
+		clist = new ArrayList<Course>();
 		ulist = new LinkedList<University>();
-		glist = new LinkedList<Game>();
+		glist = new ArrayList<Game>();
 	}
 
-	
-	
+
+
 	//to be used with a coded string without Q_ID etc in it i.e when generation questions
 	public LinkedList<Question> generateQuestions(String text){
 		try {
@@ -65,35 +67,54 @@ public class CQParser {
 			qlist.add(q);
 		}
 	}
-	
-	
+
+
 	//Use when having a coded string of courses
-	public LinkedList<Course> toCList(String courseText){
+	public ArrayList<Course> toCList(String courseText){
 		courseParser(courseText);
 		return this.clist;
 
 	}
-	
-	private void courseParser(String text){
-		String splits[] = text.split("%N%");
-		for(int i=0; i < splits.length; i++){
-			String sentence_splits[] = splits[i].split("%C%");
-			Course c  = new Course(Integer.parseInt(sentence_splits[0]),
-					Integer.parseInt(sentence_splits[1]),
-					sentence_splits[2],
-					sentence_splits[3],
-					sentence_splits[4]);
-			clist.add(c);
-		}
+	public ArrayList<ArrayList<Course>> toCLists(String courseText){
+		ArrayList<ArrayList<Course>> courseLists = new ArrayList<ArrayList<Course>>();
+		ArrayList<Course> myCourses = new ArrayList<Course>();
+		ArrayList<Course> uniCourses = new ArrayList<Course>();
+		ArrayList<Course> allCourses = new ArrayList<Course>();
+		String[] splits = courseText.split("%U%");
+		myCourses =courseParser(splits[0]);
+		uniCourses =courseParser(splits[1]);
+		allCourses =courseParser(splits[2]);
+		courseLists.add(myCourses);
+		courseLists.add(uniCourses);
+		courseLists.add(allCourses);
+		return courseLists;
+
 	}
-	
-	
+
+	private ArrayList<Course> courseParser(String text){
+		ArrayList<Course> courseList = new ArrayList<Course>();
+		if (!text.equals("EMPTY")) {
+			String splits[] = text.split("%N%");
+			for (int i = 0; i < splits.length; i++) {
+				String sentence_splits[] = splits[i].split("%C%");
+				Course c = new Course(Integer.parseInt(sentence_splits[0]),
+						Integer.parseInt(sentence_splits[1]),
+						sentence_splits[2],
+						sentence_splits[3],
+						sentence_splits[4]);
+				courseList.add(c);
+			}
+		}
+		return courseList;
+	}
+
+
 	//Use when having a coded University string
 	public LinkedList<University> toUList(String UniText){
 		universityParser(UniText);
 		return this.ulist;
 	}
-	
+
 	private void universityParser(String text){
 		String splits[] = text.split("%N%");
 		for(int i=0; i < splits.length; i++){
@@ -105,43 +126,46 @@ public class CQParser {
 		}
 	}
 
-    public LinkedList<Game> toGList(String text){
-	gameParser(text);
-	return this.glist;
-    }
-
-    private void gameParser(String text){
-	String splits[] = text.split("%N%");
-	for(int i = 0; i < splits.length; i++){
-	    String sentence_splits[] = splits[i].split("%G%");
-	    Game g = new Game(Integer.parseInt(sentence_splits[0]),
-			      Integer.parseInt(sentence_splits[1]),
-			      Integer.parseInt(sentence_splits[2]),
-			      Integer.parseInt(sentence_splits[3]),
-			      Integer.parseInt(sentence_splits[4]),
-			      Integer.parseInt(sentence_splits[5]),
-			      sentence_splits[6],
-			      sentence_splits[7],
-			      Integer.parseInt(sentence_splits[8]),
-			      Integer.parseInt(sentence_splits[9]),
-			      Integer.parseInt(sentence_splits[10]),
-			      sentence_splits[11]);
+	public ArrayList<Game> toGList(String text){
+		gameParser(text);
+		return this.glist;
 	}
-    }
+
+	private void gameParser(String text){
+		String splits[] = text.split("%N%");
+		for(int i = 0; i < splits.length; i++){
+			String sentence_splits[] = splits[i].split("%G%");
+			Game g = new Game(Integer.parseInt(sentence_splits[0]),
+					Integer.parseInt(sentence_splits[1]),
+					Integer.parseInt(sentence_splits[2]),
+					Integer.parseInt(sentence_splits[3]),
+					Integer.parseInt(sentence_splits[4]),
+					Integer.parseInt(sentence_splits[5]),
+					sentence_splits[6],
+					sentence_splits[7],
+					Integer.parseInt(sentence_splits[8]),
+					Integer.parseInt(sentence_splits[9]),
+					Integer.parseInt(sentence_splits[10]),
+					sentence_splits[11],
+					sentence_splits[12]);
+			glist.add(g);
+		}
+
+	}
 	////////////////////////////////////////////////
 	/// Getters n Setters
 	////////////////////////////////////////////////
 
-    public LinkedList<Game> getGList(){
-	return this.glist;
-    }
+	public ArrayList<Game> getGList(){
+		return this.glist;
+	}
 
-    public void setGList(LinkedList<Game> glist){
-	this.glist = glist;
-    }
-    
-    public LinkedList<Question> getQlist() {
-	return qlist;
+	public void setGList(ArrayList<Game> glist){
+		this.glist = glist;
+	}
+
+	public LinkedList<Question> getQlist() {
+		return qlist;
 	}
 
 
@@ -152,17 +176,17 @@ public class CQParser {
 
 
 
-	public LinkedList<Course> getClist() {
+	public ArrayList<Course> getClist() {
 		return clist;
 	}
 
 
 
-	public void setClist(LinkedList<Course> clist) {
+	public void ArrayList(ArrayList<Course> clist) {
 		this.clist = clist;
 	}
 
-    
+
 
 	public LinkedList<University> getUlist() {
 		return ulist;
@@ -174,7 +198,7 @@ public class CQParser {
 		this.ulist = ulist;
 	}
 
-	
+
 	//////////////////////////////////
 	/// toString methods
 	///////////////////////////////////
