@@ -48,14 +48,12 @@
         android:layout_centerHorizontal="true"
         android:onClick="register" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="tomain"
-        android:id="@+id/toMainButton"
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/imageView2"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp"
-        android:onClick="toMainActivity"
-        android:nestedScrollingEnabled="false" />
+        android:src="@drawable/logo_nobg" />
+
 </RelativeLayout>

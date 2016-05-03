@@ -173,37 +173,19 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_play) {
-            // Handle the camera action
-        } else if (id == R.id.nav_profile) {
+        if (id == R.id.nav_profile) {
             Intent i = new Intent(getApplicationContext(),MyProfileActivity.class);
             ArrayList<String> send = new ArrayList<String>();
             send.add("fromMainActivity");
             i.putExtra("prevActivity",send );
             startActivity(i);
-
-        } else if (id == R.id.nav_settings) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_create) {
-            Intent i = new Intent(getApplicationContext(),CreateQuestionActivity.class);
+        } else if (id == R.id.nav_signOut) {
+            SaveSharedData.setUserName(MainActivity.this, "");
+            SaveSharedData.setUserName(MainActivity.this, "");
+            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
             ArrayList<String> send = new ArrayList<String>();
             send.add("fromMainActivity");
-            i.putExtra("prevActivity",send );
-            startActivity(i);
-
-
-        } else if (id == R.id.nav_share) {
-
-        }
-        else if (id == R.id.nav_signOut) {
-                SaveSharedData.setUserName(MainActivity.this,"");
-                SaveSharedData.setUserName(MainActivity.this,"");
-            Intent i = new Intent(getApplicationContext(),LoginActivity.class);
-            ArrayList<String> send = new ArrayList<String>();
-            send.add("fromMainActivity");
-            i.putExtra("resetActivity",send );
+            i.putExtra("resetActivity", send);
             startActivity(i);
         }
 
