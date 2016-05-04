@@ -211,6 +211,15 @@ public class MainActivity extends AppCompatActivity
             i.putExtra("resetActivity", send);
             startActivity(i);
         }
+        else if(id == R.id.nav_courses){
+            BackgroundWithServer bgws = new BackgroundWithServer(this);
+            String type = "get all courses";
+            bgws.execute(type);
+        }
+        else if (id == R.id.nav_friends){
+            BackgroundWithServer bgws = new BackgroundWithServer(MainActivity.this);
+            bgws.execute("getrelationlists");
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

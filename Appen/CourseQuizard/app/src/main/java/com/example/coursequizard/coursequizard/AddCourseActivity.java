@@ -32,15 +32,12 @@ public class AddCourseActivity extends AppCompatActivity {
             ArrayList<String>  message = new ArrayList<String>();
             message = getIntent().getExtras().getStringArrayList("prevActivity");
             if (message.get(0).equals("fromCourseActivity")){
-               addCourseView();
                 CQParser parser = new CQParser();
                 universityLinkedList= parser.toUList(message.get(1));
             }
 
         }
-    public void addCourseView(){
 
-    }
     /**
      * This method is used  to read the textfields from the view what the users have entered in.
      *
@@ -77,7 +74,7 @@ public class AddCourseActivity extends AppCompatActivity {
         bgws.execute(type,courseName,courseCode,universityName,universityID);
     }
     public void setCurrentSelect(int index){
-        Spinner universitySpinner = (Spinner)findViewById(R.id.universitySpinnerProfile);
+        Spinner universitySpinner = (Spinner)findViewById(R.id.universitySpinner);
         universitySpinner.setSelection(index);
     }
     /**
@@ -101,7 +98,6 @@ public class AddCourseActivity extends AppCompatActivity {
         }
         // Getting the spinner
         Spinner universitySpinner = (Spinner)findViewById(R.id.universitySpinner);
-        //String[] universities = new String[]{"Lund", "Stockholm", "Uppsala"};
         // Inserting the List to the spinner
         ArrayAdapter<String> universityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, universityNameList);
         universitySpinner.setAdapter(universityAdapter);

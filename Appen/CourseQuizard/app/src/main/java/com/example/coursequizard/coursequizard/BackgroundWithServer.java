@@ -2,13 +2,12 @@ package com.example.coursequizard.coursequizard;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.os.AsyncTask;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -67,12 +66,14 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         String alt2 = params[4];
         String alt3 = params[5];
         String cID  = params[6];
+        /*
         Log.i("question",question);
         Log.i("answer",answer);
         Log.i("alt1",alt1);
         Log.i("alt2",alt2);
         Log.i("alt3",alt3);
         Log.i("cid",cID);
+        */
         try {
             post_data = URLEncoder.encode("question", "UTF-8") + "=" + URLEncoder.encode(question, "UTF-8") + "&"
                     + URLEncoder.encode("answer", "UTF-8") + "=" + URLEncoder.encode(answer, "UTF-8") + "&"
@@ -127,8 +128,6 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         }
 
     }
-    private void allUniversties(String ... params){
-    }
     private void myCourseListFromChallenge(String ... params){
         opponentName = params[1];
         String username = SaveSharedData.getUserName(context);
@@ -161,16 +160,6 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
             e.printStackTrace();
         }
     }
-
-    private void getMyCourses(String ... params){
-        String user_name = SaveSharedData.getUserName(context);
-        try {
-            this.post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void swapFavCourses(String[] params) {
         String c_id = params[1];
         String user_name =  SaveSharedData.getUserName(context);
@@ -381,58 +370,64 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 operationURL = IP + "/addusertodb.php";
                 break;
             case("add question"):
+                // Used by addquestion(View viev) in CreateQuestionActivity
                 addQuestion(params);
                 operationURL = IP +"/addquestiontodb.php";
                 break;
             case("universitylist"):
-                allUniversties(params);
+                // Used by   toAddCourseActivity() in CourseActivity
                 operationURL = IP + "/getuniversitiesfromdb.php";
                 break;
 
             case("added course"):
+                // Used by toBackGroundWithServer(meny arguments) in AddCourseActivity
                 addCourse(params);
                 operationURL = IP + "/addcoursetodb.php";
                 break;
             case("all courses"):
+                //used by toCourseActivity(View view) in CreateQuestionActivity
                 Log.i("innantryblock",params[0]);
                 myCourseList(params);
                 operationURL = IP + "/getcourselistsfromdb.php";
                 break;
             case("my courses, from opponent"):
+                // Used by toNextActivity in OpponentActivity
                 myCourseListFromOpponent(params);
                 operationURL = IP + "/getcourselistsfromdb.php";
                 break;
             case("my courses, from challenge"):
+                // from toCourseActivity in CHallengeactivity
                 myCourseListFromChallenge(params);
                 operationURL= IP + "/getcourselistsfromdb.php";
                 break;
             case("singlePlayerMode"):
+                // Used by toPlayGameActivity(View view) in ChallengeActivity
                 getSinglePlayerQuiz(params);
                 operationURL= IP + "/getquestionsfromdb.php";
                 break;
-            case ("get my courses"):
-                getMyCourses(params);
-                operationURL = IP + "/getmycoursesfromdb.php";
-                break;
-
             case ("swap favorites"):
+                // used by swapSavourite in CourseAdapter
                 swapFavCourses(params);
                 operationURL = IP + "/swapfavoritestodb.php";
                 break;
             case ("Upload text"):{
+                // used by throughphp(String textToUpload) in UploadTextActivity
                 uploadText(params);
                 operationURL = IP + "/generatequestions.php";
                 break;
             }
             case ("friendPlayerMode"):
+                // used by toPlayGameActivity() in ChallengeAcitivity
                 friendGame(params);
                 operationURL = IP + "/addgametodb.php";
                 break;
             case("sendresult"):
+                // Used by  sendResults() in PlayGameActivity
                 sendResult(params);
                 operationURL = IP + "/updategamestatustodb.php";
                 break;
             case("mygames"):
+                // used by toMyGamesActivity(View view) in MainActivity
                 myGames(params);
                 operationURL = IP + "/getmygamesfromdb.php";
                 break;
@@ -441,6 +436,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 operationURL = IP + "/getfriendlistfromdb.php";
                 break;
             case "get all courses":{
+                // used in MainActivity/My profileactivity
                 myCourseList(params);
                 operationURL = IP + "/getcourselistsfromdb.php";
                 break;
@@ -472,7 +468,6 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 operationURL = IP + "/getfriendlistfromdb.php";
                 break;
             case("profile universitylist"):
-                allUniversties(params);
                 operationURL = IP + "/getuniversitiesfromdb.php";
                 break;
             case("update relation"):
@@ -562,7 +557,6 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         ArrayList<String> send = new ArrayList<String>();
         switch (type) {
             case "all courses":
-                Log.i("postexecuteblock","weee");
                 // send a string containing all the courses in the database and start the Course Activity
                 Intent allcoursesi = new Intent(context, CourseActivity.class);
                 send.add("fromCreateQuestionActivity");
@@ -610,6 +604,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 break;
 
             case "my courses, from challenge":
+
                 Intent mycoursesfromchallengei = new Intent(context, CourseActivity.class);
                 send.add("fromChallengeActivity");
                 send.add(opponentName);
@@ -651,17 +646,6 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 singleplayermodei.putExtra("prevActivity", send);
                 context.startActivity(singleplayermodei);
                 break;
-
-            case "get my courses":
-                Intent getmycoursesi = new Intent(context, MyCoursesActivity.class);
-                Log.i("result", result);
-                send.add("fromMyProfileActivity");
-                send.add(result);
-                getmycoursesi.putExtra("prevActivity", send);
-                context.startActivity(getmycoursesi);
-                break;
-
-
             case "swap favorites":
                 Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
 
@@ -694,16 +678,9 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
                 friendplayermodei.putExtra("prevActivity", send);
                 context.startActivity(friendplayermodei);
-
-                /*
-                Intent friendplayermodei = new Intent(context,PlayGameActivity.class);
-                send.add("fromFPChallengeActivity");
-                send.add(result);
-                friendplayermodei.putExtra("prevActivity", send);
-                context.startActivity(friendplayermodei);
-                */
                 break;
             case("mygames"):
+                // used by toMyGamesActivity(View view) in MainActivity
                 Intent mygamesi = new Intent(context,MyGamesActivity.class);
                 send.add("fromMainActivity");
                 send.add(result);

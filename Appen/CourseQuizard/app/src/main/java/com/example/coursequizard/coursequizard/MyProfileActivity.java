@@ -66,19 +66,6 @@ public class MyProfileActivity extends AppCompatActivity {
         }
     }
 
-    public void toMyCoursesActivity(View view){
-        //Intent i = new Intent(getApplicationContext(), MyCoursesActivity.class);
-        // ArrayList<String> send = new ArrayList<String>();
-        //send.add(opponent);
-        //send.add(course);
-        //i.putExtra("Opponent and Course", send);
-        //startActivity(i);
-        BackgroundWithServer bgws = new BackgroundWithServer(this);
-        String type = "get my courses";
-        //TODO IMPLEMENT USER
-        String username = SaveSharedData.getUserName(MyProfileActivity.this);
-        bgws.execute(type, username);
-    }
     public void myFriends(View view){
         BackgroundWithServer bgws = new BackgroundWithServer(MyProfileActivity. this);
         bgws.execute("friendlist" );

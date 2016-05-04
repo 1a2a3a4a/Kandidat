@@ -6,6 +6,14 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_person_black_24dp"
             android:title=" My Profile" />
+        <item
+            android:id="@+id/nav_friends"
+            android:icon="@drawable/ic_tag_faces_black_24dp"
+            android:title=" Friends " />
+        <item
+            android:id="@+id/nav_courses"
+            android:icon="@drawable/ic_school_black_24dp"
+            android:title=" Courses" />
     <item
         android:id="@+id/nav_signOut"
         android:icon="@drawable/ic_power_settings_new_black_24dp"

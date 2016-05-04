@@ -58,7 +58,7 @@ public class CourseActivity extends AppCompatActivity {
         fab.setVisibility(View.INVISIBLE);
         ArrayList<String> message = new ArrayList<String>();
         message = getIntent().getExtras().getStringArrayList("prevActivity");
-        if (message.get(0).equals("fromCreateQuestionActivity")){
+        if (message.get(0).equals("fromCreateQuestionActivity") || message.get(0).equals("fromMyProfileActivity")  ){
             fab.setVisibility(View.VISIBLE);
         }
     }
