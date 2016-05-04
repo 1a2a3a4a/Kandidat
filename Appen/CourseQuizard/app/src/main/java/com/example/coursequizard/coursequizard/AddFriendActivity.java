@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-public class FriendRequestActivity extends AppCompatActivity {
+public class AddFriendActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,12 +18,9 @@ public class FriendRequestActivity extends AppCompatActivity {
     public void addFriend(View view){
         EditText friendText = (EditText) findViewById(R.id.friendText);
         String friendTextString = friendText.getText().toString();
+        friendTextString = friendTextString.replace(" ","");
 
-        if(!(friendTextString.matches(""))){
-            BackgroundWithServer bgws = new BackgroundWithServer(FriendRequestActivity.this);
-            bgws.execute("friend request", friendTextString);
-        }
-        else{
+        if((friendTextString.matches(""))){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("invalid name")
                     .setCancelable(false)
@@ -34,6 +31,23 @@ public class FriendRequestActivity extends AppCompatActivity {
                     });
             AlertDialog alert = builder.create();
             alert.show();
+        }
+        else if (friendTextString.toLowerCase().equals(SaveSharedData.getUserName(AddFriendActivity.this).toLowerCase())){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("You cant be firend with yourself :( ")
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //do things
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+    }
+        else{
+            BackgroundWithServer bgws = new BackgroundWithServer(AddFriendActivity.this);
+            bgws.execute("friend request", friendTextString);
+
         }
 
     }

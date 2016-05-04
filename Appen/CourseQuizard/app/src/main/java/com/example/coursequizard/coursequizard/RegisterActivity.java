@@ -11,12 +11,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.regex.Pattern;
+
 /*import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 */
 public class RegisterActivity extends AppCompatActivity {
-    String[] invalidUsernames = {"single player","singleplayer","randomopponent", "random opponent", "admin", "simontest","simontest2"};
+    String[] invalidUsernames = {"single player","singleplayer","randomopponent", "random opponent", "admin", "simontest","simontest2","empty"};
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -33,7 +35,16 @@ public class RegisterActivity extends AppCompatActivity {
         }
         return false;
     }
+    public boolean invalidPattern(String tryString) {
+        Pattern pattern = Pattern.compile("[A-Za-z0-9_!]{1,50}$");
+        if(pattern.matcher(tryString).matches()){
+            return false;
+        }
+        return true;
+
+    }
     public void register(View view) {
+        String errorMessage = "Invalid registry information";
         EditText username = (EditText) findViewById(R.id.usernameText);
         EditText password = (EditText) findViewById(R.id.passwordText);
         EditText cpassword = (EditText) findViewById(R.id.confirmpwText);
@@ -41,26 +52,47 @@ public class RegisterActivity extends AppCompatActivity {
         String usernameString = username.getText().toString();
         String passwordString =  password.getText().toString();
         String cpasswordString =  cpassword.getText().toString();
+        usernameString = usernameString.replace(" ", "");
+
+        passwordString = passwordString.replace(" ", "");
+        cpasswordString = cpasswordString.replace(" ", "");
         BackgroundWithServer bgws = new BackgroundWithServer(this);
-
-
-        if (!(usernameString.matches("") || passwordString.matches("") || cpasswordString.matches("") || invalidUsername(usernameString.toLowerCase()))) {
-            bgws.execute("register", usernameString, passwordString, cpasswordString);
-            //få tillbaka ett ok sen gå tillbaka till loginaktiviteten eller att det redan finns och returna.
-            return;
-
-        }
-        //få en ruta som säger att det inte funkade
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Invalid registry informatin.")
-                .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
                         //do things
                     }
                 });
-        AlertDialog alert = builder.create();
-        alert.show();
+
+
+        if(invalidPattern(usernameString) || usernameString.matches("") ){
+            errorMessage = "invalid username";
+            builder.setMessage(errorMessage);
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+        else if (!(passwordString.equals(cpasswordString))){
+            errorMessage = "password not equal";
+            builder.setMessage(errorMessage);
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+
+        else if (passwordString.matches("") || cpasswordString.matches("") || invalidPattern(passwordString) || invalidPattern(cpasswordString)){
+            errorMessage = "invalid password";
+            builder.setMessage(errorMessage);
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+
+        else {
+            bgws.execute("register", usernameString, passwordString, cpasswordString);
+        }
+
+            //få tillbaka ett ok sen gå tillbaka till loginaktiviteten eller att det redan finns och returna.
+
+        //få en ruta som säger att det inte funkade
     }
 
 

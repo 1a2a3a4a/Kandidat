@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -23,7 +24,9 @@ public class LoginActivity extends AppCompatActivity {
         EditText username = (EditText) findViewById(R.id.loginusernameText);
         EditText password = (EditText) findViewById(R.id.loginpwtext);
         String usernameString = username.getText().toString();
+        usernameString = usernameString.replace(" ", "");
         String passwordString =  password.getText().toString();
+        passwordString = passwordString.replace(" ", "");
         BackgroundWithServer bgws = new BackgroundWithServer(this);
         if (!(usernameString.matches("") || usernameString.matches(""))) {
             bgws.execute("login", usernameString, passwordString);

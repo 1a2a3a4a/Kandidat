@@ -189,7 +189,9 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
+    public void clearAllSharedData(){
+        SaveSharedData.clearAll(MainActivity.this);
+    }
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -202,8 +204,7 @@ public class MainActivity extends AppCompatActivity
             bgws.execute(type);
 
         } else if (id == R.id.nav_signOut) {
-            SaveSharedData.setUserName(MainActivity.this, "");
-            SaveSharedData.setUserName(MainActivity.this, "");
+            clearAllSharedData();
             Intent i = new Intent(getApplicationContext(), LoginActivity.class);
             ArrayList<String> send = new ArrayList<String>();
             send.add("fromMainActivity");

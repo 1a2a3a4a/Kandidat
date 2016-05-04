@@ -163,7 +163,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     }
 
     private void getMyCourses(String ... params){
-        String user_name = params[1];
+        String user_name = SaveSharedData.getUserName(context);
         try {
             this.post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8");
         } catch (Exception e) {
@@ -339,6 +339,26 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
             e.printStackTrace();
         }
     }
+    private void updateRelation(String ... params ){
+        String friend = params[1];
+        String username = params[2];
+        String intent = params[3];
+        try {
+            post_data = URLEncoder.encode("to_user", "UTF-8") + "=" + URLEncoder.encode(friend, "UTF-8") + "&"
+                    + URLEncoder.encode("by_user", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&"
+                    + URLEncoder.encode("intent", "UTF-8") + "=" + URLEncoder.encode(intent, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void getRelations( String ... params){
+        String username = SaveSharedData.getUserName(context);
+        try {
+            post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     @Override
@@ -454,6 +474,14 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
             case("profile universitylist"):
                 allUniversties(params);
                 operationURL = IP + "/getuniversitiesfromdb.php";
+                break;
+            case("update relation"):
+                updateRelation(params);
+                operationURL = IP + "/updaterelationstodb.php";
+                break;
+            case("getrelationlists"):
+                getRelations(params);
+                operationURL = IP + "/getrelationlistsfromdb.php";
                 break;
             default:
 
@@ -744,6 +772,16 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 send.add(result);
                 profileuniversitylisti.putExtra("prevActivity",send );
                 context.startActivity(profileuniversitylisti);
+                break;
+            case("getrelationlists"):
+                Intent getrelationlistsi = new Intent(context,FriendsActivity.class);
+                send.add("fromMyProfileActivity");
+                send.add(result);
+                getrelationlistsi.putExtra("prevActivity",send );
+                context.startActivity(getrelationlistsi);
+                break;
+            case("update relation"):
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
                 break;
             default:
                 // Log.i("Result", result);

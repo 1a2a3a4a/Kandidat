@@ -41,6 +41,32 @@ public class SaveSharedData
         editor.putString("currentQuestionAlt3","Alt3");
         editor.commit();
     }
+    public static void clearAll(Context ctx){
+        clearGenQuestions(ctx);
+        clearCurrentQuestion(ctx);
+        clearUser(ctx);
+        clearMyUniversity(ctx);
+        clearFriendList(ctx);
+    }
+    public static void clearUser(Context ctx){
+        setUserName(ctx,"");
+    }
+    public static void clearMyUniversity(Context ctx){
+        setMyUniversityName(ctx,"Uppsala University");
+        setMyUniversityID(ctx,"1");
+
+
+    }
+    public static void clearFriendList(Context ctx){
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+       int  length =  getSharedPreferences(ctx).getInt("numberoffriends",0);
+        editor.putInt("numberoffriends",0);
+
+        for(int i = 0; i < length; i++){
+            editor.putString("friend_" + i, "");
+        }
+        editor.commit();
+    }
     public static void setCurrentQuestion(Context ctx, Question currentQuestion){
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         editor.putString("currentQuestionQuestion",currentQuestion.getQuestion());
@@ -131,6 +157,7 @@ public class SaveSharedData
     }
     public static void setFriendList(Context ctx, ArrayList<String> friendList){
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+
         int length = friendList.size();
         for(int i = 0; i < length; i++){
             editor.putString("friend_" + i, friendList.get(i));

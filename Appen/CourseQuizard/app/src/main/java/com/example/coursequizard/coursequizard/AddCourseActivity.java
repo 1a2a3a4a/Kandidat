@@ -76,19 +76,28 @@ public class AddCourseActivity extends AppCompatActivity {
 
         bgws.execute(type,courseName,courseCode,universityName,universityID);
     }
-
+    public void setCurrentSelect(int index){
+        Spinner universitySpinner = (Spinner)findViewById(R.id.universitySpinnerProfile);
+        universitySpinner.setSelection(index);
+    }
     /**
      * This method is similar to a main method. The first method that runs for the Activity
      * @param savedInstanceState
      */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course);
 
         fromActivity();
+        String uniID = SaveSharedData.getMyUniversityID(AddCourseActivity.this);
+        int index =0;
         for ( int j =0; j< universityLinkedList.size() ;j++){
-            universityNameList.add(universityLinkedList.get(j).getName()) ;
+            universityNameList.add(universityLinkedList.get(j).getName());
+            if (uniID.equals(String.valueOf(universityLinkedList.get(j).getU_ID()))){
+                index =j;
+            }
         }
         // Getting the spinner
         Spinner universitySpinner = (Spinner)findViewById(R.id.universitySpinner);
@@ -96,6 +105,7 @@ public class AddCourseActivity extends AppCompatActivity {
         // Inserting the List to the spinner
         ArrayAdapter<String> universityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, universityNameList);
         universitySpinner.setAdapter(universityAdapter);
+        setCurrentSelect(index);
 
     }
 }

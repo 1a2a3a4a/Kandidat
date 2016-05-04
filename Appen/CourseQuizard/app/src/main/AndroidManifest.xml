@@ -50,8 +50,9 @@
         <activity
             android:name=".MyGamesActivity"
             android:theme="@style/MyMaterialTheme" />
-        <activity android:name=".FriendsActivity" />
-        <activity android:name=".FriendRequestActivity" />
+        <activity android:name=".FriendsActivity"
+            android:theme="@style/MyMaterialTheme"/>
+        <activity android:name=".AddFriendActivity" />
         <activity android:name=".PendingActivity"></activity>
     </application>
 

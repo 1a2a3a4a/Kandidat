@@ -37,14 +37,23 @@ public class MyProfileActivity extends AppCompatActivity {
         //String username = "Daniel";
         bgws.execute(type);
     }
+    public void setCurrentSelect(int index){
+        Spinner universitySpinner = (Spinner)findViewById(R.id.universitySpinnerProfile);
+        universitySpinner.setSelection(index);
+    }
     public void createSpinner(){
+        String uniID = SaveSharedData.getMyUniversityID(MyProfileActivity.this);
+        int index =0;
         for ( int j =0; j< universityLinkedList.size() ;j++){
             universityNameList.add(universityLinkedList.get(j).getName()) ;
+            if (uniID.equals(String.valueOf(universityLinkedList.get(j).getU_ID()))){
+                index =j;
+            }
         }
         Spinner universitySpinner = (Spinner)findViewById(R.id.universitySpinnerProfile);
         ArrayAdapter<String> universityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, universityNameList);
         universitySpinner.setAdapter(universityAdapter);
-
+        setCurrentSelect(index);
     }
     public void fromActivity(){
         ArrayList<String> message = new ArrayList<String>();
@@ -77,11 +86,15 @@ public class MyProfileActivity extends AppCompatActivity {
         startActivity(i);
     }
     public void addFriend(View view){
-        Intent i = new Intent(MyProfileActivity.this, FriendRequestActivity.class);
+        Intent i = new Intent(MyProfileActivity.this, AddFriendActivity.class);
         startActivity(i);
     }
     public void toPendingActivity(View view){
         BackgroundWithServer bgws = new BackgroundWithServer(MyProfileActivity.this);
         bgws.execute("pending");
+    }
+    public void toFriendsActivity(View view){
+        BackgroundWithServer bgws = new BackgroundWithServer(MyProfileActivity.this);
+        bgws.execute("getrelationlists");
     }
 }

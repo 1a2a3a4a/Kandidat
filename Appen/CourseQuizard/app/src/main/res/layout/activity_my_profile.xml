@@ -12,79 +12,51 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="My Courses"
-        android:id="@+id/button"
-        android:layout_marginTop="46dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="33dp"
-        android:onClick="toMyCoursesActivity" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="All Courses"
-        android:id="@+id/button2"
-        android:layout_alignTop="@+id/button"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="47dp"
-        android:onClick="toAllCoursesActivity" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="My Friends"
-        android:id="@+id/myFriendsButton"
+        android:text="Courses"
+        android:id="@+id/CourseProfileButton"
+        android:onClick="toAllCoursesActivity"
         android:layout_marginTop="39dp"
-        android:layout_below="@+id/button"
-        android:layout_alignStart="@+id/button"
-        android:onClick="myFriends" />
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/universityEditButton" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Friend"
-        android:id="@+id/addFriendButton"
-        android:layout_alignTop="@+id/myFriendsButton"
-        android:layout_alignStart="@+id/button2"
-        android:onClick="addFriend"
-        android:layout_alignEnd="@+id/button2" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Friend Requests"
-        android:id="@+id/pendingButton"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/myFriendsButton"
-        android:onClick="toPendingActivity" />
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/universitySpinnerProfile"
-        android:layout_below="@+id/pendingButton"
         android:layout_marginTop="54dp"
-        android:layout_toEndOf="@+id/pendingButton"
-        android:clickable="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="University:"
-        android:id="@+id/universityTextViewProfile"
-        android:layout_alignTop="@+id/universitySpinnerProfile"
-        android:layout_alignStart="@+id/pendingButton"
-        android:layout_alignBottom="@+id/universitySpinnerProfile"
-        android:layout_alignEnd="@+id/pendingButton"
-        android:textAlignment="center"
-        android:textColor="#070707"
-        android:textSize="20dp" />
+        android:clickable="true"
+        android:layout_centerVertical="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save universitychanges"
         android:id="@+id/universityEditButton"
-        android:layout_below="@+id/universitySpinnerProfile"
-        android:layout_centerHorizontal="true"
         android:onClick="editMyUniversity"
-        android:nestedScrollingEnabled="false" />
+        android:nestedScrollingEnabled="false"
+        android:layout_marginStart="43dp"
+        android:layout_below="@+id/universitySpinnerProfile"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="25dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Friends"
+        android:id="@+id/FriendsProfileButton"
+        android:layout_alignBottom="@+id/CourseProfileButton"
+        android:layout_alignParentStart="true"
+        android:onClick="toFriendsActivity" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="University:"
+        android:id="@+id/textView"
+        android:textAlignment="center"
+        android:textColor="#070707"
+        android:textSize="20dp"
+        android:layout_below="@+id/CourseProfileButton"
+        android:layout_toEndOf="@+id/FriendsProfileButton"
+        android:layout_marginTop="76dp" />
 </RelativeLayout>

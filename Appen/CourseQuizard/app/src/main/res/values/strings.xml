@@ -9,6 +9,12 @@
     <string name="title_activity_login">Sign in</string>
     <item name="course_star_position" type="id" />
     <item name="course_star_image" type="id" />
+    <item name="friend_edit_position" type="id" />
+    <item name="friend_edit_image" type="id" />
+    <item name="friend_edit_request_position" type="id" />
+    <item name="friend_edit_request_image" type="id" />
+    <item name="friend_edit_pending_position" type="id" />
+    <item name="friend_edit_pending_image" type="id" />
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

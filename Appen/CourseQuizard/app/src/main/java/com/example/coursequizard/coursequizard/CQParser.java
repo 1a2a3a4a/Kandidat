@@ -95,6 +95,32 @@ public class CQParser {
 		return courseLists;
 
 	}
+	public ArrayList<ArrayList<String>> toFriendLists(String friendText) {
+		ArrayList<ArrayList<String>> friendLists = new ArrayList<ArrayList<String>>();
+		ArrayList<String> myFriends = new ArrayList<String>();
+		ArrayList<String> requestsFriend = new ArrayList<String>();
+		ArrayList<String> pendningFriend = new ArrayList<String>();
+		String[] splits = friendText.split("%END%");
+		myFriends = friendParser(splits[0]);
+		requestsFriend = friendParser(splits[1]);
+		pendningFriend = friendParser(splits[2]);
+		friendLists.add(myFriends);
+		friendLists.add(requestsFriend);
+		friendLists.add(pendningFriend);
+		return friendLists;
+	}
+
+	private ArrayList<String> friendParser(String names) {
+		ArrayList<String> list = new ArrayList<String>();
+		if (!names.equals("EMPTY")) {
+			String split_names[] = names.split("%U%");
+
+			for (int i = 0; i < split_names.length; i++) {
+				list.add(split_names[i]);
+			}
+		}
+		return list;
+	}
 
 	private ArrayList<Course> courseParser(String text){
 		ArrayList<Course> courseList = new ArrayList<Course>();
