@@ -16,14 +16,17 @@ import java.util.ArrayList;
 public class GameItemAdapter extends ArrayAdapter<Game> {
     //private ArrayList<Game> objects;
     private Context context1;
+    private int resourceItem = 0;
 
     public GameItemAdapter(Context context, int textViewResourceId, ArrayList<Game> objects) {
         super(context, textViewResourceId, objects);
         //this.objects = objects;
+
     }
     public GameItemAdapter(Context context,int resource, int textViewResourceId, ArrayList<Game> items) {
         super(context, resource, textViewResourceId, items);
         this.context1 = context;
+        this.resourceItem =resource;
     }
     @Override
     public View getView(int position,View convertView, ViewGroup parent) {
@@ -31,7 +34,9 @@ public class GameItemAdapter extends ArrayAdapter<Game> {
         if (v == null) {
             LayoutInflater inflater;
             inflater = LayoutInflater.from(getContext());
-            v = inflater.inflate(R.layout.fragment_gameitem, null);
+
+                v = inflater.inflate(resourceItem, null);
+
             //LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
            // v = inflater.inflate(R.layout.fragment_gameitem, null);
         }
@@ -50,7 +55,7 @@ public class GameItemAdapter extends ArrayAdapter<Game> {
 
             TextView gameScore = (TextView) v.findViewById(R.id.scoreTextView);
             TextView courseName = (TextView) v.findViewById(R.id.courseNameTextView);
-            TextView stateMessage = (TextView) v.findViewById(R.id.opponentNameTextView);
+            // TextView stateMessage = (TextView) v.findViewById(R.id.opponentNameTextView);
             TextView opponentScoreText = (TextView) v.findViewById(R.id.opponentScoreTextView);
             TextView userScoreText = (TextView) v.findViewById(R.id.userScoreTextView);
 
@@ -88,6 +93,7 @@ public class GameItemAdapter extends ArrayAdapter<Game> {
                 if (courseName != null) {
                     courseName.setText(i.getcourse_name());
                 }
+                /*
                 if (stateMessage != null) {
                     //0 pending
                     //1  user2
@@ -115,6 +121,7 @@ public class GameItemAdapter extends ArrayAdapter<Game> {
                     }
                     stateMessage.setText(i.getGame_status_string());
                 }
+                */
             }
         }
             return v;

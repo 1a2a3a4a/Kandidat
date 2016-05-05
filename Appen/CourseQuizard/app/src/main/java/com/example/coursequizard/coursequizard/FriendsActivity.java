@@ -84,9 +84,9 @@ public class FriendsActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         FriendFragmentAdapter adapter = new FriendFragmentAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FriendFragment(), "myfriends", myFriends);
+        adapter.addFragment(new FriendFragment(), "my friends", myFriends);
         adapter.addFragment(new FriendFragment(), " friend requests", myFriendRequests);
-        adapter.addFragment(new FriendFragment(), "pending", myPendingFriends);
+        adapter.addFragment(new FriendFragment(), "sent requests", myPendingFriends);
         viewPager.setAdapter(adapter);
     }
 

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -29,6 +30,7 @@ public class MyProfileActivity extends AppCompatActivity {
         Log.i("id",String.valueOf(universityLinkedList.get(spinner.getSelectedItemPosition()).getU_ID()));
         SaveSharedData.setMyUniversityID(MyProfileActivity.this,String.valueOf(universityLinkedList.get(spinner.getSelectedItemPosition()).getU_ID()));
         Log.i("saveds", SaveSharedData.getMyUniversityID(MyProfileActivity.this));
+        Toast.makeText(MyProfileActivity.this, "Saved: " + SaveSharedData.getMyUniversityName(MyProfileActivity.this), Toast.LENGTH_SHORT).show();
     }
     public void toAllCoursesActivity(View view){
         BackgroundWithServer bgws = new BackgroundWithServer(this);

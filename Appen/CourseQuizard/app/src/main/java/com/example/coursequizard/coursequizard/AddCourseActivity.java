@@ -8,9 +8,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.regex.Pattern;
 
 /**
 This is the Add course Activity, here users can add non existing courses.
@@ -37,7 +39,14 @@ public class AddCourseActivity extends AppCompatActivity {
             }
 
         }
+    public boolean invalidPattern(String tryString) {
+        Pattern pattern = Pattern.compile("[A-Za-z0-9_!-]{1,95}$");
+        if(pattern.matcher(tryString).matches()){
+            return false;
+        }
+        return true;
 
+    }
     /**
      * This method is used  to read the textfields from the view what the users have entered in.
      *
@@ -56,8 +65,12 @@ public class AddCourseActivity extends AppCompatActivity {
         Spinner spinner = (Spinner)findViewById(R.id.universitySpinner);
         uniName = spinner.getSelectedItem().toString();
         uniID  =  String.valueOf(universityLinkedList.get(spinner.getSelectedItemPosition()).getU_ID());
-
-        toBackGroundWithServer(courseName,courseCode, uniName, uniID);
+        if(invalidPattern(courseName) || invalidPattern(courseCode)){
+            Toast.makeText(AddCourseActivity.this, "Invalid course information", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            toBackGroundWithServer(courseName, courseCode, uniName, uniID);
+        }
     }
 
     /**

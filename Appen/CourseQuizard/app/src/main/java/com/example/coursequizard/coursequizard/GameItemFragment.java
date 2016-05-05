@@ -76,9 +76,14 @@ public class GameItemFragment extends ListFragment {
         //myGames  = extras.getParcelableArrayList("arraylist");
         fromActivity();
         Log.i("first game",myGames.get(0).getUser_2());
-        View rootView = inflater.inflate(R.layout.fragment_gameitem_list, container, false);
         Bundle bundle = this.getArguments();
         myInt = bundle.getInt("gameList", 3);
+
+
+
+
+        View rootView = inflater.inflate(R.layout.fragment_gameitem_list, container, false);
+
 
 
         Log.i("beforeswitch", "beforeswitch");
@@ -93,7 +98,7 @@ public class GameItemFragment extends ListFragment {
                 ListView lva = (ListView) rootView.findViewById(android.R.id.list);
                 Log.i("myturn", "myturn");
                 Log.i("myturn size", String.valueOf(myTurnGames.size()));
-                myAdapter = new GameItemAdapter(getActivity(), R.layout.fragment_gameitem, android.R.id.list, myTurnGames);
+                myAdapter = new GameItemAdapter(getActivity(), R.layout.fragment_gameitem_my_turn, android.R.id.list, myTurnGames);
 
                 lva.setAdapter(myAdapter);
                 break;

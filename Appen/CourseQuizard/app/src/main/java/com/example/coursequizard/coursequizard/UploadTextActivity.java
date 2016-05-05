@@ -73,7 +73,13 @@ public class UploadTextActivity extends AppCompatActivity {
                 } catch(IOException e) {
                     e.printStackTrace();
                 }
-                throughphp(converted);
+                if (converted.length() > 0){
+                    throughphp(converted);
+                }
+                else{
+                    Toast.makeText(UploadTextActivity.this, "Too short to be generated", Toast.LENGTH_SHORT).show();
+                }
+
 
             }
             else{

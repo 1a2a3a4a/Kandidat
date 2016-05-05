@@ -47,6 +47,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     String universityName="";
     String userName="";
     String gameID="";
+    String notEnoughQuestions="There are not enough questions for this course, you are welcome to add more";
     AlertDialog alertDialog;
     BackgroundWithServer (Context ctx) {
         context = ctx;
@@ -640,11 +641,16 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 break;
 
             case "singlePlayerMode":
-                Intent singleplayermodei = new Intent(context, PlayGameActivity.class);
-                send.add("fromSPChallengeActivity");
-                send.add(result);
-                singleplayermodei.putExtra("prevActivity", send);
-                context.startActivity(singleplayermodei);
+                if(result.equals("limit")) {
+                    Toast.makeText(context,notEnoughQuestions, Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent singleplayermodei = new Intent(context, PlayGameActivity.class);
+                    send.add("fromSPChallengeActivity");
+                    send.add(result);
+                    singleplayermodei.putExtra("prevActivity", send);
+                    context.startActivity(singleplayermodei);
+                }
                 break;
             case "swap favorites":
                 Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
@@ -672,12 +678,17 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 break;
 
             case ("friendPlayerMode"):
-                Intent friendplayermodei = new Intent(context,MainActivity.class);
-                send.add("fromFPChallengeActivity");
-                send.add(result);
-                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
-                friendplayermodei.putExtra("prevActivity", send);
-                context.startActivity(friendplayermodei);
+                if(result.equals("limit")) {
+                    Toast.makeText(context,notEnoughQuestions, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent friendplayermodei = new Intent(context, MainActivity.class);
+                    send.add("fromFPChallengeActivity");
+                    send.add(result);
+                    Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+                    friendplayermodei.putExtra("prevActivity", send);
+                    context.startActivity(friendplayermodei);
+                }
                 break;
             case("mygames"):
                 // used by toMyGamesActivity(View view) in MainActivity
@@ -690,19 +701,23 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 break;
             case("friendlist"):
                 if(result == null){
-                    result = "Nofriends";
                 }
+                else {
+                    Log.i("result", result);
+                    ArrayList<String> friend = new ArrayList<String>();
+                    String[] friends = result.split("%U%");
+                    if (friends[0].equals("EMPTY")) {
 
-                Log.i("result", result);
-                ArrayList<String> friend = new ArrayList<String>();
-                String[] friends = result.split("%U%");
-                int length = friends.length; // length of coded friendlist string[]
-                Log.i("friendlistlength", String.valueOf(length));
-                for(int i = 0; i < length; i++){
-                    friend.add(friends[i]); //add all friends in friendlist
+                    } else {
+                        int length = friends.length; // length of coded friendlist string[]
+                        Log.i("friendlistlength", String.valueOf(length));
+                        for (int i = 0; i < length; i++) {
+                            friend.add(friends[i]); //add all friends in friendlist
+                        }
+                    }
+                    SaveSharedData.setFriendList(context, friend);
+                    Log.i("friendlist done!", "hej");
                 }
-                SaveSharedData.setFriendList(context, friend);
-                Log.i("friendlist done!", "hej");
                 break;
             case "get all courses":{
                 Log.i("result", result);
@@ -731,7 +746,18 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
 
                 break;
             case("randomPlayerMode"):
+                if (result.equals("limit")){
+                Toast.makeText(context, notEnoughQuestions, Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Intent randomplayermodei = new Intent(context, MainActivity.class);
+                send.add("fromRPChallengeActivity");
+                send.add(result);
                 Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+                randomplayermodei.putExtra("prevActivity", send);
+                context.startActivity(randomplayermodei);
+            }
+
                 break;
             case("delete friend"):
                 Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
