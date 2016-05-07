@@ -16,52 +16,9 @@ tools:context="com.example.coursequizard.coursequizard.CreateQuestionActivity">
     android:layout_alignParentBottom="true"
     android:id="@+id/tableLayout"
     android:layout_toStartOf="@+id/cancelButton"
+    android:layout_toLeftOf="@+id/cancelButton"
     android:layout_alignTop="@+id/cancelButton">
-    <!--
-     <Button
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_column="0"
-         android:layout_row="0"
-         android:layout_gravity="fill"
-         android:layout_columnWeight="1"
-         android:layout_rowWeight="1"
-         android:text="New Button"
-         android:id="@+id/button" />
 
-     <Button
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_column="1"
-         android:layout_row="0"
-         android:layout_gravity="fill"
-         android:layout_columnWeight="1"
-         android:layout_rowWeight="1"
-         android:text="New Button"
-         android:id="@+id/button1" />
-
-     <Button
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_column="0"
-         android:layout_row="1"
-         android:layout_gravity="fill"
-         android:layout_columnWeight="1"
-         android:layout_rowWeight="1"
-         android:text="New Button"
-         android:id="@+id/button2" />
-
-     <Button
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_column="1"
-         android:layout_row="1"
-         android:layout_gravity="fill"
-         android:layout_columnWeight="1"
-         android:layout_rowWeight="1"
-         android:text="New Button"
-         android:id="@+id/button3" />
-         -->
     <TableRow
         android:id="@+id/tableRow1"
         android:layout_width="fill_parent"
@@ -77,7 +34,7 @@ tools:context="com.example.coursequizard.coursequizard.CreateQuestionActivity">
             android:background="#0cf010"
 
             android:clickable="true"
-            android:editable="true" />
+             />
 
         <EditText
             android:layout_width="0dp"
@@ -88,7 +45,7 @@ tools:context="com.example.coursequizard.coursequizard.CreateQuestionActivity">
             android:id="@+id/editAlt1Button"
             android:background="#fb715c"
             android:clickable="true"
-            android:editable="true" />
+             />
     </TableRow>
     <TableRow
         android:id="@+id/tableRow2"
@@ -106,7 +63,7 @@ tools:context="com.example.coursequizard.coursequizard.CreateQuestionActivity">
             android:id="@+id/editAlt2Button"
             android:background="#fb715c"
             android:clickable="true"
-            android:editable="true" />
+             />
         <EditText
             android:layout_width="0dp"
             android:layout_height="fill_parent"
@@ -118,7 +75,7 @@ tools:context="com.example.coursequizard.coursequizard.CreateQuestionActivity">
             android:id="@+id/editAlt3Button"
             android:background="#fb715c"
             android:clickable="true"
-            android:editable="true" />
+            />
     </TableRow>
 
 </TableLayout>
@@ -133,7 +90,9 @@ tools:context="com.example.coursequizard.coursequizard.CreateQuestionActivity">
     android:maxLength="95"
     android:longClickable="false"
     android:layout_alignParentTop="true"
-    android:layout_alignParentStart="true" />
+    android:layout_alignParentStart="true"
+    android:layout_alignParentLeft="true"
+    />
 
 <Button
     android:layout_width="wrap_content"
@@ -142,7 +101,8 @@ tools:context="com.example.coursequizard.coursequizard.CreateQuestionActivity">
     android:id="@+id/cancelButton"
     android:onClick="toMainActivity"
     android:layout_above="@+id/addQuestion"
-    android:layout_alignStart="@+id/clearButton" />
+    android:layout_alignStart="@+id/clearButton"
+    android:layout_alignLeft="@+id/clearButton"/>
 
 <Button
     android:layout_width="wrap_content"
@@ -150,10 +110,12 @@ tools:context="com.example.coursequizard.coursequizard.CreateQuestionActivity">
     android:text="Clear"
     android:id="@+id/clearButton"
     android:onClick="resetView"
-    android:nestedScrollingEnabled="true"
     android:layout_marginEnd="56dp"
+    android:layout_marginRight="56dp"
     android:layout_below="@+id/skipGenButton"
-    android:layout_toStartOf="@+id/addQuestion" />
+    android:layout_toStartOf="@+id/addQuestion"
+    android:layout_toLeftOf="@+id/addQuestion"
+    />
 
 <Button
     android:layout_width="wrap_content"
@@ -162,7 +124,8 @@ tools:context="com.example.coursequizard.coursequizard.CreateQuestionActivity">
     android:id="@+id/addQuestion"
     android:onClick="addQuestion"
     android:layout_alignParentBottom="true"
-    android:layout_alignParentEnd="true" />
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentRight="true" />
 
 <TextView
     android:layout_width="200dp"
@@ -176,7 +139,9 @@ tools:context="com.example.coursequizard.coursequizard.CreateQuestionActivity">
     android:onClick="toCourseActivity"
     android:textSize="18dp"
     android:layout_above="@+id/cancelButton"
-    android:layout_alignEnd="@+id/questionTextView" />
+    android:layout_alignEnd="@+id/questionTextView"
+    android:layout_alignRight="@+id/questionTextView"
+    />
 
 <Button
     style="?android:attr/buttonStyleSmall"
@@ -185,9 +150,10 @@ tools:context="com.example.coursequizard.coursequizard.CreateQuestionActivity">
     android:text="Skip"
     android:id="@+id/skipGenButton"
     android:onClick="skipGenQuestion"
-    android:nestedScrollingEnabled="false"
     android:layout_alignTop="@+id/cancelButton"
     android:layout_alignStart="@+id/addQuestion"
-    android:layout_alignEnd="@+id/questionTextView" />
+    android:layout_alignLeft="@+id/addQuestion"
+    android:layout_alignEnd="@+id/questionTextView"
+    android:layout_alignRight="@+id/questionTextView"/>
 
 </RelativeLayout>

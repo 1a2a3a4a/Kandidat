@@ -11,52 +11,9 @@
         android:layout_height="200dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:id="@+id/tableLayout">
-        <!--
-         <Button
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_column="0"
-             android:layout_row="0"
-             android:layout_gravity="fill"
-             android:layout_columnWeight="1"
-             android:layout_rowWeight="1"
-             android:text="New Button"
-             android:id="@+id/button" />
 
-         <Button
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_column="1"
-             android:layout_row="0"
-             android:layout_gravity="fill"
-             android:layout_columnWeight="1"
-             android:layout_rowWeight="1"
-             android:text="New Button"
-             android:id="@+id/button1" />
-
-         <Button
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_column="0"
-             android:layout_row="1"
-             android:layout_gravity="fill"
-             android:layout_columnWeight="1"
-             android:layout_rowWeight="1"
-             android:text="New Button"
-             android:id="@+id/button2" />
-
-         <Button
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_column="1"
-             android:layout_row="1"
-             android:layout_gravity="fill"
-             android:layout_columnWeight="1"
-             android:layout_rowWeight="1"
-             android:text="New Button"
-             android:id="@+id/button3" />
-             -->
         <TableRow
             android:id="@+id/tableRow1"
             android:layout_width="fill_parent"
@@ -72,7 +29,7 @@
             android:background="#0cf010"
 
             android:clickable="true"
-            android:editable="true" />
+             />
 
         <EditText
             android:layout_width="0dp"
@@ -83,7 +40,7 @@
             android:id="@+id/editAlt1Button"
             android:background="#fb715c"
             android:clickable="true"
-            android:editable="true" />
+             />
         </TableRow>
         <TableRow
             android:id="@+id/tableRow2"
@@ -101,19 +58,17 @@
             android:id="@+id/editAlt2Button"
             android:background="#fb715c"
             android:clickable="true"
-            android:editable="true" />
+           />
         <EditText
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-
-
             android:gravity="center"
             android:hint="Alt3"
             android:id="@+id/editAlt3Button"
             android:background="#fb715c"
             android:clickable="true"
-            android:editable="true" />
+             />
         </TableRow>
 
     </TableLayout>
@@ -127,6 +82,7 @@
         android:hint="Enter question here"
         android:layout_above="@+id/tableLayout"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:maxLength="95"
         android:longClickable="false" />
 
@@ -137,6 +93,7 @@
         android:id="@+id/cancelButton"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:onClick="toMainActivity" />
 
     <Button
@@ -147,7 +104,7 @@
         android:layout_alignTop="@+id/cancelButton"
         android:layout_centerHorizontal="true"
         android:onClick="resetView"
-        android:nestedScrollingEnabled="true" />
+        />
 
     <Button
         android:layout_width="wrap_content"
@@ -156,6 +113,7 @@
         android:id="@+id/addQuestion"
         android:layout_alignTop="@+id/clearButton"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:onClick="addQuestion" />
 
     <TextView
@@ -171,7 +129,10 @@
         android:textSize="18dp"
         android:layout_below="@+id/skipGenButton"
         android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/questionTextView" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignEnd="@+id/questionTextView"
+        android:layout_alignRight="@+id/questionTextView"
+        />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -181,8 +142,10 @@
         android:id="@+id/skipGenButton"
         android:layout_below="@+id/clearButton"
         android:layout_alignEnd="@+id/clearButton"
+        android:layout_alignRight="@+id/clearButton"
         android:layout_alignStart="@+id/clearButton"
+        android:layout_alignLeft="@+id/clearButton"
         android:onClick="skipGenQuestion"
-        android:nestedScrollingEnabled="false" />
+         />
 
 </RelativeLayout>

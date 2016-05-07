@@ -20,7 +20,9 @@
         android:layout_marginTop="50dp"
         android:layout_alignParentTop="true"
         android:layout_alignEnd="@+id/cqNewGameButton"
+        android:layout_alignRight="@+id/cqNewGameButton"
         android:layout_alignStart="@+id/cqNewGameButton"
+        android:layout_alignLeft="@+id/cqNewGameButton"
         android:onClick="toMyGamesActivity" />
     <Button
         android:layout_width="200dp"
@@ -28,10 +30,11 @@
         android:text="New Game"
         android:id="@+id/cqNewGameButton"
         android:onClick="cqToOpponentActivity"
-        android:nestedScrollingEnabled="false"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/cqMyGamesButton"
-        android:layout_alignStart="@+id/cqCreateQuestionButton" />
+        android:layout_alignStart="@+id/cqCreateQuestionButton"
+        android:layout_alignLeft="@+id/cqCreateQuestionButton"
+        />
 
     <Button
         android:layout_width="200dp"

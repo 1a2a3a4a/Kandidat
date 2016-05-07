@@ -14,20 +14,27 @@ tools:context="com.example.coursequizard.coursequizard.ChallengeActivity">
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Opponent"
+    android:layout_marginStart="20dp"
+    android:layout_marginLeft="20dp"
+    android:maxWidth="250dp"
     android:id="@+id/opponentNameTextView"
     android:layout_alignParentTop="true"
     android:layout_toStartOf="@+id/confirmButton"
+    android:layout_toLeftOf="@+id/confirmButton"
     android:layout_marginEnd="82dp"
+    android:layout_marginRight="82dp"
     android:layout_marginTop="65dp" />
 
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Course"
+    android:maxWidth="250dp"
     android:id="@+id/courseNameTextView"
     android:layout_marginTop="59dp"
     android:layout_below="@+id/editOpponentImageButton"
-    android:layout_alignStart="@+id/opponentNameTextView" />
+    android:layout_alignStart="@+id/opponentNameTextView"
+    android:layout_alignLeft="@+id/opponentNameTextView"/>
 
 <ImageButton
     android:layout_width="wrap_content"
@@ -36,7 +43,8 @@ tools:context="com.example.coursequizard.coursequizard.ChallengeActivity">
     android:src="@drawable/ic_mode_edit_black_18dp"
     android:onClick="toOpponentActivity"
     android:layout_alignBottom="@+id/opponentNameTextView"
-    android:layout_alignStart="@+id/editCourseImageButton" />
+    android:layout_alignStart="@+id/editCourseImageButton"
+    android:layout_alignLeft="@+id/opponentNameTextView"/>
 
 <ImageButton
     android:layout_width="wrap_content"
@@ -45,7 +53,9 @@ tools:context="com.example.coursequizard.coursequizard.ChallengeActivity">
     android:src="@drawable/ic_mode_edit_black_18dp"
     android:onClick="toCourseActivity"
     android:layout_marginEnd="79dp"
+    android:layout_marginRight="79dp"
     android:layout_alignTop="@+id/courseNameTextView"
+    android:layout_alignParentRight="true"
     android:layout_alignParentEnd="true" />
 
 <Button

@@ -15,6 +15,7 @@
         android:id="@+id/newCourseNameEditText"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_marginTop="61dp"
         android:maxLines="1"
         android:maxLength="75"
@@ -26,6 +27,7 @@
         android:id="@+id/newCourseCodeEditText"
         android:layout_below="@+id/newCourseNameEditText"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:maxLines="1"
         android:maxLength="75"
         android:hint="Enter coursecode" />
@@ -35,7 +37,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/universitySpinner"
         android:layout_below="@+id/newCourseCodeEditText"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
 
     <Button
         android:layout_width="wrap_content"

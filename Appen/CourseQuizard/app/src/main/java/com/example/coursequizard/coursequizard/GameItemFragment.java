@@ -64,7 +64,6 @@ public class GameItemFragment extends ListFragment {
             CQParser parser = new CQParser();
             Log.i("intent",unparsedMyGames);
             myGames= parser.toGList(unparsedMyGames);
-            Log.i("intent",myGames.get(0).getUser_1());
             myGamesSort();
         }
     }
@@ -75,7 +74,6 @@ public class GameItemFragment extends ListFragment {
         Bundle extras = getActivity().getIntent().getExtras();
         //myGames  = extras.getParcelableArrayList("arraylist");
         fromActivity();
-        Log.i("first game",myGames.get(0).getUser_2());
         Bundle bundle = this.getArguments();
         myInt = bundle.getInt("gameList", 3);
 

@@ -14,7 +14,8 @@
         android:onClick="clickar"
         android:scaleType="fitCenter"
         android:focusableInTouchMode="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
 
     <TextView
         android:layout_width="250dp"
@@ -26,6 +27,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignBottom="@+id/list_item_friend_pending_button"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_toEndOf="@+id/list_item_friend_pending_button"
+        android:layout_toRightOf="@+id/list_item_friend_pending_button"
         android:textAlignment="center" />
 </RelativeLayout>

@@ -26,6 +26,8 @@
         android:id="@+id/friendText"
         android:layout_above="@+id/addFriendButton"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:hint="Enter name here" />
 </RelativeLayout>

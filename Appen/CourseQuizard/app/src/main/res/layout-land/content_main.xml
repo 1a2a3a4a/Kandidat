@@ -19,16 +19,17 @@
         android:id="@+id/cqMyGamesButton"
         android:onClick="toMyGamesActivity"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
     <Button
         android:layout_width="200dp"
         android:layout_height="80dp"
         android:text="New Game"
         android:id="@+id/cqNewGameButton"
         android:onClick="cqToOpponentActivity"
-        android:nestedScrollingEnabled="false"
         android:layout_alignTop="@+id/cqMyGamesButton"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"/>
 
     <Button
         android:layout_width="200dp"
@@ -37,7 +38,8 @@
         android:id="@+id/cqCreateQuestionButton"
         android:onClick="toCreateQuestionActivity"
         android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
     <Button
         android:layout_width="200dp"
         android:layout_height="80dp"
@@ -45,6 +47,8 @@
         android:id="@+id/generateQuestionButton"
         android:onClick="toUploadTextActivity"
         android:layout_alignTop="@+id/cqCreateQuestionButton"
-        android:layout_alignStart="@+id/cqNewGameButton" />
+        android:layout_alignStart="@+id/cqNewGameButton"
+        android:layout_alignLeft="@+id/cqNewGameButton"
+        />
 
 </RelativeLayout>

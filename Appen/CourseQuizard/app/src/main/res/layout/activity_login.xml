@@ -16,7 +16,9 @@
         android:id="@+id/loginpwtext"
         android:layout_centerVertical="true"
         android:layout_alignEnd="@+id/loginButton"
+        android:layout_alignRight="@+id/loginButton"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:hint="Password" />
 
     <EditText
@@ -25,7 +27,9 @@
         android:id="@+id/loginusernameText"
         android:layout_above="@+id/loginpwtext"
         android:layout_alignStart="@+id/loginpwtext"
+        android:layout_alignLeft="@+id/loginpwtext"
         android:layout_alignEnd="@+id/loginpwtext"
+        android:layout_alignRight="@+id/loginpwtext"
         android:hint="Username" />
 
     <Button
@@ -35,7 +39,9 @@
         android:id="@+id/loginButton"
         android:layout_below="@+id/loginpwtext"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:onClick="login" />
 
     <TextView

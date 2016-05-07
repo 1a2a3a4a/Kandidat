@@ -14,28 +14,35 @@
         android:layout_height="wrap_content"
         android:text="Opponent"
         android:id="@+id/opponentNameTextView"
-        android:layout_marginStart="71dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:maxWidth="200dp"
         android:layout_marginTop="88dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Course"
+        android:maxWidth="200dp"
         android:id="@+id/courseNameTextView"
         android:layout_marginTop="59dp"
         android:layout_below="@+id/editOpponentImageButton"
-        android:layout_alignStart="@+id/opponentNameTextView" />
+        android:layout_alignStart="@+id/opponentNameTextView"
+        android:layout_alignLeft="@+id/opponentNameTextView"/>
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editOpponentImageButton"
         android:layout_marginEnd="35dp"
+        android:layout_marginRight="35dp"
         android:src="@drawable/ic_mode_edit_black_18dp"
         android:layout_alignTop="@+id/opponentNameTextView"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:onClick="toOpponentActivity" />
 
     <ImageButton
@@ -45,6 +52,7 @@
         android:src="@drawable/ic_mode_edit_black_18dp"
         android:layout_alignTop="@+id/courseNameTextView"
         android:layout_alignStart="@+id/editOpponentImageButton"
+        android:layout_alignLeft="@+id/editOpponentImageButton"
         android:onClick="toCourseActivity" />
 
     <Button

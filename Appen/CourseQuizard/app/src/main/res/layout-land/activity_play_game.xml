@@ -2,11 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".PlayGameActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".PlayGameActivity">
 
     <TableLayout
         android:layout_width="match_parent"
@@ -51,7 +53,7 @@
 
                 android:gravity="center"
                 android:id="@+id/alt3Button"
-              />
+                />
             <Button
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
@@ -72,19 +74,18 @@
         android:text="New Text"
         android:id="@+id/questionTextView"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="71dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:layout_above="@+id/tableLayout" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="To main menu"
         android:id="@+id/gameDoneButton"
-        android:layout_alignBottom="@+id/questionTextView"
-        android:layout_centerHorizontal="true"
         android:onClick="toMainActivity"
-        />
+        android:layout_above="@+id/tableLayout"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

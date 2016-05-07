@@ -695,7 +695,14 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 // used by toMyGamesActivity(View view) in MainActivity
                 Intent mygamesi = new Intent(context,MyGamesActivity.class);
                 send.add("fromMainActivity");
-                send.add(result);
+                if (result.equals("You have no challenges or active games!")){
+
+                    send.add("");
+            }
+                else{
+                    send.add(result);
+                }
+
                 Log.i("mygamesunparsed",result);
                 mygamesi.putExtra("prevActivity", send);
                 context.startActivity(mygamesi);

@@ -163,23 +163,25 @@ public class CQParser {
 	}
 
 	private void gameParser(String text){
-		String splits[] = text.split("%N%");
-		for(int i = 0; i < splits.length; i++){
-			String sentence_splits[] = splits[i].split("%G%");
-			Game g = new Game(Integer.parseInt(sentence_splits[0]),
-					Integer.parseInt(sentence_splits[1]),
-					Integer.parseInt(sentence_splits[2]),
-					Integer.parseInt(sentence_splits[3]),
-					Integer.parseInt(sentence_splits[4]),
-					Integer.parseInt(sentence_splits[5]),
-					sentence_splits[6],
-					sentence_splits[7],
-					Integer.parseInt(sentence_splits[8]),
-					Integer.parseInt(sentence_splits[9]),
-					Integer.parseInt(sentence_splits[10]),
-					sentence_splits[11],
-					sentence_splits[12]);
-			glist.add(g);
+		if (text.length() > 0) {
+			String splits[] = text.split("%N%");
+			for (int i = 0; i < splits.length; i++) {
+				String sentence_splits[] = splits[i].split("%G%");
+				Game g = new Game(Integer.parseInt(sentence_splits[0]),
+						Integer.parseInt(sentence_splits[1]),
+						Integer.parseInt(sentence_splits[2]),
+						Integer.parseInt(sentence_splits[3]),
+						Integer.parseInt(sentence_splits[4]),
+						Integer.parseInt(sentence_splits[5]),
+						sentence_splits[6],
+						sentence_splits[7],
+						Integer.parseInt(sentence_splits[8]),
+						Integer.parseInt(sentence_splits[9]),
+						Integer.parseInt(sentence_splits[10]),
+						sentence_splits[11],
+						sentence_splits[12]);
+				glist.add(g);
+			}
 		}
 
 	}
