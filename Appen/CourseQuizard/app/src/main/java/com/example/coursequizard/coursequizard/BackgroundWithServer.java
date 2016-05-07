@@ -568,19 +568,18 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 break;
 
             case "register":
-                if (!(result.equals("User created"))) {
-                    alertDialog.setMessage(result);
-                    alertDialog.show();
-                } else {
+                if (result.equals("User created!")) {
                     Intent registeri = new Intent(context, LoginActivity.class);
                     context.startActivity(registeri);
                 }
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
                 break;
             case "login":
                 if (result.equals("Login successful!")) {
                     Intent logini = new Intent(context, MainActivity.class);
                     SaveSharedData.setUserName(context,userName);
                     context.startActivity(logini);
+                    Toast.makeText(context, "Welcome " + userName +"!", Toast.LENGTH_SHORT).show();
                 } else {
                     alertDialog.setMessage(result);
                     alertDialog.show();
@@ -621,7 +620,10 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 send.add(result);
                 addquestioni.putExtra("prevActivity", send);
                 context.startActivity(addquestioni);
-               */ break;
+
+               */
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+                break;
 
             case "added course":
                 Intent addedcoursei = new Intent(context, CreateQuestionActivity.class);
@@ -670,7 +672,6 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 break;
             case ("Upload text"):
              Intent uploadtexti = new Intent(context,CreateQuestionActivity.class);
-                Log.i("Second case","case");
                 send.add("fromUploadTextActivity");
                 send.add(result);
                 uploadtexti.putExtra("prevActivity",send );

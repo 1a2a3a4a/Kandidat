@@ -40,6 +40,9 @@ public class UploadTextActivity extends AppCompatActivity {
     }
         public void throughphp(String textToUpload){
             String type = "Upload text";
+            SaveSharedData.clearGenQuestions(UploadTextActivity.this);
+            SaveSharedData.setFromGenIndex(UploadTextActivity.this,0);
+            SaveSharedData.setToGenIndex(UploadTextActivity.this,0);
             BackgroundWithServer bgws = new BackgroundWithServer(this);
             bgws.execute(type,textToUpload);
         }
@@ -48,6 +51,7 @@ public class UploadTextActivity extends AppCompatActivity {
 
             //Button generateButton = (Button) findViewById(R.id.generateButton);
             if(counter == 0) {
+
                 EditText textEditText = (EditText) findViewById(R.id.textEditText);
                 counter = 1;
                 String convertThisText = textEditText.getText().toString();
@@ -74,6 +78,7 @@ public class UploadTextActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if (converted.length() > 0){
+                    Toast.makeText(UploadTextActivity.this, "Generating... please wait a moment", Toast.LENGTH_SHORT).show();
                     throughphp(converted);
                 }
                 else{
@@ -83,7 +88,10 @@ public class UploadTextActivity extends AppCompatActivity {
 
             }
             else{
+
                 counter++;
+            }
+            if (counter ==3){
             }
             if(counter >= 10){
                 Toast.makeText(UploadTextActivity.this, "DIBIDBDIDBI DONT touch that...", Toast.LENGTH_SHORT).show();

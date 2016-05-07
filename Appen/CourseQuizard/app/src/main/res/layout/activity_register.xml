@@ -50,5 +50,14 @@
         android:layout_centerHorizontal="true"
         android:onClick="register" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WARNING: Do NOT use a password that you use somewhere else"
+        android:id="@+id/textView3"
+        android:textColor="#f11515"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
 
 </RelativeLayout>

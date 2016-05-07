@@ -33,7 +33,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
     public String courseID ="";
     public int genlistcount =0  ;
     public LinkedList<Question> genQuestionList = new LinkedList<Question>();
-    public Question currentQuestion = new Question("","Answer","Alt1","Alt2","Alt3");
+    public Question currentQuestion = new Question("","","","","");
     public int toGenIndex =0;
     public int fromGenIndex = 0;
     public int localGenIndex =0;
@@ -60,7 +60,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
    public void fromActivity(){
         TextView courseTextView = (TextView) findViewById(R.id.courseCreateQuestionTextView);
        View skipGenButton = findViewById(R.id.skipGenButton);
-       skipGenButton.setVisibility(View.GONE);
+       skipGenButton.setVisibility(View.INVISIBLE);
        ArrayList<String>  message = new ArrayList<String>();
         message = getIntent().getExtras().getStringArrayList("prevActivity");
        // if we have chosen the course for the question  we have to get the course ID
@@ -260,7 +260,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
         currentQuestion = SaveSharedData.getCurrentQuestion(CreateQuestionActivity.this);
         if(currentQuestion.getQuestion().equals("")){
             View skipGenButton = findViewById(R.id.skipGenButton);
-            skipGenButton.setVisibility(View.GONE);
+            skipGenButton.setVisibility(View.INVISIBLE);
         }
         questionTextView.setText(currentQuestion.getQuestion());
         editAnswerButton.setText(currentQuestion.getAnswer());
@@ -286,9 +286,9 @@ public class CreateQuestionActivity extends AppCompatActivity {
      * go to the main menu
      */
     public void toMainActivity(View view){
+        SaveSharedData.clearGenQuestions(CreateQuestionActivity.this);
         SaveSharedData.setFromGenIndex(CreateQuestionActivity.this,0);
         SaveSharedData.setToGenIndex(CreateQuestionActivity.this,0);
-        SaveSharedData.clearGenQuestions(CreateQuestionActivity.this);
         Intent i = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(i);
 

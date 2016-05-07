@@ -35,10 +35,10 @@ public class SaveSharedData
     public static void clearCurrentQuestion(Context ctx){
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         editor.putString("currentQuestionQuestion","");
-        editor.putString("currentQuestionAnswer","Answer");
-        editor.putString("currentQuestionAlt1","Alt1");
-        editor.putString("currentQuestionAlt2","Alt2");
-        editor.putString("currentQuestionAlt3","Alt3");
+        editor.putString("currentQuestionAnswer","");
+        editor.putString("currentQuestionAlt1","");
+        editor.putString("currentQuestionAlt2","");
+        editor.putString("currentQuestionAlt3","");
         editor.commit();
     }
     public static void clearAll(Context ctx){
@@ -79,10 +79,10 @@ public class SaveSharedData
     public static Question getCurrentQuestion(Context ctx){
         Question currentQuestion = new Question("","Answer","Alt1","Alt2","Alt3");
         currentQuestion.setQuestion(getSharedPreferences(ctx).getString("currentQuestionQuestion",""));
-        currentQuestion.setAnswer(getSharedPreferences(ctx).getString("currentQuestionAnswer","Answer"));
-        currentQuestion.setAlt1(getSharedPreferences(ctx).getString("currentQuestionAlt1","Alt1"));
-        currentQuestion.setAlt2(getSharedPreferences(ctx).getString("currentQuestionAlt2","Alt2"));
-        currentQuestion.setAlt3(getSharedPreferences(ctx).getString("currentQuestionAlt3","Alt3"));
+        currentQuestion.setAnswer(getSharedPreferences(ctx).getString("currentQuestionAnswer",""));
+        currentQuestion.setAlt1(getSharedPreferences(ctx).getString("currentQuestionAlt1",""));
+        currentQuestion.setAlt2(getSharedPreferences(ctx).getString("currentQuestionAlt2",""));
+        currentQuestion.setAlt3(getSharedPreferences(ctx).getString("currentQuestionAlt3",""));
         return currentQuestion;
 
     }
@@ -132,10 +132,10 @@ public class SaveSharedData
 
         for (int i = fromIndex; i<= toIndex; i++){
             String question = getSharedPreferences(ctx).getString("GenQuestion_" +i, "");
-            String answer  =  getSharedPreferences(ctx).getString("GenAnswer_" +i, "Answer");
-            String alt1  =  getSharedPreferences(ctx).getString("GenAlt1_" +i, "Alt1");
-            String alt2  =  getSharedPreferences(ctx).getString("GenAlt2_" +i, "Alt2");
-            String alt3  =  getSharedPreferences(ctx).getString("GenAlt3_" +i, "Alt3");
+            String answer  =  getSharedPreferences(ctx).getString("GenAnswer_" +i, "");
+            String alt1  =  getSharedPreferences(ctx).getString("GenAlt1_" +i, "");
+            String alt2  =  getSharedPreferences(ctx).getString("GenAlt2_" +i, "");
+            String alt3  =  getSharedPreferences(ctx).getString("GenAlt3_" +i, "");
             Question oneQuestion = new Question(question,answer,alt1,alt2,alt3);
             questionList.add(oneQuestion);
         }

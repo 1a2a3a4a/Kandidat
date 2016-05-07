@@ -67,7 +67,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Answer"
+            android:hint="Answer"
             android:id="@+id/editAnswerButton"
             android:background="#0cf010"
 
@@ -79,7 +79,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Alt1"
+            android:hint="Alt1"
             android:id="@+id/editAlt1Button"
             android:background="#fb715c"
             android:clickable="true"
@@ -97,7 +97,7 @@
 
 
             android:gravity="center"
-            android:text="Alt2"
+            android:hint="Alt2"
             android:id="@+id/editAlt2Button"
             android:background="#fb715c"
             android:clickable="true"
@@ -109,7 +109,7 @@
 
 
             android:gravity="center"
-            android:text="alt3"
+            android:hint="Alt3"
             android:id="@+id/editAlt3Button"
             android:background="#fb715c"
             android:clickable="true"

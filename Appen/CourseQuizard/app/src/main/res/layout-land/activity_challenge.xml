@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:paddingBottom="@dimen/activity_vertical_margin"
+android:paddingLeft="@dimen/activity_horizontal_margin"
+android:paddingRight="@dimen/activity_horizontal_margin"
+android:paddingTop="@dimen/activity_vertical_margin"
+tools:context="com.example.coursequizard.coursequizard.ChallengeActivity">
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Opponent"
+    android:id="@+id/opponentNameTextView"
+    android:layout_alignParentTop="true"
+    android:layout_toStartOf="@+id/confirmButton"
+    android:layout_marginEnd="82dp"
+    android:layout_marginTop="65dp" />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Course"
+    android:id="@+id/courseNameTextView"
+    android:layout_marginTop="59dp"
+    android:layout_below="@+id/editOpponentImageButton"
+    android:layout_alignStart="@+id/opponentNameTextView" />
+
+<ImageButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/editOpponentImageButton"
+    android:src="@drawable/ic_mode_edit_black_18dp"
+    android:onClick="toOpponentActivity"
+    android:layout_alignBottom="@+id/opponentNameTextView"
+    android:layout_alignStart="@+id/editCourseImageButton" />
+
+<ImageButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/editCourseImageButton"
+    android:src="@drawable/ic_mode_edit_black_18dp"
+    android:onClick="toCourseActivity"
+    android:layout_marginEnd="79dp"
+    android:layout_alignTop="@+id/courseNameTextView"
+    android:layout_alignParentEnd="true" />
+
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Confirm"
+    android:id="@+id/confirmButton"
+    android:onClick="toPlayGameActivity"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true" />
+</RelativeLayout>

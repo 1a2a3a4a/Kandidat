@@ -13,11 +13,11 @@ public class Question {
 	//private LinkedList tags = new LinkedList();
 
 	public Question(String question, String answer, String alt1, String alt2, String alt3){
-		this.question = question;
+		this.question = question.replace("?BLANK","___");
 		this.answer = answer;
-		this.alt1 = alt1;
-		this.alt2 = alt2;
-		this.alt3 = alt3;
+		this.alt1 = alt1.replace("Not generated","");
+		this.alt2 = alt2.replace("Not generated","");
+		this.alt3 = alt3.replace("Not generated","");
 	}
 	public Question(int q_id, String question, String answer, String alt1, String alt2, String alt3, int c_id, int rating){
 		this.question = question;
