@@ -68,8 +68,8 @@ public class Course{
     public boolean equals(Object obj){
         if(obj instanceof Course) {
             Course course = (Course) obj;
-            Log.i("equals method", "equalsmethod");
-            Log.i(String.valueOf(this.C_ID), String.valueOf(course.C_ID));
+           // Log.i("equals method", "equalsmethod");
+           // Log.i(String.valueOf(this.C_ID), String.valueOf(course.C_ID));
             return this.C_ID == course.C_ID;
         }
         return false;

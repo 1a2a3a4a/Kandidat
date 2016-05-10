@@ -62,8 +62,8 @@ public class GameItemAdapter extends ArrayAdapter<Game> {
 
             // check to see if each individual textview is null.
             // if not, assign some text!
-            String opponentScore = "";
-            String userScore = "";
+            String opponentScore = "?";
+            String userScore = "?";
             String user_1_turn ="Your";
             String user_2_turn ="Your";
             String userScoreName   ="Your score";
@@ -71,8 +71,34 @@ public class GameItemAdapter extends ArrayAdapter<Game> {
             if (gameScore != null) {
                 // check if user is user1/sentby
                 if (SaveSharedData.getUserName(getContext()).toLowerCase().equals(i.getUser_1().toLowerCase())) {
-                    opponentScore = String.valueOf(i.getUser2_score());
-                    userScore = String.valueOf(i.getUser1_score());
+
+                    switch(i.getGame_status()){
+                        case(0):
+                            opponentScore="?";
+                            userScore="?";
+                            break;
+                        case(1):
+                            opponentScore="Playing";
+                            userScore="?";
+                            break;
+                        case(2):
+                            opponentScore = String.valueOf(i.getUser2_score());
+                            userScore="?";
+                            break;
+                        case(3):
+                            opponentScore = String.valueOf(i.getUser2_score());
+                            userScore="Playing";
+                            break;
+                        case(4):
+                            opponentScore = String.valueOf(i.getUser2_score());
+                            userScore = String.valueOf(i.getUser1_score());
+                            break;
+                        default:
+                            opponentScore = String.valueOf(i.getUser2_score());
+                            userScore = String.valueOf(i.getUser1_score());
+                            break;
+                    }
+
                     String score = userScore + " - " + opponentScore;
                     gameScore.setText(score);
                     user_2_turn =i.getUser_2() + "´s";
@@ -81,8 +107,32 @@ public class GameItemAdapter extends ArrayAdapter<Game> {
                     userScoreText.setText(userScoreName);
 
                 } else {
-                    userScore = String.valueOf(i.getUser2_score());
-                    opponentScore = String.valueOf(i.getUser1_score());
+                    switch(i.getGame_status()){
+                        case(0):
+                            opponentScore="?";
+                            userScore="?";
+                            break;
+                        case(1):
+                            opponentScore="?";
+                            userScore="Playing";
+                            break;
+                        case(2):
+                            opponentScore = "?";
+                            userScore=String.valueOf(i.getUser2_score());
+                            break;
+                        case(3):
+                            opponentScore = "Playing" ;
+                            userScore=String.valueOf(i.getUser2_score());
+                            break;
+                        case(4):
+                            opponentScore = String.valueOf(i.getUser1_score());
+                            userScore = String.valueOf(i.getUser2_score());
+                            break;
+                        default:
+                            opponentScore = String.valueOf(i.getUser1_score());
+                            userScore = String.valueOf(i.getUser2_score());
+                            break;
+                    }
                     String score = userScore + " - " + opponentScore;
                     gameScore.setText(score);
                     user_1_turn =i.getUser_1() +"´s";
@@ -95,8 +145,11 @@ public class GameItemAdapter extends ArrayAdapter<Game> {
                 }
                 /*
                 if (stateMessage != null) {
-                    //0 pending
-                    //1  user2
+                    //0 pending user2
+                    //1  user2 plays
+                    //2  user 1 pending
+                    //3 user 1 plays
+                    //4 finished
                     //2 user 1
                     // 3 finished
                     switch(i.getGame_status()){

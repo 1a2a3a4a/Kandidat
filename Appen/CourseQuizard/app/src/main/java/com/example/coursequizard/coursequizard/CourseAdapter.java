@@ -81,7 +81,7 @@ public class CourseAdapter extends ArrayAdapter<Course> {
             public void onClick(View view){
                 int pos = (Integer) view.getTag(R.id.course_star_position);
                 Course courseChosen = c.get(pos);
-                Log.i("pushed on course", courseChosen.getName());
+               // Log.i("pushed on course", courseChosen.getName());
                 swapFavorite(courseChosen);
                String editTag= swapButton(courseStar,(String) view.getTag(R.id.course_star_image));
                 if (editTag.equals("on")){
@@ -116,8 +116,8 @@ public class CourseAdapter extends ArrayAdapter<Course> {
         return v;
     }
     public boolean checkMyCourses(Course course){
-        Log.i("Checking","Checking");
-        Log.i("coursename",course.getName());
+       // Log.i("Checking","Checking");
+      //  Log.i("coursename",course.getName());
         if(myCourses == null) {
             return false;
         }

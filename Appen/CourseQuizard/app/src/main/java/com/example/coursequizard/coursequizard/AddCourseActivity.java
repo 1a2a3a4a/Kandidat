@@ -40,7 +40,7 @@ public class AddCourseActivity extends AppCompatActivity {
 
         }
     public boolean invalidPattern(String tryString) {
-        Pattern pattern = Pattern.compile("[A-Za-z0-9_!-]{1,95}$");
+        Pattern pattern = Pattern.compile("[^ÅÄÖåäö]{1,100}$");
         if(pattern.matcher(tryString).matches()){
             return false;
         }

@@ -71,8 +71,8 @@ class MyListAdapter extends ArrayAdapter<String> {
         ArrayList<String> message = new ArrayList<String>();
         Intent intent = ((Activity)getContext()).getIntent();
         message = intent.getExtras().getStringArrayList("prevActivity");
-        Log.i("message0", message.get(0));
-        Log.i("message1", message.get(1));
+      //  Log.i("message0", message.get(0));
+        // Log.i("message1", message.get(1));
         if (message.get(0).equals("fromChallengeActivity")){
             // To challenge activity with opponent name and course name .
             String opponentName = message.get(1);
@@ -148,7 +148,7 @@ class MyListAdapter extends ArrayAdapter<String> {
             @Override
             public void onClick(View v){
                 Course courseChosen = courseList.get(position);
-                Log.i("pushed on course", courseChosen.toStringName());
+             //   Log.i("pushed on course", courseChosen.toStringName());
 
                 fromActivity(courseChosen.getName(), String.valueOf(courseChosen.getCourse_code()), String.valueOf(courseChosen.getC_ID()), courseChosen.getUni_name(), String.valueOf(courseChosen.getUni_ID()));
             }

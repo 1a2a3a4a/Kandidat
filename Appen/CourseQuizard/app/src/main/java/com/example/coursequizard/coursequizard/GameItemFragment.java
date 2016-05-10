@@ -62,7 +62,7 @@ public class GameItemFragment extends ListFragment {
         if (message.get(0).equals("fromMainActivity")){
             String unparsedMyGames = message.get(1);
             CQParser parser = new CQParser();
-            Log.i("intent",unparsedMyGames);
+          //  Log.i("intent",unparsedMyGames);
             myGames= parser.toGList(unparsedMyGames);
             myGamesSort();
         }
@@ -84,8 +84,8 @@ public class GameItemFragment extends ListFragment {
 
 
 
-        Log.i("beforeswitch", "beforeswitch");
-        Log.i("totalsize", String.valueOf(myGames.size()));
+      //  Log.i("beforeswitch", "beforeswitch");
+      //  Log.i("totalsize", String.valueOf(myGames.size()));
 
         /*myTurnGames.clear();
         opTurnGames.clear();
@@ -94,23 +94,23 @@ public class GameItemFragment extends ListFragment {
         switch(myInt){
             case(0):
                 ListView lva = (ListView) rootView.findViewById(android.R.id.list);
-                Log.i("myturn", "myturn");
-                Log.i("myturn size", String.valueOf(myTurnGames.size()));
+            //    Log.i("myturn", "myturn");
+               // Log.i("myturn size", String.valueOf(myTurnGames.size()));
                 myAdapter = new GameItemAdapter(getActivity(), R.layout.fragment_gameitem_my_turn, android.R.id.list, myTurnGames);
 
                 lva.setAdapter(myAdapter);
                 break;
             case(1):
                 ListView lvb = (ListView) rootView.findViewById(android.R.id.list);
-                Log.i("opturn", "opturn");
-                Log.i("opturn size", String.valueOf(opTurnGames.size()));
+              //  Log.i("opturn", "opturn");
+              //  Log.i("opturn size", String.valueOf(opTurnGames.size()));
                 myAdapter = new GameItemAdapter(getActivity(), R.layout.fragment_gameitem, android.R.id.list, opTurnGames);
                 lvb.setAdapter(myAdapter);
                 break;
             case(2):
                 ListView lvc = (ListView) rootView.findViewById(android.R.id.list);
-                Log.i("finito", "finito");
-                Log.i("finished size", String.valueOf(finishedGames.size()));
+              //  Log.i("finito", "finito");
+              //  Log.i("finished size", String.valueOf(finishedGames.size()));
                 myAdapter = new GameItemAdapter(getActivity(), R.layout.fragment_gameitem, android.R.id.list, finishedGames);
                 lvc.setAdapter(myAdapter);
                 break;
@@ -121,7 +121,7 @@ public class GameItemFragment extends ListFragment {
                 break;
         }
 
-        Log.i("afterinit","woohooh");
+      //  Log.i("afterinit","woohooh");
 
 
         return rootView;
@@ -129,13 +129,13 @@ public class GameItemFragment extends ListFragment {
     }
     @Override
     public void onListItemClick(ListView l,View v,int position,long id){
-        Log.i("clickclick","click");
+     //   Log.i("clickclick","click");
         Game gameItemChosen = myAdapter.getItem(position);
         String gID = String.valueOf(gameItemChosen.getG_id());
         int stateInt = gameItemChosen.getGame_status();
-        Log.i("gid",gID);
-        Log.i("tab",String.valueOf(myInt));
-        Log.i("state",String.valueOf(stateInt));
+       // Log.i("gid",gID);
+       // Log.i("tab",String.valueOf(myInt));
+      //  Log.i("state",String.valueOf(stateInt));
         if (myInt ==0) {
             if (stateInt==0 || stateInt ==2)
             toPlayGameActivity(gID);
@@ -161,11 +161,11 @@ public class GameItemFragment extends ListFragment {
         int size = myGames.size();
         for (int j =0; j<  size; j++){
             Game g = myGames.get(j);
-            Log.i("gameid",String.valueOf(g.getG_id()));
-            Log.i("User1 Score",String.valueOf(g.getUser1_score()));
-            Log.i("User2 Score",String.valueOf(g.getUser2_score()));
-            Log.i("gamelist sent by",g.getSent_by());
-            Log.i("gamelist state",String.valueOf(g.getGame_status()));
+         //   Log.i("gameid",String.valueOf(g.getG_id()));
+         //   Log.i("User1 Score",String.valueOf(g.getUser1_score()));
+         //   Log.i("User2 Score",String.valueOf(g.getUser2_score()));
+         //   Log.i("gamelist sent by",g.getSent_by());
+         //   Log.i("gamelist state",String.valueOf(g.getGame_status()));
             switch(g.getGame_status()){
                 //pending
                 case(0):

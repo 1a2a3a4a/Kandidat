@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/cqbackground"
     tools:context="com.example.coursequizard.coursequizard.AddCourseActivity">
 
     <EditText
@@ -17,8 +18,9 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="61dp"
-        android:maxLines="1"
-        android:maxLength="75"
+        android:singleLine="true"
+        android:lines="1"
+        android:maxLength="90"
         android:hint="Enter coursename" />
 
     <EditText
@@ -28,8 +30,9 @@
         android:layout_below="@+id/newCourseNameEditText"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:maxLines="1"
-        android:maxLength="75"
+        android:singleLine="true"
+        android:lines="1"
+        android:maxLength="90"
         android:hint="Enter coursecode" />
 
     <Spinner

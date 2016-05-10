@@ -27,7 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     //private GoogleApiClient client;
     public boolean invalidUsername(String username){
         for (int i =0; i < invalidUsernames.length; i++){
-            Log.i("invalidrunning","invalid");
+          //  Log.i("invalidrunning","invalid");
             if (username.equals(invalidUsernames[i])){
                 return true;
             }

@@ -1,7 +1,7 @@
 package com.example.coursequizard.coursequizard;
 
 import android.content.Context;
-import android.util.Log;
+//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,7 +99,7 @@ public class FriendAdapter extends ArrayAdapter<String> {
             public void onClick(View view){
                 int pos = (Integer) view.getTag(R.id.friend_edit_position);
                 String friendChosen = friends.get(pos);
-                Log.i("pushed on friend", friendChosen);
+             //   Log.i("pushed on friend", friendChosen);
                 String editTag= swapButton(editFriend,(String) view.getTag(R.id.friend_edit_image));
                 if (editTag.equals("off")) {
                     removeFriend(friendChosen);
@@ -144,7 +144,7 @@ public class FriendAdapter extends ArrayAdapter<String> {
             public void onClick(View view){
                 int pos = (Integer) view.getTag(R.id.friend_edit_request_position);
                 String friendChosen = friends.get(pos);
-                Log.i("pushed on friend", friendChosen);
+                //Log.i("pushed on friend", friendChosen);
 
                 String editTag= swapButton(editRequest,(String) view.getTag(R.id.friend_edit_request_image));
                 if (editTag.equals("off")) {
@@ -183,7 +183,7 @@ public class FriendAdapter extends ArrayAdapter<String> {
             public void onClick(View view){
                 int pos = (Integer) view.getTag(R.id.friend_edit_pending_position);
                 String friendChosen = friends.get(pos);
-                Log.i("pushed on friend", friendChosen);
+               // Log.i("pushed on friend", friendChosen);
                 String editTag= swapButton(editRequest,(String) view.getTag(R.id.friend_edit_pending_image));
                 if (editTag.equals("off")) {
                     declineSentRequest(friendChosen);

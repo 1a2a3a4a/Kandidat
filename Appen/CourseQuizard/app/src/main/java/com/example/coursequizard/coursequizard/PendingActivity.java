@@ -40,7 +40,7 @@ public class PendingActivity extends AppCompatActivity {
         ArrayList<String> pending = new ArrayList<String>();
         String[] pendings = result.split("%U%");
         int pendingLength = pendings.length; // length of coded friendlist string[]
-        Log.i("pendinglistlength", String.valueOf(pendingLength));
+       // Log.i("pendinglistlength", String.valueOf(pendingLength));
         for(int i = 0; i < pendingLength; i++){
             pending.add(pendings[i]); //add all friends in friendlist
         }

@@ -20,6 +20,7 @@ public class Question {
 		this.alt3 = alt3.replace("Not generated","");
 	}
 	public Question(int q_id, String question, String answer, String alt1, String alt2, String alt3, int c_id, int rating){
+		this.q_id=q_id;
 		this.question = question;
 		this.answer = answer;
 		this.alt1 = alt1;

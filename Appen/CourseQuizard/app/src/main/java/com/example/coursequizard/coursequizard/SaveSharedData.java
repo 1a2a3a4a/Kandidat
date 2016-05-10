@@ -104,21 +104,21 @@ public class SaveSharedData
     }
     public static void setFromGenIndex(Context ctx, int fromGenIndex)
     {
-        Log.i("setfromgenindex","random");
-        Log.i("setfromgenindex",String.valueOf(fromGenIndex));
+      //  Log.i("setfromgenindex","random");
+       // Log.i("setfromgenindex",String.valueOf(fromGenIndex));
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         editor.putInt("fromGenIndex", fromGenIndex);
         editor.commit();
     }
     public static int getFromGenIndex(Context ctx)
     {
-        Log.i("getfromgenindex","woop");
+      //  Log.i("getfromgenindex","woop");
         return getSharedPreferences(ctx).getInt("fromGenIndex", 0);
     }
     public static void setGenQuestions(Context ctx, LinkedList<Question> genQuestions){
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         for (int i =0; i< genQuestions.size(); i++){
-            Log.i("setloop",genQuestions.get(i).getQuestion());
+        //    Log.i("setloop",genQuestions.get(i).getQuestion());
             editor.putString("GenQuestion_" + i,genQuestions.get(i).getQuestion());
             editor.putString("GenAnswer_" + i,genQuestions.get(i).getAnswer());
             editor.putString("GenAlt1_" + i,genQuestions.get(i).getAlt1());

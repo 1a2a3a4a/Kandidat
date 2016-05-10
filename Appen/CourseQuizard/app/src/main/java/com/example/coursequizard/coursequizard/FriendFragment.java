@@ -38,16 +38,14 @@ public class FriendFragment extends ListFragment {
     public FriendFragment() {
         // Required empty public constructor
     }
-    public void clickar(View view){
-        Log.i("clion","clicon");
-    }
+
 
     public void fromActivity() {
         ArrayList<String> message = new ArrayList<String>();
         Intent intent = ((Activity) getContext()).getIntent();
         message = intent.getExtras().getStringArrayList("prevActivity");
-        Log.i("message0", message.get(0));
-        Log.i("message1", message.get(1));
+       // Log.i("message0", message.get(0));
+      //  Log.i("message1", message.get(1));
         if (message.get(0).equals("fromMainActivity")) {
             // To challenge activity with opponent name and course name .
             String friendListString = message.get(1);
@@ -64,20 +62,20 @@ public class FriendFragment extends ListFragment {
         return fragment;
     }
     public void toParserHandler() {
-        Log.i("parserhandler", "");
+      //  Log.i("parserhandler", "");
         String datas = "";
         ArrayList<String> message = new ArrayList<String>();
 
         message = getActivity().getIntent().getExtras().getStringArrayList("prevActivity");
-        Log.i("message 0:", message.get(0));
+      //  Log.i("message 0:", message.get(0));
         if (message.get(0).equals("fromMainActivity")) {
             datas = message.get(1);
         }
         else if (message.get(0).equals("fromMyProfileActivity")) {
             datas = message.get(1);
         }
-        Log.i("unparsedfriendlists","unp");
-        Log.i("unparsedfriendlists",datas);
+     //   Log.i("unparsedfriendlists","unp");
+       // Log.i("unparsedfriendlists",datas);
         CQParser parser = new CQParser();
         // allCourses = parser.toCList(datas);
         friendLists = parser.toFriendLists(datas);
@@ -109,22 +107,22 @@ public class FriendFragment extends ListFragment {
         switch(myInt){
             case(0):
                 ListView lva = (ListView) rootView.findViewById(android.R.id.list);
-                Log.i("myFriends", "mycFriends");
-                Log.i("mycfriends size", String.valueOf(myFriends.size()));
+              //  Log.i("myFriends", "mycFriends");
+              //  Log.i("mycfriends size", String.valueOf(myFriends.size()));
                 friendAdapter = new FriendAdapter(getActivity(), R.layout.list_item_friend, android.R.id.list, myFriends, myInt);
                 lva.setAdapter(friendAdapter);
                 break;
             case(1):
                 ListView lvb = (ListView) rootView.findViewById(android.R.id.list);
-                Log.i("myFriendRequests", "myFriendRequests");
-                Log.i("myFriendRequests size", String.valueOf(myFriendRequests.size()));
+               // Log.i("myFriendRequests", "myFriendRequests");
+              //  Log.i("myFriendRequests size", String.valueOf(myFriendRequests.size()));
                 friendAdapter = new FriendAdapter(getActivity(), R.layout.list_item_friend_request, android.R.id.list, myFriendRequests,myInt);
                 lvb.setAdapter(friendAdapter);
                 break;
             case(2):
                 ListView lvc = (ListView) rootView.findViewById(android.R.id.list);
-                Log.i("myFriendsPending", "myFriendsPending");
-                Log.i("myFriendsPending size", String.valueOf(myFriends.size()));
+               // Log.i("myFriendsPending", "myFriendsPending");
+               // Log.i("myFriendsPending size", String.valueOf(myFriends.size()));
                 friendAdapter = new FriendAdapter(getActivity(), R.layout.list_item_friend_pending, android.R.id.list, myFriendPending,myInt);
                 lvc.setAdapter(friendAdapter);
                 break;
@@ -134,7 +132,7 @@ public class FriendFragment extends ListFragment {
         return rootView;
     }
     public void onListItemClick(ListView l,View v,int position,long id) {
-        Log.i("clickclick", "click");
+      //  Log.i("clickclick", "click");
         String friendChosen = friendAdapter.getItem(position);
         fromActivity();
     }

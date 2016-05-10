@@ -26,10 +26,10 @@ public class MyProfileActivity extends AppCompatActivity {
     public void editMyUniversity(View view){
         Spinner spinner = (Spinner)findViewById(R.id.universitySpinnerProfile);
         SaveSharedData.setMyUniversityName(MyProfileActivity.this,spinner.getSelectedItem().toString());
-        Log.i("id","id");
-        Log.i("id",String.valueOf(universityLinkedList.get(spinner.getSelectedItemPosition()).getU_ID()));
+      //  Log.i("id","id");
+      //  Log.i("id",String.valueOf(universityLinkedList.get(spinner.getSelectedItemPosition()).getU_ID()));
         SaveSharedData.setMyUniversityID(MyProfileActivity.this,String.valueOf(universityLinkedList.get(spinner.getSelectedItemPosition()).getU_ID()));
-        Log.i("saveds", SaveSharedData.getMyUniversityID(MyProfileActivity.this));
+       // Log.i("saveds", SaveSharedData.getMyUniversityID(MyProfileActivity.this));
         Toast.makeText(MyProfileActivity.this, "Saved: " + SaveSharedData.getMyUniversityName(MyProfileActivity.this), Toast.LENGTH_SHORT).show();
     }
     public void toAllCoursesActivity(View view){

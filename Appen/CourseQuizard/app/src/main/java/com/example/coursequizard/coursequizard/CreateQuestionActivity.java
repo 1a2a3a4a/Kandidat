@@ -19,6 +19,7 @@ import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.regex.Pattern;
 
 //import CQ.*;
 
@@ -85,16 +86,16 @@ public class CreateQuestionActivity extends AppCompatActivity {
        else if(message.get(0).equals("fromUploadTextActivity")){
             skipGenButton.setVisibility(View.VISIBLE);
             CQParser parser = new CQParser();
-            Log.i("toparser",message.get(1));
+           // Log.i("toparser",message.get(1));
                genQuestionList = parser.generateQuestions(message.get(1));
-            Log.i("question",genQuestionList.get(0).getQuestion());
+           // Log.i("question",genQuestionList.get(0).getQuestion());
             SaveSharedData.setGenQuestions(CreateQuestionActivity.this,genQuestionList);
-            Log.i("question2",genQuestionList.get(0).getQuestion());
+          //  Log.i("question2",genQuestionList.get(0).getQuestion());
             SaveSharedData.setFromGenIndex(CreateQuestionActivity.this,0);
             SaveSharedData.setToGenIndex(CreateQuestionActivity.this,genQuestionList.size());
             LinkedList<Question> temp = SaveSharedData.getGenQuestions(CreateQuestionActivity.this,0,0);
-            Log.i("question3",genQuestionList.get(0).getQuestion());
-            Log.i("tempsave",temp.get(0).getQuestion());
+          //  Log.i("question3",genQuestionList.get(0).getQuestion());
+          //  Log.i("tempsave",temp.get(0).getQuestion());
             SaveSharedData.setToGenIndex(CreateQuestionActivity.this,genQuestionList.size());
               toGenIndex = genQuestionList.size();
               setupGenView(0);
@@ -109,7 +110,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
         String userID = "1337";
         //Intent i = new Intent(getApplicationContext(),CourseActivity.class);
         String type = "all courses";
-        Log.i("addquestion","add");
+       // Log.i("addquestion","add");
         EditText editAnswerButton = (EditText) findViewById(R.id.editAnswerButton);
         EditText editAlt1Button = (EditText) findViewById(R.id.editAlt1Button);
         EditText editAlt2Button = (EditText) findViewById(R.id.editAlt2Button);
@@ -136,13 +137,23 @@ public class CreateQuestionActivity extends AppCompatActivity {
        // startActivity(i);
     }
 
+
+
+    public boolean invalidPattern(String tryString) {
+        Pattern pattern = Pattern.compile("[^ÅÄÖåäö]{1,100}$");
+        if(pattern.matcher(tryString).matches()){
+            return false;
+        }
+        return true;
+
+    }
     /**
      *  read all the parameters from the view and use them as the arguments for the php script to insert question in database
      * @param view add questionbutton
      */
 
     public void addQuestion(View view){
-        Log.i("addquestion","add");
+     //   Log.i("addquestion","add");
         EditText editAnswerButton = (EditText) findViewById(R.id.editAnswerButton);
         EditText editAlt1Button = (EditText) findViewById(R.id.editAlt1Button);
         EditText editAlt2Button = (EditText) findViewById(R.id.editAlt2Button);
@@ -154,41 +165,43 @@ public class CreateQuestionActivity extends AppCompatActivity {
         String alt2 = editAlt2Button.getText().toString();
         String alt3 = editAlt3Button.getText().toString();
         String type = "add question";
-        if (anyStringEmpty(question,answer,alt1,alt2,alt3,courseID)){
-            String message ="";
-            if (question.equals("")){
+        if (anyStringInvalid(question,answer,alt1,alt2,alt3,courseID)){
+            String message ="Text in ";
+            if (invalidPattern(question)){
                 message+="question field ";
 
             }
-            if (answer.equals("")){
+            if (invalidPattern(answer)){
                 message+="answer field ";
 
             }
-            if (alt1.equals("")){
+            if (invalidPattern(alt1)){
                 message+="alt1 field ";
 
             }
-            if (alt2.equals("")){
+            if (invalidPattern(alt2)){
                 message+="alt2 field ";
 
             }
-            if (alt3.equals("")){
+            if (invalidPattern(alt3)){
                 message+="alt3 field ";
 
             }
-            if (courseID.equals("")){
+            if (invalidPattern(courseID)){
                 message +="course field ";
 
             }
             if (message.length() > 17){
-                message +="are empty";
+                message +="are not valid";
             }
             if (message.length() <= 17){
-                message += "is empty";
+                message += "is not valid";
             }
             Toast.makeText(CreateQuestionActivity.this, message, Toast.LENGTH_SHORT).show();
         }
         else {
+              // fix here with åäö
+
             fromGenIndex++;
             localGenIndex++;
             SaveSharedData.setFromGenIndex(CreateQuestionActivity.this, fromGenIndex);
@@ -223,10 +236,10 @@ public class CreateQuestionActivity extends AppCompatActivity {
 
         //cq.disconnect();
     }
-    private boolean anyStringEmpty(String ... params){
+    private boolean anyStringInvalid(String ... params){
         int length =  params.length;
         for (int i =0; i< length; i++){
-          if (params[i].equals("")){
+          if (invalidPattern(params[i])){
               return true;
           };
         }
@@ -334,15 +347,15 @@ public class CreateQuestionActivity extends AppCompatActivity {
         */
     }
      public boolean haveGenQuestions() {
-         Log.i("bool","bool");
+      //   Log.i("bool","bool");
          LinkedList<Question> have = new LinkedList<Question>();
          have = SaveSharedData.getGenQuestions(CreateQuestionActivity.this, 0, 0);
-         Log.i("have",have.get(0).getQuestion());
+      //   Log.i("have",have.get(0).getQuestion());
          if (have.get(0).getQuestion().equals("")) {
-             Log.i("bool","false");
+        //     Log.i("bool","false");
              return false;
          }
-         Log.i("bool","true");
+       //  Log.i("bool","true");
          return true;
 
      }
@@ -356,17 +369,17 @@ public class CreateQuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_question);
 
         setupCurrentQuestionView();
-        Log.i("oncreate","oncreate");
+     //   Log.i("oncreate","oncreate");
         if (haveGenQuestions()){
-            Log.i("true","true");
+       //     Log.i("true","true");
 
 
             toGenIndex = SaveSharedData.getToGenIndex(CreateQuestionActivity.this);
-            Log.i("prefromgenindex",String.valueOf(fromGenIndex));
+        //    Log.i("prefromgenindex",String.valueOf(fromGenIndex));
             fromGenIndex =  SaveSharedData.getFromGenIndex(CreateQuestionActivity.this);
-            Log.i("postfromgenindex",String.valueOf(fromGenIndex));
+          //  Log.i("postfromgenindex",String.valueOf(fromGenIndex));
             genQuestionList= SaveSharedData.getGenQuestions(CreateQuestionActivity.this,fromGenIndex,toGenIndex);
-            Log.i("Getting it ", genQuestionList.get(0).getQuestion());
+         //   Log.i("Getting it ", genQuestionList.get(0).getQuestion());
             //setupGenView(0);
         }
         fromActivity();

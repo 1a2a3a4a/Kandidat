@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.os.AsyncTask;
 import android.app.AlertDialog;
 import android.content.Context;
+//import android.util.Log;
 import android.util.Log;
 import android.widget.Toast;
 import java.io.BufferedReader;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
  * operationURL The URL to the specific php script
  *  post_data: A url encoded string to add as argument for the operationURL
  *  context: This background service
- *  Type: what kind of arguments we recieve from the activities
+ *  Type: what kind of arguments we recieve from the activiFs
  *  Opponent: the opponent variable is necessary when creating a game
  *  alertDialog: The popup that can be used so the users can recieve a confirm or an error message
  *
@@ -244,8 +245,8 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     private void userlogin(String ... params){
         userName = params[1];
         String password = params[2];
-        Log.i("username",userName);
-        Log.i("password",password);
+       // Log.i("username",userName);
+      //  Log.i("password",password);
         try{post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8") + "&"
                 + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
 
@@ -255,7 +256,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     }
     private void getFriendlist(String ... params){
         userName = SaveSharedData.getUserName(context);
-        Log.i("username", userName);
+       // Log.i("username", userName);
         try{post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8")+ "&"
                 + URLEncoder.encode("rel_status", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8");;
 
@@ -266,8 +267,8 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
     }
     private void friendRequest(String addFriend){
         userName = SaveSharedData.getUserName(context);
-        Log.i("username friend request", userName);
-        Log.i("im adding friend:", addFriend);
+       // Log.i("username friend request", userName);
+       // Log.i("im adding friend:", addFriend);
         try{post_data = URLEncoder.encode("by_user", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8") + "&"
                 + URLEncoder.encode("to_user", "UTF-8") + "=" + URLEncoder.encode(addFriend, "UTF-8");
 
@@ -349,6 +350,19 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
             e.printStackTrace();
         }
     }
+    private void sendRating(String ... params){
+        String username = SaveSharedData.getUserName(context);
+        String qID = params[1];
+        String rating = params[2];
+        try {
+            post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&" +
+                    URLEncoder.encode("q_id", "UTF-8") + "=" + URLEncoder.encode(qID, "UTF-8") + "&" +
+                    URLEncoder.encode("vote_type", "UTF-8") + "=" + URLEncoder.encode(rating, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     @Override
@@ -387,7 +401,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 break;
             case("all courses"):
                 //used by toCourseActivity(View view) in CreateQuestionActivity
-                Log.i("innantryblock",params[0]);
+              //  Log.i("innantryblock",params[0]);
                 myCourseList(params);
                 operationURL = IP + "/getcourselistsfromdb.php";
                 break;
@@ -449,7 +463,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
 
             case("quiz from my games"):
                  quizFromMyGames(params);
-                Log.i("quizfrommygames","quizfrommygames");
+               // Log.i("quizfrommygames","quizfrommygames");
                  operationURL = IP + "/getgamequestionsfromdb.php";
                 break;
             case("updatestate"):
@@ -479,9 +493,13 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 getRelations(params);
                 operationURL = IP + "/getrelationlistsfromdb.php";
                 break;
+            case("Rating"):
+                sendRating(params);
+                operationURL = IP + "/updatequestionratingtodb.php";
+                break;
             default:
 
-                Log.i("nocase","nocase");
+               // Log.i("nocase","nocase");
                 operationURL = IP;
 
 
@@ -489,41 +507,42 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
         }
 
             try {
-                Log.i("tryblock",params[0]);
+             //   Log.i("tryblock",params[0]);
                 URL url = new URL(operationURL);
-                Log.i("tryblock2",params[0]);
+             //   Log.i("tryblock2",params[0]);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
-                Log.i("tryblock3",params[0]);
+             //   Log.i("tryblock3",params[0]);
                 httpURLConnection.setRequestMethod("POST");
-                Log.i("tryblock4",params[0]);
+              //  Log.i("tryblock4",params[0]);
                 httpURLConnection.setDoOutput(true);
-                Log.i("tryblock5",params[0]);
+              //  Log.i("tryblock5",params[0]);
                 httpURLConnection.setDoInput(true);
-                Log.i("tryblock6",params[0]);
-                Log.i("postdata",post_data);
-                Log.i("url",operationURL);
+              //  Log.i("tryblock6",params[0]);
+             //   Log.i("postdata",post_data);
+              //  Log.i("url",operationURL);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
-                Log.i("tryblock7",params[0]);
+              //  Log.i("tryblock7",params[0]);
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 // the arguments to the URL
-                Log.i("innanwrite",params[0]);
+              //  Log.i("innanwrite",params[0]);
                 bufferedWriter.write(post_data);
 
                 bufferedWriter.flush();
                 bufferedWriter.close();
                 outputStream.close();
-                Log.i("efterwrite",params[0]);
+              //  Log.i("efterwrite",params[0]);
                 InputStream inputStream = httpURLConnection.getInputStream();
-                Log.i("efterinit",params[0]);
+              //  Log.i("efterinit",params[0]);
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
-                Log.i("efterread",params[0]);
+              //  Log.i("efterread",params[0]);
                 //StringBuilder sb = new StringBuilder();
                 String result="";
                 String line="";
                 //Read line by line the output from the server.
                 while((line = bufferedReader.readLine())!= null) {
                     result += line;
-                    Log.i("resultat",line);
+                   // Log.i("Results","Results");
+                // Log.i("resultat",line);
                     //sb.append(line + "\n");
                 }
                 bufferedReader.close();
@@ -575,12 +594,25 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
                 break;
             case "login":
-                if (result.equals("Login successful!")) {
-                    Intent logini = new Intent(context, MainActivity.class);
-                    SaveSharedData.setUserName(context,userName);
-                    context.startActivity(logini);
-                    Toast.makeText(context, "Welcome " + userName +"!", Toast.LENGTH_SHORT).show();
-                } else {
+               // Log.i("Login","Login");
+                String firstPart = "Login successful! ";
+                if (result.length() >= firstPart.length()) {
+                    if (result.substring(0, firstPart.length()).equals(firstPart)) {
+
+
+                        Intent logini = new Intent(context, MainActivity.class);
+                        userName = result.substring(firstPart.length(), result.length());
+                        SaveSharedData.setUserName(context, userName);
+                        context.startActivity(logini);
+                        Toast.makeText(context, "Welcome " + userName + "!", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+
+                        alertDialog.setMessage(result);
+                        alertDialog.show();
+                    }
+                }else {
+
                     alertDialog.setMessage(result);
                     alertDialog.show();
                 }
@@ -633,11 +665,11 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 courseID = result;
                 send.add(courseID);
                 send.add(universityName);
-                Log.i("Background", "I do somethong right");
-                Log.i("coursename", courseName);
-                Log.i("coursecode", courseCode);
+                //Log.i("Background", "I do somethong right");
+                //Log.i("coursename", courseName);
+                //Log.i("coursecode", courseCode);
                 // Log.i("courseID",courseID);
-                Log.i("universityname", universityName);
+               // Log.i("universityname", universityName);
                 addedcoursei.putExtra("prevActivity", send);
                 context.startActivity(addedcoursei);
                 break;
@@ -657,7 +689,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
             case "swap favorites":
                 Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
 
-                Log.i("swap res", result);
+              //  Log.i("swap res", result);
                 // alertDialog.setMessage(result);
                 //Toast.show();
                 break;
@@ -703,7 +735,7 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                     send.add(result);
                 }
 
-                Log.i("mygamesunparsed",result);
+              //  Log.i("mygamesunparsed",result);
                 mygamesi.putExtra("prevActivity", send);
                 context.startActivity(mygamesi);
                 break;
@@ -711,24 +743,24 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
                 if(result == null){
                 }
                 else {
-                    Log.i("result", result);
+                  //  Log.i("result", result);
                     ArrayList<String> friend = new ArrayList<String>();
                     String[] friends = result.split("%U%");
                     if (friends[0].equals("EMPTY")) {
 
                     } else {
                         int length = friends.length; // length of coded friendlist string[]
-                        Log.i("friendlistlength", String.valueOf(length));
+                      //  Log.i("friendlistlength", String.valueOf(length));
                         for (int i = 0; i < length; i++) {
                             friend.add(friends[i]); //add all friends in friendlist
                         }
                     }
                     SaveSharedData.setFriendList(context, friend);
-                    Log.i("friendlist done!", "hej");
+                  //  Log.i("friendlist done!", "hej");
                 }
                 break;
             case "get all courses":{
-                Log.i("result", result);
+               // Log.i("result", result);
                 Intent allCi = new Intent(context, CourseActivity.class);
                 send.add("fromMyProfileActivity");
                 send.add(result);
@@ -794,10 +826,13 @@ public class BackgroundWithServer extends AsyncTask<String,Void,String> {
             case("update relation"):
                 Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
                 break;
+            case("Rating"):
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+                break;
             default:
                 // Log.i("Result", result);
                 //alertDialog.setMessage(result);
-                Log.i("Error","default");
+                //Log.i("Error","default");
                 alertDialog.show();
                 break;
         }

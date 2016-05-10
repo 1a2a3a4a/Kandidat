@@ -11,9 +11,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
@@ -28,7 +31,8 @@ public class PlayGameActivity extends AppCompatActivity {
     public ArrayList<String> userAnswers= new ArrayList<String>();
     public ArrayList<String> correctAnswers = new ArrayList<String>();
     private Toolbar toolbar;
-
+    public boolean haveVotedUp = false;
+    public boolean haveVotedDown = false;
 
 
 
@@ -40,7 +44,7 @@ public class PlayGameActivity extends AppCompatActivity {
           message = getIntent().getExtras().getStringArrayList("prevActivity");
           if (message.get(0).equals("fromSPChallengeActivity")){
 
-              Log.i("to parse",message.get(1) );
+             // Log.i("to parse",message.get(1) );
               questionList = questionParser.toQList(message.get(1));
 
               }
@@ -61,7 +65,7 @@ public class PlayGameActivity extends AppCompatActivity {
         public ArrayList<String>  randomAlternativeList(ArrayList<String> alternativeList){
             ArrayList<String> randomizedList = new ArrayList<String>();
             while ( alternativeList.size() > 0) {
-                Log.i("looop","looopar");
+            //    Log.i("looop","looopar");
                 int randomIndex = new Random().nextInt(alternativeList.size());
                 randomizedList.add(alternativeList.get(randomIndex));
                 alternativeList.remove(randomIndex);
@@ -84,11 +88,11 @@ public class PlayGameActivity extends AppCompatActivity {
         alternativeList.add(alt1String);
         alternativeList.add(alt2String);
         alternativeList.add(alt3String);
-        Log.i("questiomstring",questionString);
-        Log.i("answer",answerString);
-        Log.i("alt1",alt1String);
-        Log.i("alt2",alt2String);
-        Log.i("alt3",alt3String);
+       // Log.i("questiomstring",questionString);
+      //  Log.i("answer",answerString);
+       // Log.i("alt1",alt1String);
+        //Log.i("alt2",alt2String);
+      //  Log.i("alt3",alt3String);
         questionTextView.setText(questionString);
         alternativeList = randomAlternativeList(alternativeList);
 
@@ -135,9 +139,9 @@ public class PlayGameActivity extends AppCompatActivity {
         Button   alt3Button       = (Button) findViewById(R.id.alt3Button);
         Button   alt4Button       = (Button) findViewById(R.id.alt4Button);
         String alt1buttonstring = alt1Button.getText().toString();
-        Log.i("alt1string","innan");
-        Log.i("alt1string",alt1buttonstring);
-        Log.i("alt1string","efter");
+      //  Log.i("alt1string","innan");
+       // Log.i("alt1string",alt1buttonstring);
+      //  Log.i("alt1string","efter");
 
 
         alt1Button.setBackgroundColor(Color.BLUE);
@@ -195,11 +199,15 @@ public class PlayGameActivity extends AppCompatActivity {
         Button   alt2Button       = (Button) findViewById(R.id.alt2Button);
         Button   alt3Button       = (Button) findViewById(R.id.alt3Button);
         Button   alt4Button       = (Button) findViewById(R.id.alt4Button);
+        ImageButton   voteUpButton     =  (ImageButton) findViewById(R.id.voteUpButton);
+        ImageButton   voteDownButton     =  (ImageButton) findViewById(R.id.voteDownButton);
+
         alt1Button.setEnabled(false);
         alt2Button.setEnabled(false);
         alt3Button.setEnabled(false);
         alt4Button.setEnabled(false);
-
+        voteUpButton.setEnabled(false);
+        voteDownButton.setEnabled(false);
     }
     public void sendResults(){
         String type = "sendresult";
@@ -208,7 +216,15 @@ public class PlayGameActivity extends AppCompatActivity {
         bgws.execute(type,gameID,score,userAnswers.get(0),userAnswers.get(1),userAnswers.get(2),userAnswers.get(3),userAnswers.get(4));
     }
     public void nextQuestion(){
+        ImageButton down = (ImageButton)findViewById(R.id.voteDownButton);
+        ImageButton up = (ImageButton)findViewById(R.id.voteUpButton);
         String add = "";
+        rateQuestion();
+        haveVotedUp = false;
+        haveVotedDown = false;
+        up.setBackgroundColor(Color.WHITE);
+        down.setBackgroundColor(Color.WHITE);
+
         /*
         TextView questionTextView = (TextView) findViewById(R.id.textView);
         Button   alt1Button       =  (Button) findViewById(R.id.alt1Button);
@@ -286,6 +302,61 @@ public class PlayGameActivity extends AppCompatActivity {
         send.add("fromPlayGameActivity");
         i.putExtra("prevActivity",send );
         startActivity(i);
+
+    }
+    public void upvote(View view){
+        haveVotedDown=false;
+        ImageButton down = (ImageButton)findViewById(R.id.voteDownButton);
+        ImageButton up = (ImageButton)findViewById(R.id.voteUpButton);
+        down.setBackgroundColor(Color.WHITE);
+        if (!(haveVotedUp)) {
+           // rateQuestion("1");
+            haveVotedUp=true;
+            up.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
+            Toast.makeText(PlayGameActivity.this,"Upvoted", Toast.LENGTH_SHORT).show();
+
+
+        }
+        else{
+            haveVotedUp=false;
+            up.setBackgroundColor(Color.WHITE);
+            Toast.makeText(PlayGameActivity.this,"Vote undone", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void downvote(View view){
+        haveVotedUp=false;
+        ImageButton down = (ImageButton)findViewById(R.id.voteDownButton);
+        ImageButton up = (ImageButton)findViewById(R.id.voteUpButton);
+        up.setBackgroundColor(Color.WHITE);
+        if (!(haveVotedDown)) {
+            //rateQuestion("-1");
+            haveVotedDown=true;
+            down.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
+            Toast.makeText(PlayGameActivity.this,"Downvoted", Toast.LENGTH_SHORT).show();
+
+        }
+        else{
+            haveVotedDown=false;
+            down.setBackgroundColor(Color.WHITE);
+            Toast.makeText(PlayGameActivity.this,"Vote undone", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void rateQuestion(){
+            String type = "Rating";
+            String vote ="0";
+             String qID = String.valueOf(questionList.get(questionIndex).getQ_id());
+            if (haveVotedDown){
+                vote = "-1";
+                BackgroundWithServer bgws = new BackgroundWithServer(this);
+                bgws.execute(type, qID, vote);
+            }
+        else if(haveVotedUp){
+                vote ="1";
+                BackgroundWithServer bgws = new BackgroundWithServer(this);
+                bgws.execute(type, qID, vote);
+            }
+
+
 
     }
 }

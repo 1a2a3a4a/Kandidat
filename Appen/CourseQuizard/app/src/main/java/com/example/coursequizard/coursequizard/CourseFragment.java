@@ -85,7 +85,7 @@ public class CourseFragment extends ListFragment  {
 
     }
     public void clickar(View view){
-        Log.i("clion","clicon");
+     //   Log.i("clion","clicon");
     }
     /**
      * Start the createquestion Activity
@@ -109,8 +109,8 @@ public class CourseFragment extends ListFragment  {
         ArrayList<String> message = new ArrayList<String>();
         Intent intent = ((Activity)getContext()).getIntent();
         message = intent.getExtras().getStringArrayList("prevActivity");
-        Log.i("message0", message.get(0));
-        Log.i("message1", message.get(1));
+      //  Log.i("message0", message.get(0));
+        // Log.i("message1", message.get(1));
         if (message.get(0).equals("fromChallengeActivity")){
             // To challenge activity with opponent name and course name .
             String opponentName = message.get(1);
@@ -144,12 +144,12 @@ public class CourseFragment extends ListFragment  {
         return fragment;
     }
     public void toParserHandler() {
-        Log.i("parserhandler", "");
+      //  Log.i("parserhandler", "");
         String datas = "";
         ArrayList<String> message = new ArrayList<String>();
 
         message = getActivity().getIntent().getExtras().getStringArrayList("prevActivity");
-        Log.i("message 0:", message.get(0));
+      //  Log.i("message 0:", message.get(0));
         if (message.get(0).equals("fromOpponentActivity")) {
             datas = message.get(2);
         }
@@ -162,8 +162,8 @@ public class CourseFragment extends ListFragment  {
         else if(message.get(0).equals("fromMyProfileActivity")){
             datas = message.get(1);
         }
-        Log.i("unparsedcourselists","unp");
-        Log.i("unparsedcourselists",datas);
+      //  Log.i("unparsedcourselists","unp");
+       // Log.i("unparsedcourselists",datas);
         CQParser parser = new CQParser();
       // allCourses = parser.toCList(datas);
         courseLists = parser.toCLists(datas);
@@ -193,22 +193,22 @@ public class CourseFragment extends ListFragment  {
         switch(myInt){
             case(0):
                 ListView lva = (ListView) rootView.findViewById(android.R.id.list);
-                Log.i("mycourses", "mycourses");
-                Log.i("mycourses size", String.valueOf(myCourses.size()));
+             //   Log.i("mycourses", "mycourses");
+               // Log.i("mycourses size", String.valueOf(myCourses.size()));
                 myAdapter = new CourseAdapter(getActivity(), R.layout.list_item_course, android.R.id.list, myCourses,myCourses);
                 lva.setAdapter(myAdapter);
                 break;
             case(1):
                 ListView lvb = (ListView) rootView.findViewById(android.R.id.list);
-                Log.i("unicourses", "unicourses");
-                Log.i("unicourses size", String.valueOf(universityCourses.size()));
+               // Log.i("unicourses", "unicourses");
+              //  Log.i("unicourses size", String.valueOf(universityCourses.size()));
                 myAdapter = new CourseAdapter(getActivity(), R.layout.list_item_course, android.R.id.list, universityCourses,myCourses);
                 lvb.setAdapter(myAdapter);
                 break;
             case(2):
                 ListView lvc = (ListView) rootView.findViewById(android.R.id.list);
-                Log.i("allcourses", "allcourses");
-                Log.i("allcourses size", String.valueOf(allCourses.size()));
+              //  Log.i("allcourses", "allcourses");
+             //   Log.i("allcourses size", String.valueOf(allCourses.size()));
                 myAdapter = new CourseAdapter(getActivity(), R.layout.list_item_course, android.R.id.list, allCourses,myCourses);
                 lvc.setAdapter(myAdapter);
                 break;
@@ -218,7 +218,7 @@ public class CourseFragment extends ListFragment  {
         return rootView;
     }
     public void onListItemClick(ListView l,View v,int position,long id) {
-        Log.i("clickclick", "click");
+      //  Log.i("clickclick", "click");
         Course courseChosen = myAdapter.getItem(position);
         fromActivity(courseChosen.getName(), String.valueOf(courseChosen.getCourse_code()), String.valueOf(courseChosen.getC_ID()), courseChosen.getUni_name(), String.valueOf(courseChosen.getUni_ID()));
     }

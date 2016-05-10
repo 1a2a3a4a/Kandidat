@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/cqbackground"
     tools:context=".AddFriendActivity">
 
 
@@ -28,6 +29,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
+        android:singleLine="true"
+        android:lines="1"
         android:layout_alignParentRight="true"
         android:hint="Enter name here" />
 </RelativeLayout>

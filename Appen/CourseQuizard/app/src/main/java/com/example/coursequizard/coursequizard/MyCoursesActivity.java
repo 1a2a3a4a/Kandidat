@@ -52,8 +52,8 @@ public class MyCoursesActivity extends AppCompatActivity {
         message = getIntent().getExtras().getStringArrayList("prevActivity");
         String data = message.get(1);
 
-        Log.i("data0", message.get(0));
-        Log.i("data1",message.get(1));
+      //  Log.i("data0", message.get(0));
+       // Log.i("data1",message.get(1));
 
 
         CQParser parser = new CQParser();

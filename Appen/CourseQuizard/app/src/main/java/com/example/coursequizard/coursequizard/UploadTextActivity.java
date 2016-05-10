@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 /**
  * Upload text for automatic question generation. text is uploaded to python server using sockets.
@@ -31,6 +32,14 @@ public class UploadTextActivity extends AppCompatActivity {
         send.add(questions);
         i.putExtra("prevActivity",send );
         startActivity(i);
+    }
+    public boolean invalidPattern(String tryString) {
+        Pattern pattern = Pattern.compile("[^ÅÄÖåäö]{1,1000}$");
+        if(pattern.matcher(tryString).matches()){
+            return false;
+        }
+        return true;
+
     }
 
     @Override
@@ -53,7 +62,7 @@ public class UploadTextActivity extends AppCompatActivity {
             if(counter == 0) {
 
                 EditText textEditText = (EditText) findViewById(R.id.textEditText);
-                counter = 1;
+
                 String convertThisText = textEditText.getText().toString();
                 String converted ="";
                 String tempString ="";
@@ -78,11 +87,20 @@ public class UploadTextActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if (converted.length() > 0){
-                    Toast.makeText(UploadTextActivity.this, "Generating... please wait a moment", Toast.LENGTH_SHORT).show();
-                    throughphp(converted);
+                    if (invalidPattern(converted)){
+                        Toast.makeText(UploadTextActivity.this, "The text contains unwanted characters", Toast.LENGTH_SHORT).show();
+                        counter =0;
+
+                    }
+                    else {
+                        Toast.makeText(UploadTextActivity.this, "Generating... please wait a moment", Toast.LENGTH_SHORT).show();
+                        counter = 1;
+                        throughphp(converted);
+                    }
                 }
                 else{
                     Toast.makeText(UploadTextActivity.this, "Too short to be generated", Toast.LENGTH_SHORT).show();
+                    counter=0;
                 }
 
 
@@ -90,8 +108,6 @@ public class UploadTextActivity extends AppCompatActivity {
             else{
 
                 counter++;
-            }
-            if (counter ==3){
             }
             if(counter >= 10){
                 Toast.makeText(UploadTextActivity.this, "DIBIDBDIDBI DONT touch that...", Toast.LENGTH_SHORT).show();

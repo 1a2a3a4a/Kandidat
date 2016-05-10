@@ -3,11 +3,13 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/cqbackground"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
     <ListView
         android:id="@+id/android:list"
-
+        android:paddingBottom="100dp"
+        android:clipToPadding="false"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         />

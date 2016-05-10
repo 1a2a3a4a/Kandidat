@@ -6,6 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/cqbackground"
     tools:context="com.example.coursequizard.coursequizard.LoginActivity">
 
     <EditText
@@ -13,6 +14,8 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
+        android:singleLine="true"
+        android:lines="1"
         android:id="@+id/loginpwtext"
         android:layout_centerVertical="true"
         android:layout_alignEnd="@+id/loginButton"
@@ -23,6 +26,8 @@
 
     <EditText
         android:layout_width="wrap_content"
+        android:singleLine="true"
+        android:lines="1"
         android:layout_height="wrap_content"
         android:id="@+id/loginusernameText"
         android:layout_above="@+id/loginpwtext"

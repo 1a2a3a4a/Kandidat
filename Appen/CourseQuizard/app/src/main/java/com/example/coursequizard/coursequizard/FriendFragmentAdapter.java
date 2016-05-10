@@ -22,7 +22,7 @@ public class FriendFragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         Bundle info1=new Bundle();
         info1.putInt("friendList", position);
-        Log.i("aaaaaaaaaaa","aaaaaaaaaaaaa");
+      //  Log.i("aaaaaaaaaaa","aaaaaaaaaaaaa");
         mFragmentList.get(position).setArguments(info1);
         return mFragmentList.get(position);
     }
